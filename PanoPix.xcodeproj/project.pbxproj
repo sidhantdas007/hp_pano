@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		65C0F6261BEA7F5300E45CBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F6251BEA7F5300E45CBB /* main.m */; };
-		65C0F6291BEA7F5300E45CBB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F6281BEA7F5300E45CBB /* AppDelegate.m */; };
-		65C0F62C1BEA7F5300E45CBB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F62B1BEA7F5300E45CBB /* ViewController.m */; };
+		65C0F6291BEA7F5300E45CBB /* PPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F6281BEA7F5300E45CBB /* PPAppDelegate.m */; };
 		65C0F62F1BEA7F5300E45CBB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C0F62D1BEA7F5300E45CBB /* Main.storyboard */; };
 		65C0F6311BEA7F5300E45CBB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 65C0F6301BEA7F5300E45CBB /* Assets.xcassets */; };
 		65C0F6341BEA7F5300E45CBB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C0F6321BEA7F5300E45CBB /* LaunchScreen.storyboard */; };
 		65C0F63F1BEA7F5300E45CBB /* PanoPixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F63E1BEA7F5300E45CBB /* PanoPixTests.m */; };
 		65C0F64A1BEA7F5300E45CBB /* PanoPixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F6491BEA7F5300E45CBB /* PanoPixUITests.m */; };
+		65C3283C1BEBF3780071E752 /* PPPanoramaTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C3283B1BEBF3780071E752 /* PPPanoramaTableViewController.m */; };
 		EEC31F0F676D9DAACE99F9E3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32AA3D1FDE691CED0B848D9B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -40,10 +40,8 @@
 		3644E75EE9B1D3DF99D3FD1B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		65C0F6211BEA7F5300E45CBB /* PanoPix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PanoPix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C0F6251BEA7F5300E45CBB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		65C0F6271BEA7F5300E45CBB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		65C0F6281BEA7F5300E45CBB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		65C0F62A1BEA7F5300E45CBB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		65C0F62B1BEA7F5300E45CBB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		65C0F6271BEA7F5300E45CBB /* PPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPAppDelegate.h; sourceTree = "<group>"; };
+		65C0F6281BEA7F5300E45CBB /* PPAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PPAppDelegate.m; sourceTree = "<group>"; };
 		65C0F62E1BEA7F5300E45CBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		65C0F6301BEA7F5300E45CBB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		65C0F6331BEA7F5300E45CBB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -54,6 +52,8 @@
 		65C0F6451BEA7F5300E45CBB /* PanoPixUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PanoPixUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C0F6491BEA7F5300E45CBB /* PanoPixUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PanoPixUITests.m; sourceTree = "<group>"; };
 		65C0F64B1BEA7F5300E45CBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		65C3283A1BEBF3780071E752 /* PPPanoramaTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPanoramaTableViewController.h; sourceTree = "<group>"; };
+		65C3283B1BEBF3780071E752 /* PPPanoramaTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPanoramaTableViewController.m; sourceTree = "<group>"; };
 		D81B966252321C8EDF1F02AF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -108,15 +108,15 @@
 		65C0F6231BEA7F5300E45CBB /* PanoPix */ = {
 			isa = PBXGroup;
 			children = (
-				65C0F6271BEA7F5300E45CBB /* AppDelegate.h */,
-				65C0F6281BEA7F5300E45CBB /* AppDelegate.m */,
-				65C0F62A1BEA7F5300E45CBB /* ViewController.h */,
-				65C0F62B1BEA7F5300E45CBB /* ViewController.m */,
+				65C0F6271BEA7F5300E45CBB /* PPAppDelegate.h */,
+				65C0F6281BEA7F5300E45CBB /* PPAppDelegate.m */,
 				65C0F62D1BEA7F5300E45CBB /* Main.storyboard */,
 				65C0F6301BEA7F5300E45CBB /* Assets.xcassets */,
 				65C0F6321BEA7F5300E45CBB /* LaunchScreen.storyboard */,
 				65C0F6351BEA7F5300E45CBB /* Info.plist */,
 				65C0F6241BEA7F5300E45CBB /* Supporting Files */,
+				65C3283A1BEBF3780071E752 /* PPPanoramaTableViewController.h */,
+				65C3283B1BEBF3780071E752 /* PPPanoramaTableViewController.m */,
 			);
 			path = PanoPix;
 			sourceTree = "<group>";
@@ -345,8 +345,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				65C0F62C1BEA7F5300E45CBB /* ViewController.m in Sources */,
-				65C0F6291BEA7F5300E45CBB /* AppDelegate.m in Sources */,
+				65C3283C1BEBF3780071E752 /* PPPanoramaTableViewController.m in Sources */,
+				65C0F6291BEA7F5300E45CBB /* PPAppDelegate.m in Sources */,
 				65C0F6261BEA7F5300E45CBB /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

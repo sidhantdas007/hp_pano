@@ -6,13 +6,13 @@
 //  Copyright © 2015 HP. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "PPAppDelegate.h"
 
-@interface AppDelegate ()
+@interface PPAppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation PPAppDelegate
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
