@@ -1,0 +1,1 @@
+../../../HPPhotoPrint/Pod/Classes/Private/HPPPAnalyticsManager.h

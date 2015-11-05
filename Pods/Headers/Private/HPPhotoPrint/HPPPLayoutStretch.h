@@ -1,0 +1,1 @@
+../../../HPPhotoPrint/Pod/Classes/Public/HPPPLayoutStretch.h
