@@ -15,6 +15,7 @@
 		65C0F63F1BEA7F5300E45CBB /* PanoPixTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F63E1BEA7F5300E45CBB /* PanoPixTests.m */; };
 		65C0F64A1BEA7F5300E45CBB /* PanoPixUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F6491BEA7F5300E45CBB /* PanoPixUITests.m */; };
 		65C3283C1BEBF3780071E752 /* PPPanoramaTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C3283B1BEBF3780071E752 /* PPPanoramaTableViewController.m */; };
+		65C3283F1BEC07F90071E752 /* PPPanoramaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C3283E1BEC07F90071E752 /* PPPanoramaTableViewCell.m */; };
 		EEC31F0F676D9DAACE99F9E3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32AA3D1FDE691CED0B848D9B /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +55,8 @@
 		65C0F64B1BEA7F5300E45CBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65C3283A1BEBF3780071E752 /* PPPanoramaTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPanoramaTableViewController.h; sourceTree = "<group>"; };
 		65C3283B1BEBF3780071E752 /* PPPanoramaTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPanoramaTableViewController.m; sourceTree = "<group>"; };
+		65C3283D1BEC07F90071E752 /* PPPanoramaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPanoramaTableViewCell.h; sourceTree = "<group>"; };
+		65C3283E1BEC07F90071E752 /* PPPanoramaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPanoramaTableViewCell.m; sourceTree = "<group>"; };
 		D81B966252321C8EDF1F02AF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -117,6 +120,8 @@
 				65C0F6241BEA7F5300E45CBB /* Supporting Files */,
 				65C3283A1BEBF3780071E752 /* PPPanoramaTableViewController.h */,
 				65C3283B1BEBF3780071E752 /* PPPanoramaTableViewController.m */,
+				65C3283D1BEC07F90071E752 /* PPPanoramaTableViewCell.h */,
+				65C3283E1BEC07F90071E752 /* PPPanoramaTableViewCell.m */,
 			);
 			path = PanoPix;
 			sourceTree = "<group>";
@@ -345,6 +350,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65C3283F1BEC07F90071E752 /* PPPanoramaTableViewCell.m in Sources */,
 				65C3283C1BEBF3780071E752 /* PPPanoramaTableViewController.m in Sources */,
 				65C0F6291BEA7F5300E45CBB /* PPAppDelegate.m in Sources */,
 				65C0F6261BEA7F5300E45CBB /* main.m in Sources */,

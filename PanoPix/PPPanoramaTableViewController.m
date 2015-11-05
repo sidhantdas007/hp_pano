@@ -6,7 +6,9 @@
 //  Copyright © 2015 HP. All rights reserved.
 //
 
+
 #import "PPPanoramaTableViewController.h"
+#import "PPPanoramaTableViewCell.h"
 
 @interface PPPanoramaTableViewController ()
 
@@ -85,12 +87,15 @@ NSString * const kPanoramaCellIdentifier = @"Panorama Cell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryNone;
-    if (UITableViewCellAccessoryNone == cell.accessoryType) {
-        accessoryType = UITableViewCellAccessoryCheckmark;
-    }
-    cell.accessoryType = accessoryType;
+    PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+    cell.included = !cell.included;
+    NSString *imageName = cell.included ? @"ActiveCircle" : @"InactiveCircle";
+    cell.checkmarkImageView.image = [UIImage imageNamed:imageName];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 30.0;
 }
 
 /*
