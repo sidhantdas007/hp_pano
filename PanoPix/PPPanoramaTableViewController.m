@@ -10,10 +10,15 @@
 #import "PPPanoramaTableViewController.h"
 #import "PPPanoramaTableViewCell.h"
 #import <Photos/Photos.h>
+#import <HPPP.h>
+#import <HPPPLayout.h>
+#import <HPPPPrintItemFactory.h>
+#import <HPPPLayoutFactory.h>
+#import <HPPPPaper.h>
 
-@interface PPPanoramaTableViewController ()
+@interface PPPanoramaTableViewController () <HPPPPrintDelegate>
 
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *printButton;
+@property (strong, nonatomic) UIBarButtonItem *printButton;
 @property (strong, nonatomic) NSArray *panoramaAssets;
 @property (strong, nonatomic) NSMutableArray *selectedPanoramas;
 @property (strong, nonatomic) NSMutableArray *printableImages;
@@ -25,6 +30,11 @@
 NSString * const kPanoramaCellIdentifier = @"Panorama Cell";
 CGFloat kHeaderHeight = 30.0;
 NSInteger kMaximumSelections = 3;
+CGFloat kDPI = 300.0;
+CGFloat kPaperWidth = 7.0; // inches
+CGFloat kPaperHeight = 5.0; // inches
+CGFloat kStripWidth = 7.0; // inches
+CGFloat kStripHeight = 1.375; // inches
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,11 +42,21 @@ NSInteger kMaximumSelections = 3;
     self.selectedPanoramas = [NSMutableArray array];
     [self preparePrintIcon];
     [self retrievePanoramas];
+    [self configureHPPP];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)configureHPPP
+{
+    HPPPPaper *paper = [[HPPPPaper alloc] initWithPaperSize:HPPPPaperSize5x7 paperType:HPPPPaperTypePhoto];
+    [HPPP sharedInstance].defaultPaper = paper;
+    [HPPP sharedInstance].supportedPapers = @[ paper ];
+    [HPPP sharedInstance].hidePaperSizeOption = YES;
+    [HPPP sharedInstance].hidePaperTypeOption = YES;
 }
 
 #pragma mark - Table view data source
@@ -143,19 +163,45 @@ NSInteger kMaximumSelections = 3;
     NSInteger row = [self.selectedPanoramas[index] integerValue];
     PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    options.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     options.synchronous = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [[PHImageManager defaultManager] requestImageForAsset:cell.asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        CGSize size = CGSizeMake(kStripWidth * kDPI, kStripHeight * kDPI);
+        [[PHImageManager defaultManager] requestImageForAsset:cell.asset targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             [self.printableImages addObject:result];
             if (index < self.selectedPanoramas.count - 1) {
                 [self retrivePrintableImage:index + 1];
             } else {
-                // DONE!!
-                NSLog(@"%@", self.printableImages);
+                [self initiatePrint];
             }
         }];
     });
+}
+
+- (void)initiatePrint
+{
+    HPPPPrintItem *printItem = [HPPPPrintItemFactory printItemWithAsset:[self combinedImage]];
+    printItem.layout = [HPPPLayoutFactory layoutWithType:[HPPPLayoutFit layoutType] orientation:HPPPLayoutOrientationLandscape assetPosition:[HPPPLayout completeFillRectangle]];
+    UIViewController *vc = [[HPPP sharedInstance] printViewControllerWithDelegate:self dataSource:nil printItem:printItem fromQueue:NO settingsOnly:NO];
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+- (UIImage *)combinedImage
+{
+    CGSize overallSize = CGSizeMake(kPaperWidth * kDPI, kPaperHeight * kDPI);
+    UIGraphicsBeginImageContext(overallSize);
+
+    CGFloat gutter = (kPaperHeight - kMaximumSelections * kStripHeight) / (kMaximumSelections + 1);
+    for (int idx = 0; idx < self.printableImages.count; idx++) {
+        CGFloat yOffset = gutter * (idx + 1) + kStripHeight * idx;
+        CGRect rect = CGRectMake(0, yOffset * kDPI, kStripWidth * kDPI, kStripHeight * kDPI);
+        UIImage *panoImage = self.printableImages[idx];
+        [panoImage drawInRect:rect];
+    }
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 #pragma mark - Photo library
@@ -202,6 +248,18 @@ NSInteger kMaximumSelections = 3;
     if (0 == self.selectedPanoramas.count) {
         self.printButton.enabled = NO;
     }
+}
+
+#pragma mark - HPPPPrintDelegate
+
+- (void)didFinishPrintFlow:(UIViewController *)printViewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCancelPrintFlow:(UIViewController *)printViewController
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end
