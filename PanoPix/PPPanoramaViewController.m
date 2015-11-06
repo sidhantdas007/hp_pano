@@ -139,11 +139,15 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     dispatch_async(dispatch_get_main_queue(), ^{
         CGSize size = CGSizeMake(kStripWidth * kDPI, kStripHeight * kDPI);
         [[PHImageManager defaultManager] requestImageForAsset:cell.asset targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-            [self.printableImages addObject:result];
-            if (index < self.selectedPanoramas.count - 1) {
-                [self retrivePrintableImage:index + 1];
+            if (result) {
+                [self.printableImages addObject:result];
+                if (index < self.selectedPanoramas.count - 1) {
+                    [self retrivePrintableImage:index + 1];
+                } else {
+                    [self initiatePrint];
+                }
             } else {
-                [self initiatePrint];
+                NSLog(@"IMAGE FAIL:\n\n%ld\n\n%@\n\n%@", (long)index, cell.asset, info);
             }
         }];
     });
