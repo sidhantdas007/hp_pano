@@ -131,14 +131,12 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)retrivePrintableImage:(NSInteger)index
 {
-    NSInteger row = [self.selectedPanoramas[index] integerValue];
-    PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     options.synchronous = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
         CGSize size = CGSizeMake(kStripWidth * kDPI, kStripHeight * kDPI);
-        [[PHImageManager defaultManager] requestImageForAsset:cell.asset targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        [[PHImageManager defaultManager] requestImageForAsset:self.panoramaAssets[index] targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             if (result) {
                 [self.printableImages addObject:result];
                 if (index < self.selectedPanoramas.count - 1) {
@@ -147,7 +145,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
                     [self initiatePrint];
                 }
             } else {
-                NSLog(@"IMAGE FAIL:\n\n%ld\n\n%@\n\n%@", (long)index, cell.asset, info);
+                NSLog(@"IMAGE FAIL:\n\n%ld\n\n%@\n\n%@", (long)index, self.panoramaAssets[index], info);
             }
         }];
     });
