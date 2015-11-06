@@ -26,7 +26,7 @@
     if (nil != asset && _asset != asset) {
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
         options.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
-        options.synchronous = YES;
+        options.synchronous = NO;
         dispatch_async(dispatch_get_main_queue(), ^{
             [[PHImageManager defaultManager] requestImageForAsset:_asset targetSize:self.panoramaImageView.frame.size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                 self.panoramaImageView.image = result;

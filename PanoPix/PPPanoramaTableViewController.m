@@ -13,9 +13,10 @@
 
 @interface PPPanoramaTableViewController ()
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *printButton;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *printButton;
 @property (strong, nonatomic) NSArray *panoramaAssets;
 @property (strong, nonatomic) NSMutableArray *selectedPanoramas;
+@property (strong, nonatomic) NSMutableArray *printableImages;
 
 @end
 
@@ -121,18 +122,40 @@ NSInteger kMaximumSelections = 3;
 
 - (void)preparePrintIcon
 {
-    UIBarButtonItem *button = [[UIBarButtonItem alloc]
+    self.printButton = [[UIBarButtonItem alloc]
                                initWithImage:[UIImage imageNamed:@"printIcon"]
                                style:UIBarButtonItemStylePlain
                                target:self
                                action:@selector(printTapped:)];
 
-    self.navigationItem.rightBarButtonItem = button;
+    self.printButton.enabled = NO;
+    self.navigationItem.rightBarButtonItem = self.printButton;
 }
 
 - (void)printTapped:(id)sender
 {
-    NSLog(@"TAPPED!!!!");
+    self.printableImages = [NSMutableArray array];
+    [self retrivePrintableImage:0];
+}
+
+- (void)retrivePrintableImage:(NSInteger)index
+{
+    NSInteger row = [self.selectedPanoramas[index] integerValue];
+    PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+    options.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
+    options.synchronous = NO;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [[PHImageManager defaultManager] requestImageForAsset:cell.asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            [self.printableImages addObject:result];
+            if (index < self.selectedPanoramas.count - 1) {
+                [self retrivePrintableImage:index + 1];
+            } else {
+                // DONE!!
+                NSLog(@"%@", self.printableImages);
+            }
+        }];
+    });
 }
 
 #pragma mark - Photo library
@@ -159,6 +182,7 @@ NSInteger kMaximumSelections = 3;
 
 - (void)selectItem:(NSInteger)item
 {
+    self.printButton.enabled = YES;
     NSNumber *itemToAdd = [NSNumber numberWithInteger:item];
     if (![self.selectedPanoramas containsObject:itemToAdd]) {
         [self.selectedPanoramas addObject:itemToAdd];
@@ -166,6 +190,7 @@ NSInteger kMaximumSelections = 3;
             [self removeItem:[[self.selectedPanoramas firstObject] integerValue]];
         }
     }
+    
 }
 
 - (void)removeItem:(NSInteger)item
@@ -174,6 +199,9 @@ NSInteger kMaximumSelections = 3;
     [self.selectedPanoramas removeObject:itemToRemove];
     PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[itemToRemove integerValue] inSection:0]];
     cell.included = NO;
+    if (0 == self.selectedPanoramas.count) {
+        self.printButton.enabled = NO;
+    }
 }
 
 @end
