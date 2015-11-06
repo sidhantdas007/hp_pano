@@ -9,23 +9,25 @@
 
 #import "PPPanoramaTableViewController.h"
 #import "PPPanoramaTableViewCell.h"
+#import <Photos/Photos.h>
 
 @interface PPPanoramaTableViewController ()
+
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *printButton;
+@property (strong, nonatomic) NSArray *panoramaAssets;
 
 @end
 
 @implementation PPPanoramaTableViewController
 
 NSString * const kPanoramaCellIdentifier = @"Panorama Cell";
+CGFloat kHeaderHeight = 30.0;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    self.panoramaAssets = @[];
+    [self preparePrintIcon];
+    [self retrievePanoramas];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,12 +42,13 @@ NSString * const kPanoramaCellIdentifier = @"Panorama Cell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 5;
+    return self.panoramaAssets.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kPanoramaCellIdentifier forIndexPath:indexPath];
-    cell.selected = NO;
+    PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[tableView dequeueReusableCellWithIdentifier:kPanoramaCellIdentifier forIndexPath:indexPath];
+    cell.included = NO;
+    cell.asset = self.panoramaAssets[indexPath.row];
     return cell;
 }
 
@@ -89,13 +92,11 @@ NSString * const kPanoramaCellIdentifier = @"Panorama Cell";
 {
     PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     cell.included = !cell.included;
-    NSString *imageName = cell.included ? @"ActiveCircle" : @"InactiveCircle";
-    cell.checkmarkImageView.image = [UIImage imageNamed:imageName];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 30.0;
+    return kHeaderHeight;
 }
 
 /*
@@ -107,5 +108,43 @@ NSString * const kPanoramaCellIdentifier = @"Panorama Cell";
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Action buttons
+
+- (void)preparePrintIcon
+{
+    UIBarButtonItem *button = [[UIBarButtonItem alloc]
+                               initWithImage:[UIImage imageNamed:@"printIcon"]
+                               style:UIBarButtonItemStylePlain
+                               target:self
+                               action:@selector(printTapped:)];
+
+    self.navigationItem.rightBarButtonItem = button;
+}
+
+- (void)printTapped:(id)sender
+{
+    NSLog(@"TAPPED!!!!");
+}
+
+#pragma mark - Photo library
+
+- (void)retrievePanoramas
+{
+    NSMutableArray *panoramas = [NSMutableArray array];
+    PHFetchResult<PHAssetCollection *> * collections = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum subtype:PHAssetCollectionSubtypeSmartAlbumPanoramas options:nil];
+    [collections enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (collection) {
+            PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsInAssetCollection:collection options:nil];
+            [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull asset, NSUInteger idx, BOOL * _Nonnull stop) {
+                [panoramas addObject:asset];
+                if (asset == [assets lastObject]) {
+                    self.panoramaAssets = panoramas;
+                    [self.tableView reloadData];
+                }
+            }];
+        }
+    }];
+}
 
 @end

@@ -14,10 +14,26 @@
     // Initialization code
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+- (void)setIncluded:(BOOL)included
+{
+    _included = included;
+    NSString *imageName = _included ? @"ActiveCircle" : @"InactiveCircle";
+    self.checkmarkImageView.image = [UIImage imageNamed:imageName];
+}
 
-    // Configure the view for the selected state
+- (void)setAsset:(PHAsset *)asset
+{
+    if (nil != asset && _asset != asset) {
+        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+        options.deliveryMode = PHImageRequestOptionsDeliveryModeOpportunistic;
+        options.synchronous = YES;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[PHImageManager defaultManager] requestImageForAsset:_asset targetSize:self.panoramaImageView.frame.size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+                self.panoramaImageView.image = result;
+            }];
+        });
+    }
+    _asset = asset;
 }
 
 @end
