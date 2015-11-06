@@ -15,6 +15,7 @@
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *printButton;
 @property (strong, nonatomic) NSArray *panoramaAssets;
+@property (strong, nonatomic) NSMutableArray *selectedPanoramas;
 
 @end
 
@@ -22,10 +23,12 @@
 
 NSString * const kPanoramaCellIdentifier = @"Panorama Cell";
 CGFloat kHeaderHeight = 30.0;
+NSInteger kMaximumSelections = 3;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.panoramaAssets = @[];
+    self.selectedPanoramas = [NSMutableArray array];
     [self preparePrintIcon];
     [self retrievePanoramas];
 }
@@ -92,6 +95,11 @@ CGFloat kHeaderHeight = 30.0;
 {
     PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     cell.included = !cell.included;
+    if (cell.included) {
+        [self selectItem:indexPath.row];
+    } else {
+        [self removeItem:indexPath.row];
+    }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -145,6 +153,27 @@ CGFloat kHeaderHeight = 30.0;
             }];
         }
     }];
+}
+
+#pragma mark - Selection handling
+
+- (void)selectItem:(NSInteger)item
+{
+    NSNumber *itemToAdd = [NSNumber numberWithInteger:item];
+    if (![self.selectedPanoramas containsObject:itemToAdd]) {
+        [self.selectedPanoramas addObject:itemToAdd];
+        if (self.selectedPanoramas.count > kMaximumSelections) {
+            [self removeItem:[[self.selectedPanoramas firstObject] integerValue]];
+        }
+    }
+}
+
+- (void)removeItem:(NSInteger)item
+{
+    NSNumber *itemToRemove = [NSNumber numberWithInteger:item];
+    [self.selectedPanoramas removeObject:itemToRemove];
+    PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[itemToRemove integerValue] inSection:0]];
+    cell.included = NO;
 }
 
 @end
