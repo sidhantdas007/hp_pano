@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		658AADF61BED13DC00893D3E /* PPPanoramaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658AADF51BED13DC00893D3E /* PPPanoramaViewController.m */; };
 		65C0F6261BEA7F5300E45CBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F6251BEA7F5300E45CBB /* main.m */; };
 		65C0F6291BEA7F5300E45CBB /* PPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F6281BEA7F5300E45CBB /* PPAppDelegate.m */; };
 		65C0F62F1BEA7F5300E45CBB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C0F62D1BEA7F5300E45CBB /* Main.storyboard */; };
@@ -39,6 +40,8 @@
 /* Begin PBXFileReference section */
 		32AA3D1FDE691CED0B848D9B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3644E75EE9B1D3DF99D3FD1B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		658AADF41BED13DC00893D3E /* PPPanoramaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPanoramaViewController.h; sourceTree = "<group>"; };
+		658AADF51BED13DC00893D3E /* PPPanoramaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPanoramaViewController.m; sourceTree = "<group>"; };
 		65C0F6211BEA7F5300E45CBB /* PanoPix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PanoPix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C0F6251BEA7F5300E45CBB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		65C0F6271BEA7F5300E45CBB /* PPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPAppDelegate.h; sourceTree = "<group>"; };
@@ -122,6 +125,8 @@
 				65C3283B1BEBF3780071E752 /* PPPanoramaTableViewController.m */,
 				65C3283D1BEC07F90071E752 /* PPPanoramaTableViewCell.h */,
 				65C3283E1BEC07F90071E752 /* PPPanoramaTableViewCell.m */,
+				658AADF41BED13DC00893D3E /* PPPanoramaViewController.h */,
+				658AADF51BED13DC00893D3E /* PPPanoramaViewController.m */,
 			);
 			path = PanoPix;
 			sourceTree = "<group>";
@@ -350,6 +355,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				658AADF61BED13DC00893D3E /* PPPanoramaViewController.m in Sources */,
 				65C3283F1BEC07F90071E752 /* PPPanoramaTableViewCell.m in Sources */,
 				65C3283C1BEBF3780071E752 /* PPPanoramaTableViewController.m in Sources */,
 				65C0F6291BEA7F5300E45CBB /* PPAppDelegate.m in Sources */,

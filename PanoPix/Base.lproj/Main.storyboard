@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="aY5-sE-ona">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="0ix-7U-3Vr">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
@@ -84,8 +84,137 @@
             </objects>
             <point key="canvasLocation" x="774" y="556"/>
         </scene>
+        <!--Panorama View Controller-->
+        <scene sceneID="meo-fd-yTV">
+            <objects>
+                <viewController id="HMA-8A-GYK" customClass="PPPanoramaViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="47A-lm-Cmz"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vaq-Wk-bjb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="swk-i0-ru5" userLabel="Main View">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vf2-8Z-TNd" userLabel="Preview View">
+                                <rect key="frame" x="0.0" y="64" width="600" height="0.0"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pano" translatesAutoresizingMaskIntoConstraints="NO" id="Maz-iC-EXc" userLabel="Preview Image View">
+                                        <rect key="frame" x="300" y="0.0" width="0.0" height="0.0"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" id="4MW-VB-Ohe"/>
+                                            <constraint firstAttribute="height" id="uU5-x7-9q9"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="Maz-iC-EXc" firstAttribute="centerX" secondItem="Vf2-8Z-TNd" secondAttribute="centerX" id="0Oa-el-cYI"/>
+                                    <constraint firstItem="Maz-iC-EXc" firstAttribute="centerY" secondItem="Vf2-8Z-TNd" secondAttribute="centerY" id="4D0-qp-EQR"/>
+                                    <constraint firstAttribute="height" id="Q6V-wp-em0"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
+                                <rect key="frame" x="20" y="64" width="560" height="536"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Panorama Cell" id="aNK-14-VN1" userLabel="Panorama Cell" customClass="PPPanoramaTableViewCell">
+                                        <rect key="frame" x="0.0" y="28" width="560" height="75"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aNK-14-VN1" id="1nV-Rk-qer">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="75"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F15-bf-iHO" userLabel="Panorama Image View">
+                                                    <rect key="frame" x="8" y="8" width="549" height="44"/>
+                                                    <animations/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="InactiveCircle" translatesAutoresizingMaskIntoConstraints="NO" id="n9d-eo-cgJ" userLabel="Checkmark Image View">
+                                                    <rect key="frame" x="567" y="18" width="25" height="25"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="2Ty-Ah-Vhi"/>
+                                                        <constraint firstAttribute="height" constant="25" id="W7Y-Nd-YpJ"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="n9d-eo-cgJ" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="3Iu-so-bAv"/>
+                                                <constraint firstItem="F15-bf-iHO" firstAttribute="leading" secondItem="1nV-Rk-qer" secondAttribute="leadingMargin" id="3f9-p3-IiY"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="n9d-eo-cgJ" secondAttribute="trailing" id="JWf-jp-eZJ"/>
+                                                <constraint firstItem="n9d-eo-cgJ" firstAttribute="leading" secondItem="F15-bf-iHO" secondAttribute="trailing" constant="10" id="Zcv-H6-h9c"/>
+                                                <constraint firstItem="F15-bf-iHO" firstAttribute="top" secondItem="1nV-Rk-qer" secondAttribute="topMargin" id="jco-AZ-DKO"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="F15-bf-iHO" secondAttribute="bottom" id="q5s-l6-IPs"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="checkmarkImageView" destination="n9d-eo-cgJ" id="5Mn-PL-yUy"/>
+                                            <outlet property="panoramaImageView" destination="F15-bf-iHO" id="wAF-Oe-7xd"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="HMA-8A-GYK" id="Qlf-Nt-3Uc"/>
+                                    <outlet property="delegate" destination="HMA-8A-GYK" id="Wrt-7R-87M"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.0" green="0.58823529411764708" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Vf2-8Z-TNd" firstAttribute="leading" secondItem="swk-i0-ru5" secondAttribute="leading" id="3Tx-rd-om5"/>
+                            <constraint firstItem="CnU-K1-tj6" firstAttribute="top" secondItem="Vf2-8Z-TNd" secondAttribute="bottom" id="Lqn-c0-uuV"/>
+                            <constraint firstItem="Vf2-8Z-TNd" firstAttribute="top" secondItem="47A-lm-Cmz" secondAttribute="bottom" id="RX4-JU-9KB"/>
+                            <constraint firstItem="CnU-K1-tj6" firstAttribute="leading" secondItem="swk-i0-ru5" secondAttribute="leadingMargin" id="hxa-7K-pHC"/>
+                            <constraint firstAttribute="trailing" secondItem="Vf2-8Z-TNd" secondAttribute="trailing" id="s2y-Zv-WJu"/>
+                            <constraint firstItem="Vaq-Wk-bjb" firstAttribute="top" secondItem="CnU-K1-tj6" secondAttribute="bottom" id="sy5-fB-7Dz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CnU-K1-tj6" secondAttribute="trailing" id="wVu-gD-IIc"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="BtB-31-KHE"/>
+                    <connections>
+                        <outlet property="previewHeightConstraint" destination="Q6V-wp-em0" id="eKp-Sw-SFp"/>
+                        <outlet property="previewImageHeightConstraint" destination="uU5-x7-9q9" id="06h-qY-uNh"/>
+                        <outlet property="previewImageView" destination="Maz-iC-EXc" id="Fux-N9-cWs"/>
+                        <outlet property="previewImageWidthConstraint" destination="4MW-VB-Ohe" id="OHC-QK-II1"/>
+                        <outlet property="previewView" destination="Vf2-8Z-TNd" id="uQ9-Lt-b74"/>
+                        <outlet property="tableView" destination="CnU-K1-tj6" id="wid-sb-vPr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="T0g-5t-NI8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1586" y="1239"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="pMH-h5-j4a">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0ix-7U-3Vr" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Nop-bF-G8k">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="HMA-8A-GYK" kind="relationship" relationship="rootViewController" id="mVa-pN-fK9"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sZ7-Sp-wZP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="785" y="1239"/>
+        </scene>
     </scenes>
     <resources>
         <image name="InactiveCircle" width="25" height="25"/>
+        <image name="pano" width="4096" height="884"/>
     </resources>
 </document>
