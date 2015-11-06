@@ -6,7 +6,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Panorama View Controller-->
+        <!--Panoramas-->
         <scene sceneID="meo-fd-yTV">
             <objects>
                 <viewController id="HMA-8A-GYK" customClass="PPPanoramaViewController" sceneMemberID="viewController">
@@ -21,7 +21,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vf2-8Z-TNd" userLabel="Preview View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="0.0"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pano" translatesAutoresizingMaskIntoConstraints="NO" id="Maz-iC-EXc" userLabel="Preview Image View">
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Maz-iC-EXc" userLabel="Preview Image View">
                                         <rect key="frame" x="300" y="0.0" width="0.0" height="0.0"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="height" id="Q6V-wp-em0"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
                                 <rect key="frame" x="20" y="64" width="560" height="536"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -101,7 +101,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="CnU-K1-tj6" secondAttribute="trailing" id="wVu-gD-IIc"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="BtB-31-KHE"/>
+                    <navigationItem key="navigationItem" title="Panoramas" id="BtB-31-KHE"/>
                     <connections>
                         <outlet property="previewHeightConstraint" destination="Q6V-wp-em0" id="eKp-Sw-SFp"/>
                         <outlet property="previewImageHeightConstraint" destination="uU5-x7-9q9" id="06h-qY-uNh"/>
@@ -137,6 +137,5 @@
     </scenes>
     <resources>
         <image name="InactiveCircle" width="25" height="25"/>
-        <image name="pano" width="4096" height="884"/>
     </resources>
 </document>

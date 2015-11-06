@@ -51,6 +51,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     [self preparePrintIcon];
     [self retrievePanoramas];
     [self configureHPPP];
+    [self configureGestures];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -125,56 +126,107 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)printTapped:(id)sender
 {
-    self.printableImages = [NSMutableArray array];
-    [self retrivePrintableImage:0];
+    [self initiatePrint];
 }
 
-- (void)retrivePrintableImage:(NSInteger)index
+#pragma mark - Print utilities
+- (void)retrieveImages:(NSMutableArray *)images resolution:(CGFloat)resolution Completion:(void(^)(void))completion
 {
+    if (0 == self.selectedPanoramas.count) {
+        if (completion) {
+            completion();
+        }
+        return;
+    }
+    
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+    options.resizeMode = PHImageRequestOptionsResizeModeExact;
     options.synchronous = NO;
     dispatch_async(dispatch_get_main_queue(), ^{
-        CGSize size = CGSizeMake(kStripWidth * kDPI, kStripHeight * kDPI);
-        [[PHImageManager defaultManager] requestImageForAsset:self.panoramaAssets[index] targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        CGSize size = CGSizeMake(kStripWidth * resolution, kStripHeight * resolution);
+        NSInteger item = [self.selectedPanoramas[images.count] integerValue];
+        [[PHImageManager defaultManager] requestImageForAsset:self.panoramaAssets[item] targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             if (result) {
-                [self.printableImages addObject:result];
-                if (index < self.selectedPanoramas.count - 1) {
-                    [self retrivePrintableImage:index + 1];
+                [images addObject:result];
+                if (images.count < self.selectedPanoramas.count) {
+                    [self retrieveImages:images resolution:resolution Completion:completion];
                 } else {
-                    [self initiatePrint];
+                    if (completion) {
+                        completion();
+                    }
                 }
             } else {
-                NSLog(@"IMAGE FAIL:\n\n%ld\n\n%@\n\n%@", (long)index, self.panoramaAssets[index], info);
+                NSLog(@"IMAGE FAIL:\n\n%ld\n\n%@\n\n%@", (long)images.count, self.panoramaAssets[images.count], info);
             }
         }];
     });
+ 
 }
 
-- (void)initiatePrint
+- (void)presentPrintController
 {
-    HPPPPrintItem *printItem = [HPPPPrintItemFactory printItemWithAsset:[self combinedImage]];
+    UIImage *image = [self combinedImages:self.printableImages resolution:kDPI showLines:NO];
+    HPPPPrintItem *printItem = [HPPPPrintItemFactory printItemWithAsset:image];
     printItem.layout = [HPPPLayoutFactory layoutWithType:[HPPPLayoutFit layoutType] orientation:HPPPLayoutOrientationLandscape assetPosition:[HPPPLayout completeFillRectangle]];
     UIViewController *vc = [[HPPP sharedInstance] printViewControllerWithDelegate:self dataSource:nil printItem:printItem fromQueue:NO settingsOnly:NO];
     [self presentViewController:vc animated:YES completion:nil];
 }
 
-- (UIImage *)combinedImage
+- (void)initiatePrint
 {
-    CGSize overallSize = CGSizeMake(kPaperWidth * kDPI, kPaperHeight * kDPI);
+    self.printableImages = [NSMutableArray array];
+    [self retrieveImages:self.printableImages resolution:kDPI Completion:^{
+        [self presentPrintController];
+    }];
+}
+
+- (UIImage *)combinedImages:(NSArray *)images resolution:(CGFloat)resolution showLines:(BOOL)showLines
+{
+    CGSize overallSize = CGSizeMake(kPaperWidth * resolution, kPaperHeight * resolution);
     UIGraphicsBeginImageContext(overallSize);
+
+    if (showLines) {
+        [self drawLinesWithResolution:resolution];
+    }
     
     CGFloat gutter = (kPaperHeight - kMaximumSelections * kStripHeight) / (kMaximumSelections + 1);
-    for (int idx = 0; idx < self.printableImages.count; idx++) {
+    for (int idx = 0; idx < images.count; idx++) {
         CGFloat yOffset = gutter * (idx + 1) + kStripHeight * idx;
-        CGRect rect = CGRectMake(0, yOffset * kDPI, kStripWidth * kDPI, kStripHeight * kDPI);
-        UIImage *panoImage = self.printableImages[idx];
+        CGRect rect = CGRectMake(0, yOffset * resolution, kStripWidth * kDPI, kStripHeight * resolution);
+        UIImage *panoImage = images[idx];
         [panoImage drawInRect:rect];
     }
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
+}
+
+- (void)drawLinesWithResolution:(CGFloat)resolution
+{
+    CGSize overallSize = CGSizeMake(kPaperWidth * resolution, kPaperHeight * resolution);
+    CGFloat gutter = (kPaperHeight - kMaximumSelections * kStripHeight) / (kMaximumSelections + 1);
+
+    for (int idx = 0; idx < kMaximumSelections; idx++) {
+        
+        CGFloat yOffset = gutter * (idx + 1) + kStripHeight * idx;
+       
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSetLineWidth(context, 10.0);
+        CGContextSetStrokeColorWithColor(context, [[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3] CGColor]);
+        
+        CGFloat y2 = yOffset * resolution;
+        CGFloat y1 = (yOffset + kStripHeight) * resolution;
+        
+        CGContextMoveToPoint(context, 0, y1);
+        CGContextAddLineToPoint(context, overallSize.width, y1);
+        CGContextStrokePath(context);
+
+        CGContextMoveToPoint(context, 0, y2);
+        CGContextAddLineToPoint(context, overallSize.width, y2);
+        CGContextStrokePath(context);
+    }
 }
 
 - (void)enablePrint:(BOOL)enabled
@@ -221,15 +273,15 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)selectItem:(NSInteger)item
 {
-    [self enablePrint:YES];
     NSNumber *itemToAdd = [NSNumber numberWithInteger:item];
     if (![self.selectedPanoramas containsObject:itemToAdd]) {
-        [self.selectedPanoramas addObject:itemToAdd];
+        [self.selectedPanoramas insertObject:itemToAdd atIndex:0];
         if (self.selectedPanoramas.count > kMaximumSelections) {
-            [self removeItem:[[self.selectedPanoramas firstObject] integerValue]];
+            [self removeItem:[[self.selectedPanoramas lastObject] integerValue]];
         }
     }
-    
+    [self updatePreviewImage];
+    [self enablePrint:YES];
 }
 
 - (void)removeItem:(NSInteger)item
@@ -238,9 +290,19 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     [self.selectedPanoramas removeObject:itemToRemove];
     PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[itemToRemove integerValue] inSection:0]];
     cell.included = NO;
+    [self updatePreviewImage];
     if (0 == self.selectedPanoramas.count) {
         [self enablePrint:NO];
     }
+}
+
+- (void)updatePreviewImage
+{
+    NSMutableArray *thumbnailImages = [NSMutableArray array];
+    [self retrieveImages:thumbnailImages resolution:kDPI Completion:^{
+        UIImage *image = [self combinedImages:thumbnailImages resolution:kDPI showLines:YES];
+        self.previewImageView.image = image;
+    }];
 }
 
 #pragma mark - HPPPPrintDelegate
@@ -253,6 +315,22 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 - (void)didCancelPrintFlow:(UIViewController *)printViewController
 {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Gesture handling
+
+- (void)configureGestures
+{
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handlePreviewTap:)];
+    tapRecognizer.cancelsTouchesInView = YES;
+    tapRecognizer.numberOfTapsRequired = 1;
+    tapRecognizer.numberOfTouchesRequired = 1;
+    [self.previewImageView addGestureRecognizer:tapRecognizer];
+}
+
+- (void)handlePreviewTap:(UIGestureRecognizer *)gestureRecognizer
+{
+    [self initiatePrint];
 }
 
 @end
