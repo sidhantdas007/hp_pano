@@ -24,9 +24,9 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *previewImageHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *previewImageWidthConstraint;
 @property (strong, nonatomic) UIBarButtonItem *printButton;
-@property (strong, nonatomic) NSArray *panoramaAssets;
-@property (strong, nonatomic) NSMutableArray *selectedPanoramas;
-@property (strong, nonatomic) NSMutableArray *printableImages;
+@property (strong, nonatomic) NSArray<PHAsset *> *panoramaAssets;
+@property (strong, nonatomic) NSMutableArray<NSNumber *> *selectedPanoramas; // table row number of selected items
+@property (strong, nonatomic) NSMutableArray<UIImage *> *printableImages;
 
 @end
 
@@ -46,12 +46,12 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureHPPP];
+    [self preparePrintIcon];
+    [self configureGestures];
     self.panoramaAssets = @[];
     self.selectedPanoramas = [NSMutableArray array];
-    [self preparePrintIcon];
     [self retrievePanoramas];
-    [self configureHPPP];
-    [self configureGestures];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -93,7 +93,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
     cell.included = !cell.included;
     if (cell.included) {
-        [self selectItem:indexPath.row];
+        [self addItem:indexPath.row];
     } else {
         [self removeItem:indexPath.row];
     }
@@ -271,13 +271,13 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 #pragma mark - Selection handling
 
-- (void)selectItem:(NSInteger)item
+- (void)addItem:(NSInteger)item
 {
     NSNumber *itemToAdd = [NSNumber numberWithInteger:item];
     if (![self.selectedPanoramas containsObject:itemToAdd]) {
-        [self.selectedPanoramas insertObject:itemToAdd atIndex:0];
+        [self.selectedPanoramas addObject:itemToAdd];
         if (self.selectedPanoramas.count > kMaximumSelections) {
-            [self removeItem:[[self.selectedPanoramas lastObject] integerValue]];
+            [self removeItem:[[self.selectedPanoramas firstObject] integerValue]];
         }
     }
     [self updatePreviewImage];
