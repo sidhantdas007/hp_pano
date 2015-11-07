@@ -11,9 +11,10 @@
 
 @interface PPPanoramaTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *panoramaImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *checkmarkImageView;
 @property (assign, nonatomic) BOOL included;
 @property (strong, nonatomic) PHAsset *asset;
+@property (weak, nonatomic) IBOutlet UIScrollView *panoScrollView;
+@property (weak, nonatomic) IBOutlet UIImageView *panoImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *checkmarkImageView;
 
 @end

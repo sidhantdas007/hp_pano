@@ -32,7 +32,7 @@
 
 @implementation PPPanoramaViewController
 
-NSString * const kPanoramaCellIdentifier = @"Panorama Cell";
+NSString * const kPanoramaCellIdentifier = @"Pano Scroll Cell";
 CGFloat kHeaderHeight = 30.0;
 CGFloat kPreviewHeight = 140.0;
 CGFloat kPreviewImageHeight = 120.0;
