@@ -30,13 +30,19 @@
                                             <constraint firstAttribute="height" id="uU5-x7-9q9"/>
                                         </constraints>
                                     </imageView>
+                                    <imageView userInteractionEnabled="NO" alpha="0.75" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HPPPMagnify.png" translatesAutoresizingMaskIntoConstraints="NO" id="fNL-nh-JVg" userLabel="Maginifier Image View">
+                                        <rect key="frame" x="275" y="0.0" width="25" height="25"/>
+                                        <animations/>
+                                    </imageView>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Maz-iC-EXc" firstAttribute="centerX" secondItem="Vf2-8Z-TNd" secondAttribute="centerX" id="0Oa-el-cYI"/>
                                     <constraint firstItem="Maz-iC-EXc" firstAttribute="centerY" secondItem="Vf2-8Z-TNd" secondAttribute="centerY" id="4D0-qp-EQR"/>
+                                    <constraint firstItem="fNL-nh-JVg" firstAttribute="top" secondItem="Maz-iC-EXc" secondAttribute="top" id="5ib-8b-r8d"/>
                                     <constraint firstAttribute="height" id="Q6V-wp-em0"/>
+                                    <constraint firstItem="fNL-nh-JVg" firstAttribute="trailing" secondItem="Maz-iC-EXc" secondAttribute="trailing" id="rPF-du-Lo0"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
@@ -48,16 +54,16 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aNK-14-VN1" id="1nV-Rk-qer">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="75"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="74"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F15-bf-iHO" userLabel="Panorama Image View">
-                                                    <rect key="frame" x="8" y="8" width="549" height="44"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="F15-bf-iHO" userLabel="Panorama Image View">
+                                                    <rect key="frame" x="8" y="8" width="509" height="58"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="InactiveCircle" translatesAutoresizingMaskIntoConstraints="NO" id="n9d-eo-cgJ" userLabel="Checkmark Image View">
-                                                    <rect key="frame" x="567" y="18" width="25" height="25"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InactiveCircle" translatesAutoresizingMaskIntoConstraints="NO" id="n9d-eo-cgJ" userLabel="Checkmark Image View">
+                                                    <rect key="frame" x="527" y="25" width="25" height="25"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="2Ty-Ah-Vhi"/>
@@ -136,6 +142,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="HPPPMagnify.png" width="25" height="25"/>
         <image name="InactiveCircle" width="25" height="25"/>
     </resources>
 </document>
