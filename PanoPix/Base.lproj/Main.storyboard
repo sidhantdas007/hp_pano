@@ -21,7 +21,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View">
-                                <rect key="frame" x="30" y="107" width="540" height="386"/>
+                                <rect key="frame" x="30" y="132" width="540" height="386"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NdH-eF-CNE" userLabel="Top Pano" customClass="PPScrollView">
                                         <rect key="frame" x="0.0" y="19" width="540" height="107"/>
@@ -62,9 +62,9 @@
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ftc-7o-cAX" firstAttribute="centerY" secondItem="Nyh-lx-7LU" secondAttribute="centerY" id="Hij-uA-gm8"/>
+                            <constraint firstItem="ftc-7o-cAX" firstAttribute="centerY" secondItem="Nyh-lx-7LU" secondAttribute="centerY" constant="25" id="Hij-uA-gm8"/>
                             <constraint firstItem="ftc-7o-cAX" firstAttribute="width" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="width" multiplier="0.9" id="ISn-Sv-WEu"/>
-                            <constraint firstItem="ftc-7o-cAX" firstAttribute="height" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="height" multiplier="0.8" id="W4Z-et-ggY"/>
+                            <constraint firstItem="ftc-7o-cAX" firstAttribute="height" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="height" multiplier="0.9" id="W4Z-et-ggY"/>
                             <constraint firstItem="ftc-7o-cAX" firstAttribute="centerX" secondItem="Nyh-lx-7LU" secondAttribute="centerX" id="v4I-vr-AAP"/>
                         </constraints>
                     </view>
@@ -137,7 +137,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
-                                                    <rect key="frame" x="13" y="13" width="245" height="48"/>
+                                                    <rect key="frame" x="13" y="15" width="224" height="44"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="Fmf-Cj-Wer" secondAttribute="height" multiplier="7:1.375" id="kix-Zk-zEs"/>
@@ -154,9 +154,9 @@
                                             </subviews>
                                             <animations/>
                                             <constraints>
+                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="0zA-kH-v4b"/>
                                                 <constraint firstItem="n9d-eo-cgJ" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="3Iu-so-bAv"/>
-                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="top" secondItem="1nV-Rk-qer" secondAttribute="topMargin" constant="5" id="7YR-jX-W0k"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="Fmf-Cj-Wer" secondAttribute="bottom" constant="5" id="Jly-TG-QrG"/>
+                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="height" secondItem="1nV-Rk-qer" secondAttribute="height" multiplier="0.6" id="Xai-Hn-k7l"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="n9d-eo-cgJ" secondAttribute="trailing" id="oyC-bL-meX"/>
                                                 <constraint firstItem="Fmf-Cj-Wer" firstAttribute="leading" secondItem="1nV-Rk-qer" secondAttribute="leadingMargin" constant="5" id="sj3-Sf-4P0"/>
                                             </constraints>

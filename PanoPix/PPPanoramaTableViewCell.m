@@ -24,7 +24,6 @@
 - (void)setAsset:(PHAsset *)asset
 {
     if (nil != asset && _asset != asset) {
-        
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
         options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
         options.resizeMode = PHImageRequestOptionsResizeModeExact;
