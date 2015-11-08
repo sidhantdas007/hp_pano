@@ -7,9 +7,12 @@
 //
 
 #import "PPPreviewViewController.h"
+#import "PPScrollView.h"
 
 @interface PPPreviewViewController ()
+
 @property (strong, nonatomic) IBOutletCollection(UIScrollView) NSArray *panoScrollViews;
+@property (strong, nonatomic) IBOutletCollection(UIImageView) NSArray *panoImageViews;
 
 @end
 
@@ -17,7 +20,29 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    for (int idx = 0; idx < self.panoImageViews.count; idx++) {
+        UIImage *image = nil;
+        if (idx < self.images.count) {
+            image = self.images[idx];
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            UIImageView *imageView = self.panoImageViews[idx];
+            UIScrollView *scrollView = (UIScrollView *)imageView.superview;
+            imageView.autoresizingMask = UIViewAutoresizingNone;
+            imageView.frame = CGRectMake(0, 0, scrollView.frame.size.width, scrollView.frame.size.height);
+            
+            imageView.image = image;
+            scrollView.contentSize = imageView.frame.size;
+            scrollView.contentOffset = CGPointZero;
+            [scrollView setNeedsDisplay];
+        });
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -35,14 +60,11 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - Scroll view management
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)prepareScrollView:(UIScrollView *)scrollView withImage:(UIImage *)image
+{
+    
 }
-*/
 
 @end

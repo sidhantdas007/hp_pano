@@ -8,6 +8,7 @@
 
 #import "PPPanoramaViewController.h"
 #import "PPPanoramaTableViewCell.h"
+#import "PPPreviewViewController.h"
 #import <Photos/Photos.h>
 #import <HPPP.h>
 #import <HPPPLayout.h>
@@ -70,6 +71,14 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
     return UIInterfaceOrientationMaskPortrait;
+}
+
+ #pragma mark - Navigation
+ 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
+    PPPreviewViewController *vc = (PPPreviewViewController *)navController.topViewController;
+    vc.images = self.printableImages;
 }
 
 #pragma mark - Table view data source
@@ -341,7 +350,10 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)handlePreviewTap:(UIGestureRecognizer *)gestureRecognizer
 {
-    [self performSegueWithIdentifier:@"Show Preview" sender:self];
+    self.printableImages = [NSMutableArray array];
+    [self retrieveImages:self.printableImages withCompletion:^{
+        [self performSegueWithIdentifier:@"Show Preview" sender:self];
+    }];
 }
 
 @end

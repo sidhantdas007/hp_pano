@@ -23,18 +23,36 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View">
                                 <rect key="frame" x="30" y="132" width="540" height="386"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NdH-eF-CNE" userLabel="Top Pano" customClass="PPScrollView">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NdH-eF-CNE" userLabel="Top Pano">
                                         <rect key="frame" x="0.0" y="19" width="540" height="107"/>
+                                        <subviews>
+                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xjk-KJ-Dqc">
+                                                <rect key="frame" x="150" y="-10" width="240" height="128"/>
+                                                <animations/>
+                                            </imageView>
+                                        </subviews>
                                         <animations/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </scrollView>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
                                         <rect key="frame" x="0.0" y="140" width="540" height="106"/>
+                                        <subviews>
+                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3jI-RP-q3r">
+                                                <rect key="frame" x="150" y="-11" width="240" height="128"/>
+                                                <animations/>
+                                            </imageView>
+                                        </subviews>
                                         <animations/>
                                         <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </scrollView>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
                                         <rect key="frame" x="0.0" y="261" width="540" height="106"/>
+                                        <subviews>
+                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YIV-7w-5xR">
+                                                <rect key="frame" x="150" y="-11" width="240" height="128"/>
+                                                <animations/>
+                                            </imageView>
+                                        </subviews>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </scrollView>
@@ -79,6 +97,9 @@
                         <outletCollection property="panoScrollViews" destination="NdH-eF-CNE" id="TTW-SP-7iN"/>
                         <outletCollection property="panoScrollViews" destination="ft8-8g-KHJ" id="xbz-Aa-U5U"/>
                         <outletCollection property="panoScrollViews" destination="KcF-wE-tc5" id="h4v-cV-3We"/>
+                        <outletCollection property="panoImageViews" destination="Xjk-KJ-Dqc" id="0Qz-HI-But"/>
+                        <outletCollection property="panoImageViews" destination="3jI-RP-q3r" id="XZm-30-Cbx"/>
+                        <outletCollection property="panoImageViews" destination="YIV-7w-5xR" id="ftz-UH-t56"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bzU-Dt-sMd" userLabel="First Responder" sceneMemberID="firstResponder"/>

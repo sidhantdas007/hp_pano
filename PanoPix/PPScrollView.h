@@ -10,4 +10,6 @@
 
 @interface PPScrollView : UIScrollView
 
+@property (strong, nonatomic) UIImage *image;
+
 @end

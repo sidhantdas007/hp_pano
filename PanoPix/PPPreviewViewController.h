@@ -10,4 +10,6 @@
 
 @interface PPPreviewViewController : UIViewController
 
+@property (strong, nonatomic) NSArray<UIImage *> *images;
+
 @end
