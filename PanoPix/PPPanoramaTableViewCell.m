@@ -26,11 +26,15 @@
     if (nil != asset && _asset != asset) {
         PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
         options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-        options.resizeMode = PHImageRequestOptionsResizeModeExact;
+        options.resizeMode = PHImageRequestOptionsResizeModeFast;
         options.synchronous = NO;
         
+        CGFloat desiredHeight = 50.0;
+        CGFloat scale = asset.pixelHeight / desiredHeight;
+        CGSize size = CGSizeMake(asset.pixelWidth / scale, desiredHeight);
+        
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[PHImageManager defaultManager] requestImageForAsset:_asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+            [[PHImageManager defaultManager] requestImageForAsset:_asset targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                 self.panoImageView.image = result;
             }];
         });

@@ -145,12 +145,19 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    options.resizeMode = PHImageRequestOptionsResizeModeExact;
+    options.resizeMode = PHImageRequestOptionsResizeModeFast;
     options.synchronous = NO;
     
     dispatch_async(dispatch_get_main_queue(), ^{
+
         NSInteger item = [self.selectedPanoramas[images.count] integerValue];
-        [[PHImageManager defaultManager] requestImageForAsset:self.panoramaAssets[item] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        PHAsset *asset = self.panoramaAssets[item];
+
+        CGFloat desiredHeight = 50.0;
+        CGFloat scale = asset.pixelHeight / desiredHeight;
+        CGSize size = CGSizeMake(asset.pixelWidth / scale, desiredHeight);
+
+        [[PHImageManager defaultManager] requestImageForAsset:self.panoramaAssets[item] targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             if (result) {
                 [images addObject:result];
                 if (images.count < self.selectedPanoramas.count) {
