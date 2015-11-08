@@ -21,20 +21,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View">
-                                <rect key="frame" x="0.0" y="86" width="600" height="428"/>
+                                <rect key="frame" x="30" y="107" width="540" height="386"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NdH-eF-CNE" userLabel="Top Pano" customClass="PPScrollView">
-                                        <rect key="frame" x="0.0" y="21" width="600" height="118"/>
+                                        <rect key="frame" x="0.0" y="19" width="540" height="107"/>
                                         <animations/>
                                         <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </scrollView>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
-                                        <rect key="frame" x="0.0" y="155" width="600" height="118"/>
+                                        <rect key="frame" x="0.0" y="140" width="540" height="106"/>
                                         <animations/>
                                         <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </scrollView>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
-                                        <rect key="frame" x="0.0" y="289" width="600" height="118"/>
+                                        <rect key="frame" x="0.0" y="261" width="540" height="106"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </scrollView>
@@ -63,8 +63,8 @@
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="ftc-7o-cAX" firstAttribute="centerY" secondItem="Nyh-lx-7LU" secondAttribute="centerY" id="Hij-uA-gm8"/>
-                            <constraint firstItem="ftc-7o-cAX" firstAttribute="width" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="width" id="ISn-Sv-WEu"/>
-                            <constraint firstItem="ftc-7o-cAX" firstAttribute="height" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="height" id="W4Z-et-ggY"/>
+                            <constraint firstItem="ftc-7o-cAX" firstAttribute="width" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="width" multiplier="0.9" id="ISn-Sv-WEu"/>
+                            <constraint firstItem="ftc-7o-cAX" firstAttribute="height" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="height" multiplier="0.8" id="W4Z-et-ggY"/>
                             <constraint firstItem="ftc-7o-cAX" firstAttribute="centerX" secondItem="Nyh-lx-7LU" secondAttribute="centerX" id="v4I-vr-AAP"/>
                         </constraints>
                     </view>
