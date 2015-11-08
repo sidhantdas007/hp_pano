@@ -32,7 +32,7 @@
 
 @implementation PPPanoramaViewController
 
-NSString * const kPanoramaCellIdentifier = @"Pano Scroll Cell";
+NSString * const kPanoramaCellIdentifier = @"Pano Cell";
 CGFloat kHeaderHeight = 30.0;
 CGFloat kPreviewHeight = 140.0;
 CGFloat kPreviewImageHeight = 120.0;
@@ -134,7 +134,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 }
 
 #pragma mark - Print utilities
-- (void)retrieveImages:(NSMutableArray *)images resolution:(CGFloat)resolution Completion:(void(^)(void))completion
+- (void)retrieveImages:(NSMutableArray *)images withCompletion:(void(^)(void))completion
 {
     if (0 == self.selectedPanoramas.count) {
         if (completion) {
@@ -147,14 +147,14 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     options.resizeMode = PHImageRequestOptionsResizeModeExact;
     options.synchronous = NO;
+    
     dispatch_async(dispatch_get_main_queue(), ^{
-        CGSize size = CGSizeMake(kStripWidth * resolution, kStripHeight * resolution);
         NSInteger item = [self.selectedPanoramas[images.count] integerValue];
-        [[PHImageManager defaultManager] requestImageForAsset:self.panoramaAssets[item] targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        [[PHImageManager defaultManager] requestImageForAsset:self.panoramaAssets[item] targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             if (result) {
                 [images addObject:result];
                 if (images.count < self.selectedPanoramas.count) {
-                    [self retrieveImages:images resolution:resolution Completion:completion];
+                    [self retrieveImages:images withCompletion:completion];
                 } else {
                     if (completion) {
                         completion();
@@ -180,7 +180,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 - (void)initiatePrint
 {
     self.printableImages = [NSMutableArray array];
-    [self retrieveImages:self.printableImages resolution:kDPI Completion:^{
+    [self retrieveImages:self.printableImages withCompletion:^{
         [self presentPrintController];
     }];
 }
@@ -303,7 +303,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 - (void)updatePreviewImage
 {
     NSMutableArray *thumbnailImages = [NSMutableArray array];
-    [self retrieveImages:thumbnailImages resolution:kDPI Completion:^{
+    [self retrieveImages:thumbnailImages withCompletion:^{
         UIImage *image = [self combinedImages:thumbnailImages resolution:kDPI showLines:YES];
         self.previewImageView.image = image;
     }];

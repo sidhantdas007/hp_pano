@@ -21,20 +21,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View">
-                                <rect key="frame" x="-47" y="84" width="694" height="496"/>
+                                <rect key="frame" x="0.0" y="86" width="600" height="428"/>
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NdH-eF-CNE" userLabel="Top Pano" customClass="PPScrollView">
-                                        <rect key="frame" x="0.0" y="25" width="694" height="136"/>
+                                        <rect key="frame" x="0.0" y="21" width="600" height="118"/>
                                         <animations/>
                                         <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     </scrollView>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
-                                        <rect key="frame" x="0.0" y="180" width="694" height="136"/>
+                                        <rect key="frame" x="0.0" y="155" width="600" height="118"/>
                                         <animations/>
                                         <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </scrollView>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
-                                        <rect key="frame" x="0.0" y="335" width="694" height="136"/>
+                                        <rect key="frame" x="0.0" y="289" width="600" height="118"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </scrollView>
@@ -52,6 +52,7 @@
                                     <constraint firstItem="KcF-wE-tc5" firstAttribute="leading" secondItem="ftc-7o-cAX" secondAttribute="leading" id="k8W-rr-sZb"/>
                                     <constraint firstItem="KcF-wE-tc5" firstAttribute="centerY" secondItem="ftc-7o-cAX" secondAttribute="centerY" multiplier="1.625" id="leS-SL-Qb4"/>
                                     <constraint firstAttribute="trailing" secondItem="KcF-wE-tc5" secondAttribute="trailing" id="lzM-rm-xla"/>
+                                    <constraint firstAttribute="width" priority="250" constant="1000" id="rno-DK-Y07"/>
                                     <constraint firstAttribute="trailing" secondItem="NdH-eF-CNE" secondAttribute="trailing" id="tx0-nH-hx9"/>
                                     <constraint firstItem="ft8-8g-KHJ" firstAttribute="centerY" secondItem="ftc-7o-cAX" secondAttribute="centerY" id="w8X-gl-tSY"/>
                                     <constraint firstItem="NdH-eF-CNE" firstAttribute="leading" secondItem="ftc-7o-cAX" secondAttribute="leading" id="wWg-Kx-4ta"/>
@@ -61,9 +62,10 @@
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ftc-7o-cAX" firstAttribute="top" secondItem="DCW-hm-zeT" secondAttribute="bottom" constant="20" id="cn9-vc-NVT"/>
+                            <constraint firstItem="ftc-7o-cAX" firstAttribute="centerY" secondItem="Nyh-lx-7LU" secondAttribute="centerY" id="Hij-uA-gm8"/>
+                            <constraint firstItem="ftc-7o-cAX" firstAttribute="width" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="width" id="ISn-Sv-WEu"/>
+                            <constraint firstItem="ftc-7o-cAX" firstAttribute="height" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="height" id="W4Z-et-ggY"/>
                             <constraint firstItem="ftc-7o-cAX" firstAttribute="centerX" secondItem="Nyh-lx-7LU" secondAttribute="centerX" id="v4I-vr-AAP"/>
-                            <constraint firstItem="qBU-rh-WRh" firstAttribute="top" secondItem="ftc-7o-cAX" secondAttribute="bottom" constant="20" id="ven-WK-YXL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Preview" id="Bgl-uT-T3F">
@@ -127,45 +129,20 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Pano Scroll Cell" id="aNK-14-VN1" userLabel="Pano Scroll Cell" customClass="PPPanoramaTableViewCell">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Pano Cell" id="aNK-14-VN1" userLabel="Pano Table View Cell" customClass="PPPanoramaTableViewCell">
                                         <rect key="frame" x="0.0" y="28" width="560" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aNK-14-VN1" id="1nV-Rk-qer">
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="74"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9t-K2-5uK" userLabel="Pano Scroll View">
-                                                    <rect key="frame" x="8" y="11" width="264" height="52"/>
-                                                    <subviews>
-                                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k01-Yi-fbz" userLabel="Pano Image View">
-                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
-                                                            <animations/>
-                                                            <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        </imageView>
-                                                    </subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
+                                                    <rect key="frame" x="13" y="13" width="245" height="48"/>
                                                     <animations/>
-                                                    <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
-                                                        <constraint firstItem="k01-Yi-fbz" firstAttribute="leading" secondItem="B9t-K2-5uK" secondAttribute="leading" id="4NE-CV-qW5"/>
-                                                        <constraint firstAttribute="height" constant="50" id="8vq-58-fgz"/>
-                                                        <constraint firstAttribute="trailing" secondItem="k01-Yi-fbz" secondAttribute="trailing" id="9H5-Qb-gGh"/>
-                                                        <constraint firstItem="k01-Yi-fbz" firstAttribute="centerX" secondItem="B9t-K2-5uK" secondAttribute="centerX" id="CMS-Nd-ssK"/>
-                                                        <constraint firstAttribute="bottom" secondItem="k01-Yi-fbz" secondAttribute="bottom" id="Gdv-iD-Sbh"/>
-                                                        <constraint firstAttribute="width" secondItem="B9t-K2-5uK" secondAttribute="height" multiplier="7:1.375" id="XiN-hT-DLZ"/>
-                                                        <constraint firstItem="k01-Yi-fbz" firstAttribute="centerY" secondItem="B9t-K2-5uK" secondAttribute="centerY" id="a2C-ER-VRQ"/>
-                                                        <constraint firstItem="k01-Yi-fbz" firstAttribute="top" secondItem="B9t-K2-5uK" secondAttribute="top" id="p37-Ud-P6O"/>
+                                                        <constraint firstAttribute="width" secondItem="Fmf-Cj-Wer" secondAttribute="height" multiplier="7:1.375" id="kix-Zk-zEs"/>
                                                     </constraints>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="4NE-CV-qW5"/>
-                                                            <exclude reference="9H5-Qb-gGh"/>
-                                                            <exclude reference="CMS-Nd-ssK"/>
-                                                            <exclude reference="Gdv-iD-Sbh"/>
-                                                            <exclude reference="a2C-ER-VRQ"/>
-                                                            <exclude reference="p37-Ud-P6O"/>
-                                                        </mask>
-                                                    </variation>
-                                                </scrollView>
+                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InactiveCircle" translatesAutoresizingMaskIntoConstraints="NO" id="n9d-eo-cgJ" userLabel="Checkmark Image View">
                                                     <rect key="frame" x="527" y="25" width="25" height="25"/>
                                                     <animations/>
@@ -178,16 +155,16 @@
                                             <animations/>
                                             <constraints>
                                                 <constraint firstItem="n9d-eo-cgJ" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="3Iu-so-bAv"/>
-                                                <constraint firstItem="B9t-K2-5uK" firstAttribute="leading" secondItem="1nV-Rk-qer" secondAttribute="leadingMargin" id="IKt-l0-8c9"/>
-                                                <constraint firstItem="B9t-K2-5uK" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="InE-4E-A8c"/>
+                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="top" secondItem="1nV-Rk-qer" secondAttribute="topMargin" constant="5" id="7YR-jX-W0k"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Fmf-Cj-Wer" secondAttribute="bottom" constant="5" id="Jly-TG-QrG"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="n9d-eo-cgJ" secondAttribute="trailing" id="oyC-bL-meX"/>
+                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="leading" secondItem="1nV-Rk-qer" secondAttribute="leadingMargin" constant="5" id="sj3-Sf-4P0"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
                                             <outlet property="checkmarkImageView" destination="n9d-eo-cgJ" id="5Mn-PL-yUy"/>
-                                            <outlet property="panoImageView" destination="k01-Yi-fbz" id="o4T-51-xW2"/>
-                                            <outlet property="panoScrollView" destination="B9t-K2-5uK" id="bNl-CK-b5G"/>
+                                            <outlet property="panoImageView" destination="Fmf-Cj-Wer" id="ebA-j3-Ahv"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

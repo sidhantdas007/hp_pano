@@ -30,25 +30,8 @@
         options.resizeMode = PHImageRequestOptionsResizeModeExact;
         options.synchronous = NO;
         
-        CGRect scrollFrame = CGRectMake(0, 0, 50.0 / (1.375/7.0), 50.0);
-        CGSize contentSize = [self sizeForAsset:asset inContainer:scrollFrame];
-        CGPoint offset = CGPointMake(
-                                     (scrollFrame.size.width - contentSize.width) / 2.0,
-                                     (scrollFrame.size.height - contentSize.height) / 2.0);
-        
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[PHImageManager defaultManager] requestImageForAsset:_asset targetSize:contentSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
-                
-                self.panoScrollView.contentSize = contentSize;
-                self.panoScrollView.contentOffset = offset;
-                self.panoScrollView.contentInset = UIEdgeInsetsZero;
-                
-                self.panoImageView.frame= CGRectMake(
-                                                     offset.x,
-                                                     offset.y,
-                                                     contentSize.width,
-                                                     contentSize.height);
-
+            [[PHImageManager defaultManager] requestImageForAsset:_asset targetSize:PHImageManagerMaximumSize contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
                 self.panoImageView.image = result;
             }];
         });
