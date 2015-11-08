@@ -5,7 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
-        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--Panoramas-->
@@ -59,17 +58,20 @@
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="74"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B9t-K2-5uK" userLabel="Pano Scroll View">
+                                                <scrollView autoresizesSubviews="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9t-K2-5uK" userLabel="Pano Scroll View">
                                                     <rect key="frame" x="8" y="11" width="264" height="52"/>
                                                     <subviews>
-                                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="k01-Yi-fbz" userLabel="Pano Image View">
-                                                            <rect key="frame" x="0.0" y="0.0" width="264" height="52"/>
+                                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k01-Yi-fbz" userLabel="Pano Image View">
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="60"/>
                                                             <animations/>
+                                                            <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         </imageView>
                                                     </subviews>
                                                     <animations/>
+                                                    <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstItem="k01-Yi-fbz" firstAttribute="leading" secondItem="B9t-K2-5uK" secondAttribute="leading" id="4NE-CV-qW5"/>
+                                                        <constraint firstAttribute="height" constant="50" id="8vq-58-fgz"/>
                                                         <constraint firstAttribute="trailing" secondItem="k01-Yi-fbz" secondAttribute="trailing" id="9H5-Qb-gGh"/>
                                                         <constraint firstItem="k01-Yi-fbz" firstAttribute="centerX" secondItem="B9t-K2-5uK" secondAttribute="centerX" id="CMS-Nd-ssK"/>
                                                         <constraint firstAttribute="bottom" secondItem="k01-Yi-fbz" secondAttribute="bottom" id="Gdv-iD-Sbh"/>
@@ -77,6 +79,16 @@
                                                         <constraint firstItem="k01-Yi-fbz" firstAttribute="centerY" secondItem="B9t-K2-5uK" secondAttribute="centerY" id="a2C-ER-VRQ"/>
                                                         <constraint firstItem="k01-Yi-fbz" firstAttribute="top" secondItem="B9t-K2-5uK" secondAttribute="top" id="p37-Ud-P6O"/>
                                                     </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="4NE-CV-qW5"/>
+                                                            <exclude reference="9H5-Qb-gGh"/>
+                                                            <exclude reference="CMS-Nd-ssK"/>
+                                                            <exclude reference="Gdv-iD-Sbh"/>
+                                                            <exclude reference="a2C-ER-VRQ"/>
+                                                            <exclude reference="p37-Ud-P6O"/>
+                                                        </mask>
+                                                    </variation>
                                                 </scrollView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InactiveCircle" translatesAutoresizingMaskIntoConstraints="NO" id="n9d-eo-cgJ" userLabel="Checkmark Image View">
                                                     <rect key="frame" x="527" y="25" width="25" height="25"/>
@@ -90,7 +102,6 @@
                                             <animations/>
                                             <constraints>
                                                 <constraint firstItem="n9d-eo-cgJ" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="3Iu-so-bAv"/>
-                                                <constraint firstItem="B9t-K2-5uK" firstAttribute="height" secondItem="1nV-Rk-qer" secondAttribute="height" multiplier="0.7" id="BGg-oe-AsB"/>
                                                 <constraint firstItem="B9t-K2-5uK" firstAttribute="leading" secondItem="1nV-Rk-qer" secondAttribute="leadingMargin" id="IKt-l0-8c9"/>
                                                 <constraint firstItem="B9t-K2-5uK" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="InE-4E-A8c"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="n9d-eo-cgJ" secondAttribute="trailing" id="oyC-bL-meX"/>
