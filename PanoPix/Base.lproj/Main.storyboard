@@ -5,8 +5,84 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
+        <!--Preview-->
+        <scene sceneID="oNm-qm-kLI">
+            <objects>
+                <viewController id="vBI-5w-jk0" customClass="PPPreviewViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DCW-hm-zeT"/>
+                        <viewControllerLayoutGuide type="bottom" id="qBU-rh-WRh"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Nyh-lx-7LU" userLabel="Main View">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View">
+                                <rect key="frame" x="-47" y="84" width="694" height="496"/>
+                                <subviews>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NdH-eF-CNE" userLabel="Top Pano" customClass="PPScrollView">
+                                        <rect key="frame" x="0.0" y="25" width="694" height="136"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    </scrollView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
+                                        <rect key="frame" x="0.0" y="180" width="694" height="136"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </scrollView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
+                                        <rect key="frame" x="0.0" y="335" width="694" height="136"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </scrollView>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="ft8-8g-KHJ" secondAttribute="trailing" id="Kdw-qT-SLj"/>
+                                    <constraint firstItem="ft8-8g-KHJ" firstAttribute="leading" secondItem="ftc-7o-cAX" secondAttribute="leading" id="aJK-wD-aoj"/>
+                                    <constraint firstItem="ft8-8g-KHJ" firstAttribute="height" secondItem="ftc-7o-cAX" secondAttribute="height" multiplier="0.275" id="bPG-oW-sZF"/>
+                                    <constraint firstItem="NdH-eF-CNE" firstAttribute="height" secondItem="ftc-7o-cAX" secondAttribute="height" multiplier="0.275" id="dp0-0D-jz9"/>
+                                    <constraint firstAttribute="width" secondItem="ftc-7o-cAX" secondAttribute="height" multiplier="7:5" id="eS8-Ki-oox"/>
+                                    <constraint firstItem="NdH-eF-CNE" firstAttribute="centerY" secondItem="ftc-7o-cAX" secondAttribute="centerY" multiplier="0.375" id="ggo-DW-ZWc"/>
+                                    <constraint firstItem="KcF-wE-tc5" firstAttribute="height" secondItem="ftc-7o-cAX" secondAttribute="height" multiplier="0.275" id="hjb-Z0-5v7"/>
+                                    <constraint firstItem="KcF-wE-tc5" firstAttribute="leading" secondItem="ftc-7o-cAX" secondAttribute="leading" id="k8W-rr-sZb"/>
+                                    <constraint firstItem="KcF-wE-tc5" firstAttribute="centerY" secondItem="ftc-7o-cAX" secondAttribute="centerY" multiplier="1.625" id="leS-SL-Qb4"/>
+                                    <constraint firstAttribute="trailing" secondItem="KcF-wE-tc5" secondAttribute="trailing" id="lzM-rm-xla"/>
+                                    <constraint firstAttribute="trailing" secondItem="NdH-eF-CNE" secondAttribute="trailing" id="tx0-nH-hx9"/>
+                                    <constraint firstItem="ft8-8g-KHJ" firstAttribute="centerY" secondItem="ftc-7o-cAX" secondAttribute="centerY" id="w8X-gl-tSY"/>
+                                    <constraint firstItem="NdH-eF-CNE" firstAttribute="leading" secondItem="ftc-7o-cAX" secondAttribute="leading" id="wWg-Kx-4ta"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="ftc-7o-cAX" firstAttribute="top" secondItem="DCW-hm-zeT" secondAttribute="bottom" constant="20" id="cn9-vc-NVT"/>
+                            <constraint firstItem="ftc-7o-cAX" firstAttribute="centerX" secondItem="Nyh-lx-7LU" secondAttribute="centerX" id="v4I-vr-AAP"/>
+                            <constraint firstItem="qBU-rh-WRh" firstAttribute="top" secondItem="ftc-7o-cAX" secondAttribute="bottom" constant="20" id="ven-WK-YXL"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Preview" id="Bgl-uT-T3F">
+                        <barButtonItem key="rightBarButtonItem" title="Done" id="eug-Wp-dFM">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="vBI-5w-jk0" id="9An-G2-ypS"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outletCollection property="panoScrollViews" destination="NdH-eF-CNE" id="TTW-SP-7iN"/>
+                        <outletCollection property="panoScrollViews" destination="ft8-8g-KHJ" id="xbz-Aa-U5U"/>
+                        <outletCollection property="panoScrollViews" destination="KcF-wE-tc5" id="h4v-cV-3We"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bzU-Dt-sMd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2361" y="392"/>
+        </scene>
         <!--Panoramas-->
         <scene sceneID="meo-fd-yTV">
             <objects>
@@ -31,7 +107,7 @@
                                             <constraint firstAttribute="height" id="uU5-x7-9q9"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" alpha="0.75" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HPPPMagnify.png" translatesAutoresizingMaskIntoConstraints="NO" id="fNL-nh-JVg" userLabel="Maginifier Image View">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HPPPMagnify.png" translatesAutoresizingMaskIntoConstraints="NO" id="fNL-nh-JVg" userLabel="Maginifier Image View">
                                         <rect key="frame" x="275" y="0.0" width="25" height="25"/>
                                         <animations/>
                                     </imageView>
@@ -142,16 +218,17 @@
                         <outlet property="previewImageWidthConstraint" destination="4MW-VB-Ohe" id="OHC-QK-II1"/>
                         <outlet property="previewView" destination="Vf2-8Z-TNd" id="uQ9-Lt-b74"/>
                         <outlet property="tableView" destination="CnU-K1-tj6" id="wid-sb-vPr"/>
+                        <segue destination="UXW-f8-qhT" kind="presentation" identifier="Show Preview" id="Ar8-Xr-isa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T0g-5t-NI8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1586" y="1239"/>
+            <point key="canvasLocation" x="1602" y="1265"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Portrait Navigation Controller-->
         <scene sceneID="pMH-h5-j4a">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0ix-7U-3Vr" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0ix-7U-3Vr" customClass="PPPortraitNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Nop-bF-G8k">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -166,6 +243,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sZ7-Sp-wZP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="785" y="1239"/>
+        </scene>
+        <!--Landscape Navigation Controller-->
+        <scene sceneID="fgF-ys-Sbe">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UXW-f8-qhT" customClass="PPLandscapeNavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pWt-Jp-GDA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="vBI-5w-jk0" kind="relationship" relationship="rootViewController" id="l94-uH-bMf"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ADh-dl-sOP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1549" y="392"/>
         </scene>
     </scenes>
     <resources>

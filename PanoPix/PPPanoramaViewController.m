@@ -68,6 +68,10 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     [HPPP sharedInstance].hidePaperTypeOption = YES;
 }
 
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -330,7 +334,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)handlePreviewTap:(UIGestureRecognizer *)gestureRecognizer
 {
-    [self initiatePrint];
+    [self performSegueWithIdentifier:@"Show Preview" sender:self];
 }
 
 @end
