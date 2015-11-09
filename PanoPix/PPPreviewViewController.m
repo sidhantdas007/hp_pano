@@ -28,25 +28,6 @@
     [self layoutScrollViews];
     [self createImageViews];
     self.paperView.hidden = NO;
-    
-//    for (int idx = 0; idx < self.panoImageViews.count; idx++) {
-//        UIImage *image = nil;
-//        if (idx < self.images.count) {
-//            image = self.images[idx];
-//        }
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            UIImageView *imageView = self.panoImageViews[idx];
-//            UIScrollView *scrollView = (UIScrollView *)imageView.superview;
-//            imageView.autoresizingMask = UIViewAutoresizingNone;
-//            imageView.frame = CGRectMake(0, 0, scrollView.frame.size.width, scrollView.frame.size.height);
-//            
-//            imageView.image = image;
-//            scrollView.contentSize = imageView.frame.size;
-//            scrollView.contentOffset = CGPointZero;
-//            [scrollView setNeedsDisplay];
-//        });
-//    }
-//    
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -82,16 +63,21 @@
 - (void)createImageViews
 {
     for (int idx = 0; idx < self.panoScrollViews.count; idx++) {
+        UIScrollView *scrollView = (UIScrollView *)self.panoScrollViews[idx];
+        [scrollView.subviews makeObjectsPerformSelector:@selector(removeFromSuperview)];
         if (self.images.count > idx) {
-            UIScrollView *scrollView = (UIScrollView *)self.panoScrollViews[idx];
             UIImage *image = self.images[idx];
-            UIImageView *contentView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width, image.size.height)];
+            CGFloat xScale = scrollView.bounds.size.width / image.size.width;
+            CGFloat yScale = scrollView.bounds.size.height / image.size.height;
+            CGFloat scale = fmaxf(xScale, yScale);
+            UIImageView *contentView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, image.size.width * scale, image.size.height * scale)];
             contentView.backgroundColor = [UIColor blackColor];
             contentView.contentMode = UIViewContentModeScaleAspectFit;
             contentView.image = self.images[idx];
             [scrollView addSubview:contentView];
             scrollView.contentOffset = CGPointZero;
             scrollView.contentSize = contentView.bounds.size;
+            NSLog(@"%d: %.1f, %.1f", idx, scrollView.contentSize.width, scrollView.contentSize.height);
             NSLog(@"%d: %.1f, %.1f", idx, scrollView.contentOffset.x, scrollView.contentOffset.y);
         }
     }
