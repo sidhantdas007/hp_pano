@@ -105,9 +105,11 @@
             contentView.image = self.images[idx];
             [scrollView addSubview:contentView];
             scrollView.contentOffset = CGPointZero;
+            scrollView.contentInset = UIEdgeInsetsZero;
             scrollView.contentSize = contentView.bounds.size;
-            NSLog(@"%d: %.1f, %.1f", idx, scrollView.contentSize.width, scrollView.contentSize.height);
-            NSLog(@"%d: %.1f, %.1f", idx, scrollView.contentOffset.x, scrollView.contentOffset.y);
+            NSLog(@"size %d: %.1f, %.1f", idx, scrollView.contentSize.width, scrollView.contentSize.height);
+            NSLog(@"offset %d: %.1f, %.1f", idx, scrollView.contentOffset.x, scrollView.contentOffset.y);
+            NSLog(@"inset %d: %.1f, %.1f, %.1f, %.1f", idx, scrollView.contentInset.top, scrollView.contentInset.right, scrollView.contentInset.bottom, scrollView.contentInset.left);
         }
     }
 }
