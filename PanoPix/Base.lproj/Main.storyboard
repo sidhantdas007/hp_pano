@@ -20,60 +20,30 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View">
                                 <rect key="frame" x="30" y="132" width="540" height="386"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NdH-eF-CNE" userLabel="Top Pano">
-                                        <rect key="frame" x="0.0" y="19" width="540" height="107"/>
-                                        <subviews>
-                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Xjk-KJ-Dqc">
-                                                <rect key="frame" x="150" y="-10" width="240" height="128"/>
-                                                <animations/>
-                                            </imageView>
-                                        </subviews>
-                                        <animations/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </scrollView>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ii3-Pk-oqS" userLabel="Top Pano">
                                         <rect key="frame" x="0.0" y="140" width="540" height="106"/>
-                                        <subviews>
-                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3jI-RP-q3r">
-                                                <rect key="frame" x="150" y="-11" width="240" height="128"/>
-                                                <animations/>
-                                            </imageView>
-                                        </subviews>
                                         <animations/>
-                                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </scrollView>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
                                         <rect key="frame" x="0.0" y="261" width="540" height="106"/>
-                                        <subviews>
-                                            <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YIV-7w-5xR">
-                                                <rect key="frame" x="150" y="-11" width="240" height="128"/>
-                                                <animations/>
-                                            </imageView>
-                                        </subviews>
                                         <animations/>
-                                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                    </scrollView>
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
+                                        <rect key="frame" x="0.0" y="16" width="540" height="106"/>
+                                        <animations/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </scrollView>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="ft8-8g-KHJ" secondAttribute="trailing" id="Kdw-qT-SLj"/>
-                                    <constraint firstItem="ft8-8g-KHJ" firstAttribute="leading" secondItem="ftc-7o-cAX" secondAttribute="leading" id="aJK-wD-aoj"/>
-                                    <constraint firstItem="ft8-8g-KHJ" firstAttribute="height" secondItem="ftc-7o-cAX" secondAttribute="height" multiplier="0.275" id="bPG-oW-sZF"/>
-                                    <constraint firstItem="NdH-eF-CNE" firstAttribute="height" secondItem="ftc-7o-cAX" secondAttribute="height" multiplier="0.275" id="dp0-0D-jz9"/>
                                     <constraint firstAttribute="width" secondItem="ftc-7o-cAX" secondAttribute="height" multiplier="7:5" id="eS8-Ki-oox"/>
-                                    <constraint firstItem="NdH-eF-CNE" firstAttribute="centerY" secondItem="ftc-7o-cAX" secondAttribute="centerY" multiplier="0.375" id="ggo-DW-ZWc"/>
-                                    <constraint firstItem="KcF-wE-tc5" firstAttribute="height" secondItem="ftc-7o-cAX" secondAttribute="height" multiplier="0.275" id="hjb-Z0-5v7"/>
-                                    <constraint firstItem="KcF-wE-tc5" firstAttribute="leading" secondItem="ftc-7o-cAX" secondAttribute="leading" id="k8W-rr-sZb"/>
-                                    <constraint firstItem="KcF-wE-tc5" firstAttribute="centerY" secondItem="ftc-7o-cAX" secondAttribute="centerY" multiplier="1.625" id="leS-SL-Qb4"/>
-                                    <constraint firstAttribute="trailing" secondItem="KcF-wE-tc5" secondAttribute="trailing" id="lzM-rm-xla"/>
                                     <constraint firstAttribute="width" priority="250" constant="1000" id="rno-DK-Y07"/>
-                                    <constraint firstAttribute="trailing" secondItem="NdH-eF-CNE" secondAttribute="trailing" id="tx0-nH-hx9"/>
-                                    <constraint firstItem="ft8-8g-KHJ" firstAttribute="centerY" secondItem="ftc-7o-cAX" secondAttribute="centerY" id="w8X-gl-tSY"/>
-                                    <constraint firstItem="NdH-eF-CNE" firstAttribute="leading" secondItem="ftc-7o-cAX" secondAttribute="leading" id="wWg-Kx-4ta"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -94,17 +64,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outletCollection property="panoScrollViews" destination="NdH-eF-CNE" id="TTW-SP-7iN"/>
+                        <outlet property="paperView" destination="ftc-7o-cAX" id="fxu-YR-Fj4"/>
                         <outletCollection property="panoScrollViews" destination="ft8-8g-KHJ" id="xbz-Aa-U5U"/>
                         <outletCollection property="panoScrollViews" destination="KcF-wE-tc5" id="h4v-cV-3We"/>
-                        <outletCollection property="panoImageViews" destination="Xjk-KJ-Dqc" id="0Qz-HI-But"/>
-                        <outletCollection property="panoImageViews" destination="3jI-RP-q3r" id="XZm-30-Cbx"/>
-                        <outletCollection property="panoImageViews" destination="YIV-7w-5xR" id="ftz-UH-t56"/>
+                        <outletCollection property="panoScrollViews" destination="Ii3-Pk-oqS" id="uwx-jC-79Y"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bzU-Dt-sMd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2361" y="392"/>
+            <point key="canvasLocation" x="1518" y="453"/>
         </scene>
         <!--Panoramas-->
         <scene sceneID="meo-fd-yTV">
@@ -154,7 +122,7 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aNK-14-VN1" id="1nV-Rk-qer">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="74"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="75"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
@@ -259,7 +227,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ADh-dl-sOP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1549" y="392"/>
+            <point key="canvasLocation" x="747" y="453"/>
         </scene>
     </scenes>
     <resources>
