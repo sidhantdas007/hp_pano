@@ -120,7 +120,7 @@
 
 @property (strong, nonatomic) HPPPPrintSettingsDelegateManager *delegateManager;
 
-@property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelBarButtonItem;
+@property (strong, nonatomic) UIBarButtonItem *cancelBarButtonItem;
 
 @property (strong, nonatomic) NSTimer *refreshPrinterStatusTimer;
 
@@ -160,8 +160,17 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
     
     self.hppp = [HPPP sharedInstance];
     
+    self.cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonTapped:)];
+
+    if( self.hppp.pageSettingsCancelButtonLeft ) {
+        self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
+    } else {
+        self.navigationItem.rightBarButtonItem = self.cancelBarButtonItem;
+    }    
+    
     if( HPPPPageSettingsDisplayTypePreviewPane == self.displayType ) {
         self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.leftBarButtonItem = nil;
     }
     
     [self configureJobSummaryCell];
@@ -466,6 +475,10 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
                 }
             }];
         } else {
+            if( nil != self.printLaterJob ) {
+                self.printItem = [self.printLaterJob printItemForPaperSize:self.delegateManager.paper.sizeTitle];
+            }
+
             [self configureMultiPageViewWithPrintItem:self.printItem];
         }
     }
@@ -665,17 +678,6 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
     }
     
     return _multiPageView;
-}
-
-- (void)setNavigationBarEditing:(BOOL)editing
-{
-    UIColor *buttonColor = nil;
-    
-    if (editing) {
-        buttonColor = [UIColor clearColor];
-    }
-    
-    self.cancelBarButtonItem.tintColor = buttonColor;
 }
 
 -(void)respondToMultiPageViewAction
@@ -1008,6 +1010,11 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
             HPPPLogWarn(@"No HPPPPrintDelegate or HPPPAddPrintLaterDelegate has been set to respond to the end of the print flow.  Implement one of these delegates to dismiss the Page Settings view controller.");
         }
     }
+}
+
+- (IBAction)cancelButtonTapped:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)displaySystemPrintFromView:(UIView *)view

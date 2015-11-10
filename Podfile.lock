@@ -1,10 +1,10 @@
 PODS:
-  - HPPhotoPrint (2.6.9)
+  - HPPhotoPrint (2.6.10)
 
 DEPENDENCIES:
   - HPPhotoPrint
 
 SPEC CHECKSUMS:
-  HPPhotoPrint: 6a116e519b26e21d3a408f99a7dcd92c6db76be9
+  HPPhotoPrint: c6e5e9e5b2d46f3a8322d037ba8c1e44f4d5f19a
 
 COCOAPODS: 0.39.0
