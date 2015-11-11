@@ -113,26 +113,26 @@
                                     <constraint firstItem="fNL-nh-JVg" firstAttribute="trailing" secondItem="Maz-iC-EXc" secondAttribute="trailing" id="rPF-du-Lo0"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
                                 <rect key="frame" x="20" y="64" width="560" height="536"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Pano Cell" id="aNK-14-VN1" userLabel="Pano Table View Cell" customClass="PPPanoramaTableViewCell">
-                                        <rect key="frame" x="0.0" y="28" width="560" height="75"/>
+                                        <rect key="frame" x="0.0" y="28" width="560" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aNK-14-VN1" id="1nV-Rk-qer">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="75"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
-                                                    <rect key="frame" x="13" y="15" width="224" height="44"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
+                                                    <rect key="frame" x="13" y="12" width="265" height="52"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="Fmf-Cj-Wer" secondAttribute="height" multiplier="7:1.375" id="kix-Zk-zEs"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InactiveCircle" translatesAutoresizingMaskIntoConstraints="NO" id="n9d-eo-cgJ" userLabel="Checkmark Image View">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="InactiveCircle" translatesAutoresizingMaskIntoConstraints="NO" id="n9d-eo-cgJ" userLabel="Checkmark Image View">
                                                     <rect key="frame" x="527" y="25" width="25" height="25"/>
                                                     <animations/>
                                                     <constraints>
@@ -145,7 +145,7 @@
                                             <constraints>
                                                 <constraint firstItem="Fmf-Cj-Wer" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="0zA-kH-v4b"/>
                                                 <constraint firstItem="n9d-eo-cgJ" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="3Iu-so-bAv"/>
-                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="height" secondItem="1nV-Rk-qer" secondAttribute="height" multiplier="0.6" id="Xai-Hn-k7l"/>
+                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="height" secondItem="1nV-Rk-qer" secondAttribute="height" multiplier="0.7" id="6MU-um-rAX"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="n9d-eo-cgJ" secondAttribute="trailing" id="oyC-bL-meX"/>
                                                 <constraint firstItem="Fmf-Cj-Wer" firstAttribute="leading" secondItem="1nV-Rk-qer" secondAttribute="leadingMargin" constant="5" id="sj3-Sf-4P0"/>
                                             </constraints>
