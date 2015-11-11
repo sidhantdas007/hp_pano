@@ -1,1 +1,0 @@
-../../../HPPhotoPrint/Pod/Libraries/XBPageCurl/XBPageDragView.h

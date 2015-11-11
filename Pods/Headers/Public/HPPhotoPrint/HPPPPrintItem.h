@@ -1,1 +1,0 @@
-../../../HPPhotoPrint/Pod/Classes/Public/HPPPPrintItem.h

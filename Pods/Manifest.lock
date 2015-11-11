@@ -1,10 +1,10 @@
 PODS:
-  - HPPhotoPrint (2.6.10)
+  - MobilePrintSDK (3.0.0)
 
 DEPENDENCIES:
-  - HPPhotoPrint
+  - MobilePrintSDK
 
 SPEC CHECKSUMS:
-  HPPhotoPrint: c6e5e9e5b2d46f3a8322d037ba8c1e44f4d5f19a
+  MobilePrintSDK: 67fdd99a833896d4d3f41d6820c483282cd9bb87
 
 COCOAPODS: 0.39.0
