@@ -20,40 +20,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View">
-                                <rect key="frame" x="30" y="132" width="540" height="386"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3S-In-XnF" userLabel="Container View">
+                                <rect key="frame" x="20" y="84" width="560" height="496"/>
                                 <subviews>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ii3-Pk-oqS" userLabel="Top Pano">
-                                        <rect key="frame" x="0.0" y="140" width="540" height="106"/>
+                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View">
+                                        <rect key="frame" x="-150" y="-128.5" width="700" height="500"/>
+                                        <subviews>
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ii3-Pk-oqS" userLabel="Top Pano">
+                                                <rect key="frame" x="0.0" y="140" width="540" height="106"/>
+                                                <animations/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            </scrollView>
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
+                                                <rect key="frame" x="0.0" y="261" width="540" height="106"/>
+                                                <animations/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            </scrollView>
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
+                                                <rect key="frame" x="0.0" y="16" width="540" height="106"/>
+                                                <animations/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                            </scrollView>
+                                        </subviews>
                                         <animations/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    </scrollView>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
-                                        <rect key="frame" x="0.0" y="261" width="540" height="106"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    </scrollView>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
-                                        <rect key="frame" x="0.0" y="16" width="540" height="106"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    </scrollView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="ftc-7o-cAX" secondAttribute="height" multiplier="7:5" id="eS8-Ki-oox"/>
-                                    <constraint firstAttribute="width" priority="250" constant="1000" id="rno-DK-Y07"/>
-                                </constraints>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ftc-7o-cAX" firstAttribute="centerY" secondItem="Nyh-lx-7LU" secondAttribute="centerY" constant="25" id="Hij-uA-gm8"/>
-                            <constraint firstItem="ftc-7o-cAX" firstAttribute="width" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="width" multiplier="0.9" id="ISn-Sv-WEu"/>
-                            <constraint firstItem="ftc-7o-cAX" firstAttribute="height" relation="lessThanOrEqual" secondItem="Nyh-lx-7LU" secondAttribute="height" multiplier="0.9" id="W4Z-et-ggY"/>
-                            <constraint firstItem="ftc-7o-cAX" firstAttribute="centerX" secondItem="Nyh-lx-7LU" secondAttribute="centerX" id="v4I-vr-AAP"/>
+                            <constraint firstItem="u3S-In-XnF" firstAttribute="leading" secondItem="Nyh-lx-7LU" secondAttribute="leading" constant="20" id="DP4-N9-eW3"/>
+                            <constraint firstAttribute="trailing" secondItem="u3S-In-XnF" secondAttribute="trailing" constant="20" id="HOM-CW-Ukd"/>
+                            <constraint firstItem="u3S-In-XnF" firstAttribute="top" secondItem="DCW-hm-zeT" secondAttribute="bottom" constant="20" id="MFZ-z3-kvt"/>
+                            <constraint firstItem="qBU-rh-WRh" firstAttribute="top" secondItem="u3S-In-XnF" secondAttribute="bottom" constant="20" id="hcV-nK-uFO"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Preview" id="Bgl-uT-T3F">
@@ -64,10 +67,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="containerView" destination="u3S-In-XnF" id="CjR-Gn-mNP"/>
                         <outlet property="paperView" destination="ftc-7o-cAX" id="fxu-YR-Fj4"/>
-                        <outletCollection property="panoScrollViews" destination="ft8-8g-KHJ" id="xbz-Aa-U5U"/>
                         <outletCollection property="panoScrollViews" destination="KcF-wE-tc5" id="h4v-cV-3We"/>
                         <outletCollection property="panoScrollViews" destination="Ii3-Pk-oqS" id="uwx-jC-79Y"/>
+                        <outletCollection property="panoScrollViews" destination="ft8-8g-KHJ" id="xbz-Aa-U5U"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bzU-Dt-sMd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -98,7 +102,7 @@
                                             <constraint firstAttribute="height" id="uU5-x7-9q9"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="HPPPMagnify.png" translatesAutoresizingMaskIntoConstraints="NO" id="fNL-nh-JVg" userLabel="Maginifier Image View">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MPMagnify.png" translatesAutoresizingMaskIntoConstraints="NO" id="fNL-nh-JVg" userLabel="Maginifier Image View">
                                         <rect key="frame" x="275" y="0.0" width="25" height="25"/>
                                         <animations/>
                                     </imageView>
@@ -122,7 +126,7 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aNK-14-VN1" id="1nV-Rk-qer">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
@@ -231,7 +235,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="HPPPMagnify.png" width="25" height="25"/>
         <image name="InactiveCircle" width="25" height="25"/>
+        <image name="MPMagnify.png" width="25" height="25"/>
     </resources>
 </document>

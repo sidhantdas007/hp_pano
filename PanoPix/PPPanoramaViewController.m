@@ -10,13 +10,13 @@
 #import "PPPanoramaTableViewCell.h"
 #import "PPPreviewViewController.h"
 #import <Photos/Photos.h>
-#import <HPPP.h>
-#import <HPPPLayout.h>
-#import <HPPPPrintItemFactory.h>
-#import <HPPPLayoutFactory.h>
-#import <HPPPPaper.h>
+#import <MP.h>
+#import <MPLayout.h>
+#import <MPPrintItemFactory.h>
+#import <MPLayoutFactory.h>
+#import <MPPaper.h>
 
-@interface PPPanoramaViewController () <HPPPPrintDelegate>
+@interface PPPanoramaViewController () <MPPrintDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *previewView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -47,7 +47,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureHPPP];
+    [self configureMP];
     [self preparePrintIcon];
     [self configureGestures];
     self.panoramaAssets = @[];
@@ -60,13 +60,13 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     // Dispose of any resources that can be recreated.
 }
 
-- (void)configureHPPP
+- (void)configureMP
 {
-    HPPPPaper *paper = [[HPPPPaper alloc] initWithPaperSize:HPPPPaperSize5x7 paperType:HPPPPaperTypePhoto];
-    [HPPP sharedInstance].defaultPaper = paper;
-    [HPPP sharedInstance].supportedPapers = @[ paper ];
-    [HPPP sharedInstance].hidePaperSizeOption = YES;
-    [HPPP sharedInstance].hidePaperTypeOption = YES;
+    MPPaper *paper = [[MPPaper alloc] initWithPaperSize:MPPaperSize5x7 paperType:MPPaperTypePhoto];
+    [MP sharedInstance].defaultPaper = paper;
+    [MP sharedInstance].supportedPapers = @[ paper ];
+    [MP sharedInstance].hidePaperSizeOption = YES;
+    [MP sharedInstance].hidePaperTypeOption = YES;
 }
 
 - (UIInterfaceOrientationMask)supportedInterfaceOrientations {
@@ -187,9 +187,9 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 - (void)presentPrintController
 {
     UIImage *image = [self combinedImages:self.printableImages resolution:kDPI showLines:NO];
-    HPPPPrintItem *printItem = [HPPPPrintItemFactory printItemWithAsset:image];
-    printItem.layout = [HPPPLayoutFactory layoutWithType:[HPPPLayoutFit layoutType] orientation:HPPPLayoutOrientationLandscape assetPosition:[HPPPLayout completeFillRectangle]];
-    UIViewController *vc = [[HPPP sharedInstance] printViewControllerWithDelegate:self dataSource:nil printItem:printItem fromQueue:NO settingsOnly:NO];
+    MPPrintItem *printItem = [MPPrintItemFactory printItemWithAsset:image];
+    printItem.layout = [MPLayoutFactory layoutWithType:[MPLayoutFit layoutType] orientation:MPLayoutOrientationLandscape assetPosition:[MPLayout completeFillRectangle]];
+    UIViewController *vc = [[MP sharedInstance] printViewControllerWithDelegate:self dataSource:nil printItem:printItem fromQueue:NO settingsOnly:NO];
     [self presentViewController:vc animated:YES completion:nil];
 }
 
@@ -325,7 +325,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     }];
 }
 
-#pragma mark - HPPPPrintDelegate
+#pragma mark - MPPrintDelegate
 
 - (void)didFinishPrintFlow:(UIViewController *)printViewController
 {

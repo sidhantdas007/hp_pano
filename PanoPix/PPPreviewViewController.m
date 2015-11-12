@@ -8,8 +8,10 @@
 
 #import "PPPreviewViewController.h"
 #import "PPScrollView.h"
+#import <MPLayoutFactory.h>
 
 @interface PPPreviewViewController ()
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 
 @property (strong, nonatomic) IBOutletCollection(UIScrollView) NSArray *panoScrollViews;
 @property (weak, nonatomic) IBOutlet UIView *paperView;
@@ -25,8 +27,8 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self layoutScrollViews];
-    [self createImageViews];
+//    self.paperView.frame = CGRectMake(0, 0, 7.0, 5.0);
+    [self computePositions];
     self.paperView.hidden = NO;
 }
 
@@ -50,16 +52,15 @@
         // Place code here to perform animations during the rotation.
         // You can pass nil or leave this block empty if not necessary.
 
-        [self layoutScrollViews];
-        [self createImageViews];
+        [self computePositions];
         
     } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
 
         // Code here will execute after the rotation has finished.
         // Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:]
         
-        [self layoutScrollViews];
-        [self createImageViews];
+        [self computePositions];
+
 //        self.paperView.hidden = NO;
 
     }];
@@ -72,6 +73,16 @@
 
 - (IBAction)doneButtonTapped:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Layout
+
+- (void)computePositions
+{
+    MPLayout *layout = [MPLayoutFactory layoutWithType:[MPLayoutFit layoutType] orientation:MPLayoutOrientationFixed assetPosition:[MPLayout completeFillRectangle]];
+    [layout layoutContentView:self.paperView inContainerView:self.containerView];
+    [self layoutScrollViews];
+    [self createImageViews];
 }
 
 #pragma mark - Scroll views
