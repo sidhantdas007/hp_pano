@@ -10,6 +10,8 @@
 
 @implementation PPPanoramaTableViewCell
 
+CGFloat kThumbnailHeight = 50.0;
+
 - (void)awakeFromNib {
     // Initialization code
 }
@@ -29,9 +31,8 @@
         options.resizeMode = PHImageRequestOptionsResizeModeFast;
         options.synchronous = NO;
         
-        CGFloat desiredHeight = 50.0;
-        CGFloat scale = asset.pixelHeight / desiredHeight;
-        CGSize size = CGSizeMake(asset.pixelWidth / scale, desiredHeight);
+        CGFloat scale = asset.pixelHeight / kThumbnailHeight;
+        CGSize size = CGSizeMake(asset.pixelWidth / scale, kThumbnailHeight);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[PHImageManager defaultManager] requestImageForAsset:_asset targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {

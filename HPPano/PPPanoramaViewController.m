@@ -28,6 +28,7 @@
 @property (strong, nonatomic) NSArray<PHAsset *> *panoramaAssets;
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *selectedPanoramas; // table row number of selected items
 @property (strong, nonatomic) NSMutableArray<UIImage *> *printableImages;
+@property (strong, nonatomic) NSMutableArray<UIImage *> *previewImages;
 
 @end
 
@@ -37,6 +38,9 @@ NSString * const kPanoramaCellIdentifier = @"Pano Cell";
 CGFloat kHeaderHeight = 30.0;
 CGFloat kPreviewHeight = 140.0;
 CGFloat kPreviewImageHeight = 120.0;
+CGFloat kPreviewSmallStripHeight = 50.0;
+CGFloat kPreviewLargeStripHeight = 200.0;
+CGFloat kMaximumStripHeight = MAXFLOAT;
 NSInteger kMaximumSelections = 3;
 CGFloat kDPI = 300.0;
 CGFloat kPaperWidth = 7.0; // inches
@@ -78,7 +82,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
     PPPreviewViewController *vc = (PPPreviewViewController *)navController.topViewController;
-    vc.images = self.printableImages;
+    vc.images = self.previewImages;
 }
 
 #pragma mark - Table view data source
@@ -143,7 +147,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 }
 
 #pragma mark - Print utilities
-- (void)retrieveImages:(NSMutableArray *)images withCompletion:(void(^)(void))completion
+- (void)retrieveImages:(NSMutableArray *)images height:(CGFloat)height completion:(void(^)(void))completion
 {
     if (0 == self.selectedPanoramas.count) {
         if (completion) {
@@ -158,19 +162,20 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     options.synchronous = NO;
     
     dispatch_async(dispatch_get_main_queue(), ^{
-
         NSInteger item = [self.selectedPanoramas[images.count] integerValue];
+        
         PHAsset *asset = self.panoramaAssets[item];
-
-        CGFloat desiredHeight = 50.0;
-        CGFloat scale = asset.pixelHeight / desiredHeight;
-        CGSize size = CGSizeMake(asset.pixelWidth / scale, desiredHeight);
-
-        [[PHImageManager defaultManager] requestImageForAsset:self.panoramaAssets[item] targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        CGSize size = PHImageManagerMaximumSize;
+        if (kMaximumStripHeight != height) {
+            CGFloat scale = asset.pixelHeight / height;
+            size = CGSizeMake(asset.pixelWidth / scale, height);
+        }
+        
+        [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             if (result) {
                 [images addObject:result];
                 if (images.count < self.selectedPanoramas.count) {
-                    [self retrieveImages:images withCompletion:completion];
+                    [self retrieveImages:images height:height completion:completion];
                 } else {
                     if (completion) {
                         completion();
@@ -196,7 +201,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 - (void)initiatePrint
 {
     self.printableImages = [NSMutableArray array];
-    [self retrieveImages:self.printableImages withCompletion:^{
+    [self retrieveImages:self.printableImages height:kMaximumStripHeight completion:^{
         [self presentPrintController];
     }];
 }
@@ -319,7 +324,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 - (void)updatePreviewImage
 {
     NSMutableArray *thumbnailImages = [NSMutableArray array];
-    [self retrieveImages:thumbnailImages withCompletion:^{
+    [self retrieveImages:thumbnailImages height:kPreviewSmallStripHeight completion:^{
         UIImage *image = [self combinedImages:thumbnailImages resolution:kDPI showLines:YES];
         self.previewImageView.image = image;
     }];
@@ -350,8 +355,8 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)handlePreviewTap:(UIGestureRecognizer *)gestureRecognizer
 {
-    self.printableImages = [NSMutableArray array];
-    [self retrieveImages:self.printableImages withCompletion:^{
+    self.previewImages = [NSMutableArray array];
+    [self retrieveImages:self.previewImages height:kPreviewLargeStripHeight completion:^{
         [self performSegueWithIdentifier:@"Show Preview" sender:self];
     }];
 }
