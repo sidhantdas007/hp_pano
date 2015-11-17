@@ -29,6 +29,8 @@
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *selectedPanoramas; // table row number of selected items
 @property (strong, nonatomic) NSMutableArray<UIImage *> *printableImages;
 @property (strong, nonatomic) NSMutableArray<UIImage *> *previewImages;
+@property (weak, nonatomic) IBOutlet UIButton *authorizeButton;
+@property (weak, nonatomic) IBOutlet UILabel *noPanoLabel;
 
 @end
 
@@ -56,9 +58,13 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     [self configureGestures];
     self.panoramaAssets = @[];
     self.selectedPanoramas = [NSMutableArray array];
-    [self retrievePanoramas];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self verifyAccess];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -283,15 +289,94 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     [collections enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL * _Nonnull stop) {
         if (collection) {
             PHFetchResult<PHAsset *> *assets = [PHAsset fetchAssetsInAssetCollection:collection options:nil];
-            [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull asset, NSUInteger idx, BOOL * _Nonnull stop) {
-                [panoramas addObject:asset];
-                if (asset == [assets lastObject]) {
-                    self.panoramaAssets = panoramas;
-                    [self.tableView reloadData];
-                }
-            }];
+            if (0 == assets.count) {
+                [self showNoPhotos];
+            } else {
+                [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull asset, NSUInteger idx, BOOL * _Nonnull stop) {
+                    [panoramas addObject:asset];
+                    if (asset == [assets lastObject]) {
+                        self.panoramaAssets = panoramas;
+                        [self showPhotos];
+                    }
+                }];
+            }
+            
         }
     }];
+}
+
+- (void)verifyAccess
+{
+    PHAuthorizationStatus authorizationStatus = [PHPhotoLibrary authorizationStatus];
+    if (PHAuthorizationStatusAuthorized == authorizationStatus) {
+        [self retrievePanoramas];
+    } else if (PHAuthorizationStatusNotDetermined == authorizationStatus) {
+        [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status) {
+            [self verifyAccess];
+        }];
+    } else if (PHAuthorizationStatusDenied == authorizationStatus) {
+        [self noAccessWithCaption:@"No Access" andMessage:@"Access to photos has been denied on this device."];
+    } else if (PHAuthorizationStatusRestricted == authorizationStatus) {
+        [self noAccessWithCaption:@"Restricted Access" andMessage:@"Access to photos is restricted by a policy on this device."];
+    }
+}
+
+- (void)noAccessWithCaption:(NSString *)caption andMessage:(NSString *)message
+{
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:caption
+                                                                   message:[NSString stringWithFormat:@"%@ The HP Pano app needs access to pano photos in order to work. Please check your settings.\n\nSettings → HP Pano → Photos", message]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self showNoAccess];
+    }]];
+    [alert addAction:[UIAlertAction actionWithTitle:@"Settings" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self openSettings];
+    }]];
+    [self presentViewController:alert animated:YES completion:nil];
+
+}
+
+- (void)openSettings
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        NSURL *url = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+        [[UIApplication sharedApplication] openURL:url];
+    });
+}
+
+- (IBAction)authorizeButtonTapped:(id)sender {
+    [self openSettings];
+}
+
+- (void)showPhotos
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.noPanoLabel.hidden = YES;
+        self.previewView.hidden = NO;
+        self.tableView.hidden = NO;
+        self.authorizeButton.hidden = YES;
+        [self.tableView reloadData];
+    });
+}
+
+- (void)showNoPhotos
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.noPanoLabel.hidden = NO;
+        self.previewView.hidden = YES;
+        self.tableView.hidden = YES;
+        self.authorizeButton.hidden = YES;
+    });
+}
+
+- (void)showNoAccess
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        self.noPanoLabel.hidden = YES;
+        self.previewView.hidden = YES;
+        self.tableView.hidden = YES;
+        self.authorizeButton.hidden = NO;
+    });
 }
 
 #pragma mark - Selection handling

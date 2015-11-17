@@ -90,7 +90,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vf2-8Z-TNd" userLabel="Preview View">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4dO-yR-HoP" userLabel="No Pano Label">
+                                <rect key="frame" x="30" y="64" width="540" height="536"/>
+                                <animations/>
+                                <string key="text">You have no pano pictures on your device. Take some pano pictures with the Camera app to experience the incredible HP Pano printing experience.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="31t-uI-vRc" userLabel="Authorize Button">
+                                <rect key="frame" x="20" y="64" width="560" height="536"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Tap to authorize photo access"/>
+                                <connections>
+                                    <action selector="authorizeButtonTapped:" destination="HMA-8A-GYK" eventType="touchUpInside" id="XuP-13-Ml6"/>
+                                </connections>
+                            </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vf2-8Z-TNd" userLabel="Preview View">
                                 <rect key="frame" x="0.0" y="64" width="600" height="0.0"/>
                                 <subviews>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Maz-iC-EXc" userLabel="Preview Image View">
@@ -117,7 +134,7 @@
                                     <constraint firstItem="fNL-nh-JVg" firstAttribute="trailing" secondItem="Maz-iC-EXc" secondAttribute="trailing" id="rPF-du-Lo0"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
                                 <rect key="frame" x="20" y="64" width="560" height="536"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -172,16 +189,26 @@
                         <color key="tintColor" red="0.0" green="0.58823529411764708" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Vf2-8Z-TNd" firstAttribute="leading" secondItem="swk-i0-ru5" secondAttribute="leading" id="3Tx-rd-om5"/>
+                            <constraint firstItem="Vaq-Wk-bjb" firstAttribute="top" secondItem="31t-uI-vRc" secondAttribute="bottom" id="66R-mD-aWq"/>
+                            <constraint firstItem="4dO-yR-HoP" firstAttribute="top" secondItem="47A-lm-Cmz" secondAttribute="bottom" id="B4c-nO-fgu"/>
                             <constraint firstItem="CnU-K1-tj6" firstAttribute="top" secondItem="Vf2-8Z-TNd" secondAttribute="bottom" id="Lqn-c0-uuV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4dO-yR-HoP" secondAttribute="trailing" constant="10" id="Nfm-bh-D6P"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="31t-uI-vRc" secondAttribute="trailing" id="R2S-sB-7En"/>
                             <constraint firstItem="Vf2-8Z-TNd" firstAttribute="top" secondItem="47A-lm-Cmz" secondAttribute="bottom" id="RX4-JU-9KB"/>
+                            <constraint firstItem="31t-uI-vRc" firstAttribute="top" secondItem="47A-lm-Cmz" secondAttribute="bottom" id="gu4-sb-xji"/>
                             <constraint firstItem="CnU-K1-tj6" firstAttribute="leading" secondItem="swk-i0-ru5" secondAttribute="leadingMargin" id="hxa-7K-pHC"/>
+                            <constraint firstItem="Vaq-Wk-bjb" firstAttribute="top" secondItem="4dO-yR-HoP" secondAttribute="bottom" id="o6N-AA-SY6"/>
                             <constraint firstAttribute="trailing" secondItem="Vf2-8Z-TNd" secondAttribute="trailing" id="s2y-Zv-WJu"/>
                             <constraint firstItem="Vaq-Wk-bjb" firstAttribute="top" secondItem="CnU-K1-tj6" secondAttribute="bottom" id="sy5-fB-7Dz"/>
+                            <constraint firstItem="31t-uI-vRc" firstAttribute="leading" secondItem="swk-i0-ru5" secondAttribute="leadingMargin" id="tsr-gc-zmk"/>
+                            <constraint firstItem="4dO-yR-HoP" firstAttribute="leading" secondItem="swk-i0-ru5" secondAttribute="leadingMargin" constant="10" id="ugD-hP-MAG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="CnU-K1-tj6" secondAttribute="trailing" id="wVu-gD-IIc"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Panoramas" id="BtB-31-KHE"/>
                     <connections>
+                        <outlet property="authorizeButton" destination="31t-uI-vRc" id="m46-fR-l6n"/>
+                        <outlet property="noPanoLabel" destination="4dO-yR-HoP" id="SSK-Sh-oXq"/>
                         <outlet property="previewHeightConstraint" destination="Q6V-wp-em0" id="eKp-Sw-SFp"/>
                         <outlet property="previewImageHeightConstraint" destination="uU5-x7-9q9" id="06h-qY-uNh"/>
                         <outlet property="previewImageView" destination="Maz-iC-EXc" id="Fux-N9-cWs"/>
