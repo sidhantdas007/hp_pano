@@ -114,13 +114,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
-    cell.included = !cell.included;
-    if (cell.included) {
-        [self addItem:indexPath.row];
-    } else {
-        [self removeItem:indexPath.row];
-    }
+    [self addItem:indexPath.row];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -388,12 +382,12 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)addItem:(NSInteger)item
 {
+    PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:item inSection:0]];
+    cell.included = YES;
     NSNumber *itemToAdd = [NSNumber numberWithInteger:item];
-    if (![self.selectedPanoramas containsObject:itemToAdd]) {
-        [self.selectedPanoramas addObject:itemToAdd];
-        if (self.selectedPanoramas.count > kMaximumSelections) {
-            [self removeItem:[[self.selectedPanoramas firstObject] integerValue]];
-        }
+    [self.selectedPanoramas addObject:itemToAdd];
+    if (self.selectedPanoramas.count > kMaximumSelections) {
+        [self removeItem:[[self.selectedPanoramas firstObject] integerValue]];
     }
     [self updatePreviewImage];
     [self enablePrint:YES];
@@ -401,10 +395,12 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)removeItem:(NSInteger)item
 {
-    NSNumber *itemToRemove = [NSNumber numberWithInteger:item];
-    [self.selectedPanoramas removeObject:itemToRemove];
-    PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:[itemToRemove integerValue] inSection:0]];
-    cell.included = NO;
+    NSNumber *itemRemoved = [NSNumber numberWithInteger:item];
+    [self.selectedPanoramas removeObjectAtIndex:0];
+    if (![self.selectedPanoramas containsObject:itemRemoved]) {
+        PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:item inSection:0]];
+        cell.included = NO;
+    }
     [self updatePreviewImage];
     if (0 == self.selectedPanoramas.count) {
         [self enablePrint:NO];

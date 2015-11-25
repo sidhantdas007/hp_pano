@@ -14,6 +14,5 @@
 @property (assign, nonatomic) BOOL included;
 @property (strong, nonatomic) PHAsset *asset;
 @property (weak, nonatomic) IBOutlet UIImageView *panoImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *checkmarkImageView;
 
 @end

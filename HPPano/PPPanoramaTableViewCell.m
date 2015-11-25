@@ -19,8 +19,6 @@ CGFloat kThumbnailHeight = 50.0;
 - (void)setIncluded:(BOOL)included
 {
     _included = included;
-    NSString *imageName = _included ? @"MPActiveCircle" : @"MPInactiveCircle";
-    self.checkmarkImageView.image = [UIImage imageNamed:imageName];
 }
 
 - (void)setAsset:(PHAsset *)asset

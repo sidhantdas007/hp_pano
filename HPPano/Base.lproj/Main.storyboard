@@ -143,37 +143,28 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aNK-14-VN1" id="1nV-Rk-qer">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="79.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
-                                                    <rect key="frame" x="13" y="12" width="285" height="56"/>
+                                                    <rect key="frame" x="97" y="4" width="367" height="72"/>
                                                     <animations/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="Fmf-Cj-Wer" secondAttribute="height" multiplier="7:1.375" id="kix-Zk-zEs"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MPInactiveCircle" translatesAutoresizingMaskIntoConstraints="NO" id="n9d-eo-cgJ" userLabel="Checkmark Image View">
-                                                    <rect key="frame" x="527" y="28" width="25" height="25"/>
-                                                    <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="25" id="2Ty-Ah-Vhi"/>
-                                                        <constraint firstAttribute="height" constant="25" id="W7Y-Nd-YpJ"/>
+                                                        <constraint firstAttribute="width" priority="500" constant="10000" id="zOY-gO-GRR"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
                                             <animations/>
                                             <constraints>
                                                 <constraint firstItem="Fmf-Cj-Wer" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="0zA-kH-v4b"/>
-                                                <constraint firstItem="n9d-eo-cgJ" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="3Iu-so-bAv"/>
-                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="height" secondItem="1nV-Rk-qer" secondAttribute="height" multiplier="0.7" id="6MU-um-rAX"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="n9d-eo-cgJ" secondAttribute="trailing" id="oyC-bL-meX"/>
-                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="leading" secondItem="1nV-Rk-qer" secondAttribute="leadingMargin" constant="5" id="sj3-Sf-4P0"/>
+                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="centerX" secondItem="1nV-Rk-qer" secondAttribute="centerX" id="FK2-kR-i6P"/>
+                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="width" relation="lessThanOrEqual" secondItem="1nV-Rk-qer" secondAttribute="width" multiplier="0.9" id="lHA-Ag-n5t"/>
+                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="height" relation="lessThanOrEqual" secondItem="1nV-Rk-qer" secondAttribute="height" multiplier="0.9" id="yng-bk-BOP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
-                                            <outlet property="checkmarkImageView" destination="n9d-eo-cgJ" id="5Mn-PL-yUy"/>
                                             <outlet property="panoImageView" destination="Fmf-Cj-Wer" id="ebA-j3-Ahv"/>
                                         </connections>
                                     </tableViewCell>
@@ -257,7 +248,7 @@
                                 <rect key="frame" x="0.0" y="186" width="600" height="29"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="cJF-0c-ILr" userLabel="Logo Image View">
@@ -311,7 +302,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="MPInactiveCircle" width="25" height="25"/>
         <image name="MPMagnify.png" width="25" height="25"/>
         <image name="logo" width="512" height="512"/>
     </resources>
