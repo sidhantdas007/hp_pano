@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		650F940F1C067475002F7932 /* PPLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650F940E1C067475002F7932 /* PPLaunchViewController.m */; };
 		658AADF61BED13DC00893D3E /* PPPanoramaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658AADF51BED13DC00893D3E /* PPPanoramaViewController.m */; };
 		658CF7C71BEF0F7A0081B0F1 /* PPPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658CF7C61BEF0F7A0081B0F1 /* PPPreviewViewController.m */; };
 		658CF7CA1BEF10350081B0F1 /* PPScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 658CF7C91BEF10350081B0F1 /* PPScrollView.m */; };
@@ -43,6 +44,8 @@
 /* Begin PBXFileReference section */
 		32AA3D1FDE691CED0B848D9B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3644E75EE9B1D3DF99D3FD1B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		650F940D1C067475002F7932 /* PPLaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLaunchViewController.h; sourceTree = "<group>"; };
+		650F940E1C067475002F7932 /* PPLaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLaunchViewController.m; sourceTree = "<group>"; };
 		658AADF41BED13DC00893D3E /* PPPanoramaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPanoramaViewController.h; sourceTree = "<group>"; };
 		658AADF51BED13DC00893D3E /* PPPanoramaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPanoramaViewController.m; sourceTree = "<group>"; };
 		658CF7C51BEF0F7A0081B0F1 /* PPPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreviewViewController.h; sourceTree = "<group>"; };
@@ -142,6 +145,8 @@
 				658CF7CC1BEF14BB0081B0F1 /* PPLandscapeNavigationController.m */,
 				658CF7CE1BEF15B50081B0F1 /* PPPortraitNavigationController.h */,
 				658CF7CF1BEF15B50081B0F1 /* PPPortraitNavigationController.m */,
+				650F940D1C067475002F7932 /* PPLaunchViewController.h */,
+				650F940E1C067475002F7932 /* PPLaunchViewController.m */,
 			);
 			path = HPPano;
 			sourceTree = "<group>";
@@ -373,6 +378,7 @@
 			files = (
 				658CF7D01BEF15B50081B0F1 /* PPPortraitNavigationController.m in Sources */,
 				658CF7CD1BEF14BB0081B0F1 /* PPLandscapeNavigationController.m in Sources */,
+				650F940F1C067475002F7932 /* PPLaunchViewController.m in Sources */,
 				658AADF61BED13DC00893D3E /* PPPanoramaViewController.m in Sources */,
 				658CF7C71BEF0F7A0081B0F1 /* PPPreviewViewController.m in Sources */,
 				65C3283F1BEC07F90071E752 /* PPPanoramaTableViewCell.m in Sources */,
