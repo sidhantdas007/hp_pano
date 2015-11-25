@@ -16,7 +16,7 @@
 #import <MPLayoutFactory.h>
 #import <MPPaper.h>
 
-@interface PPPanoramaViewController () <MPPrintDelegate>
+@interface PPPanoramaViewController () <MPPrintDelegate, PHPhotoLibraryChangeObserver>
 
 @property (weak, nonatomic) IBOutlet UIView *previewView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -58,6 +58,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     [self configureGestures];
     self.panoramaAssets = @[];
     self.selectedPanoramas = [NSMutableArray array];
+    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -295,7 +296,11 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
                 [assets enumerateObjectsUsingBlock:^(PHAsset * _Nonnull asset, NSUInteger idx, BOOL * _Nonnull stop) {
                     [panoramas addObject:asset];
                     if (asset == [assets lastObject]) {
-                        self.panoramaAssets = panoramas;
+                        NSMutableArray *descending = [NSMutableArray arrayWithCapacity:panoramas.count];
+                        for (id obj in [panoramas reverseObjectEnumerator]) {
+                            [descending addObject:obj];
+                        }
+                        self.panoramaAssets = descending;
                         [self showPhotos];
                     }
                 }];
@@ -444,6 +449,13 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     [self retrieveImages:self.previewImages height:kPreviewLargeStripHeight completion:^{
         [self performSegueWithIdentifier:@"Show Preview" sender:self];
     }];
+}
+
+#pragma mark - PHPhotoLibraryChangeObserver
+
+- (void)photoLibraryDidChange:(PHChange *)changeInstance
+{
+    [self retrievePanoramas];
 }
 
 @end
