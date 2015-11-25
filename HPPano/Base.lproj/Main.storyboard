@@ -283,7 +283,7 @@
                         <outlet property="launchImageView" destination="cJF-0c-ILr" id="JhP-DS-LE8"/>
                         <outlet property="launchImageViewWidthConstraint" destination="0kt-hB-uIh" id="dna-zv-vTQ"/>
                         <outlet property="titleLabel" destination="C1H-oi-zkf" id="kyQ-TJ-Bpr"/>
-                        <segue destination="0ix-7U-3Vr" kind="show" identifier="Show Pano" animates="NO" id="WJO-tS-XpM"/>
+                        <segue destination="0ix-7U-3Vr" kind="presentation" identifier="Show Pano" animates="NO" id="WJO-tS-XpM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p16-dC-z37" userLabel="First Responder" sceneMemberID="firstResponder"/>
