@@ -153,7 +153,7 @@
                                                         <constraint firstAttribute="width" secondItem="Fmf-Cj-Wer" secondAttribute="height" multiplier="7:1.375" id="kix-Zk-zEs"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="InactiveCircle" translatesAutoresizingMaskIntoConstraints="NO" id="n9d-eo-cgJ" userLabel="Checkmark Image View">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MPInactiveCircle" translatesAutoresizingMaskIntoConstraints="NO" id="n9d-eo-cgJ" userLabel="Checkmark Image View">
                                                     <rect key="frame" x="527" y="28" width="25" height="25"/>
                                                     <animations/>
                                                     <constraints>
@@ -262,7 +262,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="InactiveCircle" width="25" height="25"/>
+        <image name="MPInactiveCircle" width="25" height="25"/>
         <image name="MPMagnify.png" width="25" height="25"/>
     </resources>
 </document>
