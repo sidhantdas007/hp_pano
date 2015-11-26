@@ -8,13 +8,14 @@
 
 #import "PPPreviewViewController.h"
 #import "PPScrollView.h"
+#import "PPPaperView.h"
 #import <MPLayoutFactory.h>
 
 @interface PPPreviewViewController ()
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 
 @property (strong, nonatomic) IBOutletCollection(UIScrollView) NSArray *panoScrollViews;
-@property (weak, nonatomic) IBOutlet UIView *paperView;
+@property (weak, nonatomic) IBOutlet PPPaperView *paperView;
 
 @end
 
@@ -22,6 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self addGestures];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -60,15 +62,7 @@
         // Equivalent to placing it in the deprecated method -[didRotateFromInterfaceOrientation:]
         
         [self computePositions];
-
-//        self.paperView.hidden = NO;
-
     }];
-}
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 - (IBAction)doneButtonTapped:(id)sender {
@@ -83,6 +77,8 @@
     [layout layoutContentView:self.paperView inContainerView:self.containerView];
     [self layoutScrollViews];
     [self createImageViews];
+    self.paperView.sourceImages = self.images;
+    [self.paperView drawPerforations:kPPNumberOfStrips stripPercent:kPPStripHeight / kPPPaperHeight];
 }
 
 #pragma mark - Scroll views
@@ -118,11 +114,24 @@
             scrollView.contentOffset = CGPointZero;
             scrollView.contentInset = UIEdgeInsetsZero;
             scrollView.contentSize = contentView.bounds.size;
-            NSLog(@"size %d: %.1f, %.1f", idx, scrollView.contentSize.width, scrollView.contentSize.height);
-            NSLog(@"offset %d: %.1f, %.1f", idx, scrollView.contentOffset.x, scrollView.contentOffset.y);
-            NSLog(@"inset %d: %.1f, %.1f, %.1f, %.1f", idx, scrollView.contentInset.top, scrollView.contentInset.right, scrollView.contentInset.bottom, scrollView.contentInset.left);
         }
     }
+}
+
+#pragma mark - Gestures
+
+- (void)addGestures
+{
+    UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handlePreviewTap:)];
+    tapRecognizer.cancelsTouchesInView = YES;
+    tapRecognizer.numberOfTapsRequired = 1;
+    tapRecognizer.numberOfTouchesRequired = 1;
+    [self.view addGestureRecognizer:tapRecognizer];
+}
+
+- (void)handlePreviewTap:(UIGestureRecognizer *)gestureRecognizer
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

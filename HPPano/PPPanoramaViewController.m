@@ -9,6 +9,7 @@
 #import "PPPanoramaViewController.h"
 #import "PPPanoramaTableViewCell.h"
 #import "PPPreviewViewController.h"
+#import "PPPaperView.h"
 #import <Photos/Photos.h>
 #import <MP.h>
 #import <MPLayout.h>
@@ -20,10 +21,6 @@
 
 @property (weak, nonatomic) IBOutlet UIView *previewView;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UIImageView *previewImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *previewHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *previewImageHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *previewImageWidthConstraint;
 @property (strong, nonatomic) UIBarButtonItem *printButton;
 @property (strong, nonatomic) NSArray<PHAsset *> *panoramaAssets;
 @property (strong, nonatomic) NSMutableArray<NSNumber *> *selectedPanoramas; // table row number of selected items
@@ -32,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *authorizeButton;
 @property (weak, nonatomic) IBOutlet UILabel *noPanoLabel;
 @property (strong, nonatomic) UIImageView *selectionView;
+@property (weak, nonatomic) IBOutlet PPPaperView *paperView;
+@property (weak, nonatomic) IBOutlet UIImageView *magnifierImageView;
 
 @end
 
@@ -39,15 +38,10 @@
 
 NSString * const kPanoramaCellIdentifier = @"Pano Cell";
 CGFloat kHeaderHeight = 30.0;
-CGFloat kPreviewSmallStripHeight = 50.0;
+CGFloat kPreviewSmallStripHeight = 200.0;
 CGFloat kPreviewLargeStripHeight = 200.0;
 CGFloat kMaximumStripHeight = MAXFLOAT;
 NSInteger kMaximumSelections = 3;
-CGFloat kDPI = 300.0;
-CGFloat kPaperWidth = 7.0; // inches
-CGFloat kPaperHeight = 5.0; // inches
-CGFloat kStripWidth = 7.0; // inches
-CGFloat kStripHeight = 1.375; // inches
 CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)viewDidLoad {
@@ -66,9 +60,10 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     [super viewDidAppear:animated];
     [self verifyAccess];
 }
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+
+- (void)viewDidLayoutSubviews
+{
+    [self.paperView drawPerforations:kMaximumSelections stripPercent:kPPStripHeight / kPPPaperHeight];
 }
 
 - (void)configureMP
@@ -84,8 +79,8 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     return UIInterfaceOrientationMaskPortrait;
 }
 
- #pragma mark - Navigation
- 
+#pragma mark - Navigation
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UINavigationController *navController = (UINavigationController *)segue.destinationViewController;
     PPPreviewViewController *vc = (PPPreviewViewController *)navController.topViewController;
@@ -114,7 +109,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self addItem:indexPath.row];
+    [self selectedRow:indexPath.row];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -160,7 +155,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     
     PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    options.resizeMode = PHImageRequestOptionsResizeModeFast;
+    options.resizeMode = PHImageRequestOptionsResizeModeExact;
     options.synchronous = NO;
     
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -188,13 +183,14 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
             }
         }];
     });
- 
+    
 }
 
 - (void)presentPrintController
 {
-    UIImage *image = [self combinedImages:self.printableImages resolution:kDPI showLines:NO];
-    MPPrintItem *printItem = [MPPrintItemFactory printItemWithAsset:image];
+    PPPaperView *printPaper = [[PPPaperView alloc] init];
+    printPaper.sourceImages = self.printableImages;
+    MPPrintItem *printItem = [MPPrintItemFactory printItemWithAsset:printPaper.combinedImage];
     printItem.layout = [MPLayoutFactory layoutWithType:[MPLayoutFit layoutType] orientation:MPLayoutOrientationLandscape assetPosition:[MPLayout completeFillRectangle]];
     UIViewController *vc = [[MP sharedInstance] printViewControllerWithDelegate:self dataSource:nil printItem:printItem fromQueue:NO settingsOnly:NO];
     [self presentViewController:vc animated:YES completion:nil];
@@ -202,66 +198,29 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 - (void)initiatePrint
 {
-    self.printableImages = [NSMutableArray array];
-    [self retrieveImages:self.printableImages height:kMaximumStripHeight completion:^{
-        [self presentPrintController];
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:nil message:@"Preparing to print..." preferredStyle:UIAlertControllerStyleAlert];
+        [self presentViewController:alert animated:YES completion:^{
+            self.printableImages = [NSMutableArray array];
+            [self retrieveImages:self.printableImages height:kMaximumStripHeight completion:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [alert dismissViewControllerAnimated:YES completion:^{
+                        [self presentPrintController];
+                    }];
+                });
+            }];
+        }];
+    });
 }
 
-- (CGFloat)gutter
+- (CGFloat)gutterInches
 {
-    return (kPaperHeight - kMaximumSelections * kStripHeight) / (kMaximumSelections + 1);
+    return (kPPPaperHeight - kMaximumSelections * kPPStripHeight) / (kMaximumSelections + 1);
 }
 
-- (CGFloat)offset:(NSUInteger)position
+- (CGFloat)offsetInches:(NSUInteger)position
 {
-    return [self gutter] * position + kStripHeight * (position - 1);
-}
-
-- (UIImage *)combinedImages:(NSArray *)images resolution:(CGFloat)resolution showLines:(BOOL)showLines
-{
-    CGSize overallSize = CGSizeMake(kPaperWidth * resolution, kPaperHeight * resolution);
-    UIGraphicsBeginImageContext(overallSize);
-
-    if (showLines) {
-        [self drawLinesWithResolution:resolution];
-    }
-    
-    for (int idx = 0; idx < images.count; idx++) {
-        CGFloat yOffset = [self offset:idx + 1];
-        CGRect rect = CGRectMake(0, yOffset * resolution, kStripWidth * kDPI, kStripHeight * resolution);
-        UIImage *panoImage = images[idx];
-        [panoImage drawInRect:rect];
-    }
-    
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return image;
-}
-
-- (void)drawLinesWithResolution:(CGFloat)resolution
-{
-    CGSize overallSize = CGSizeMake(kPaperWidth * resolution, kPaperHeight * resolution);
-
-    for (int idx = 0; idx < kMaximumSelections; idx++) {
-        
-        CGFloat yOffset = [self offset:idx + 1];
-       
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetLineWidth(context, 10.0);
-        CGContextSetStrokeColorWithColor(context, [[UIColor colorWithRed:0.0 green:0.0 blue:0.0 alpha:0.3] CGColor]);
-        
-        CGFloat y2 = yOffset * resolution;
-        CGFloat y1 = (yOffset + kStripHeight) * resolution;
-        
-        CGContextMoveToPoint(context, 0, y1);
-        CGContextAddLineToPoint(context, overallSize.width, y1);
-        CGContextStrokePath(context);
-
-        CGContextMoveToPoint(context, 0, y2);
-        CGContextAddLineToPoint(context, overallSize.width, y2);
-        CGContextStrokePath(context);
-    }
+    return [self gutterInches] * position + kPPStripHeight * (position - 1);
 }
 
 #pragma mark - Photo library
@@ -321,7 +280,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
         [self openSettings];
     }]];
     [self presentViewController:alert animated:YES completion:nil];
-
+    
 }
 
 - (void)openSettings
@@ -369,29 +328,33 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 
 #pragma mark - Selection handling
 
-- (void)addItem:(NSInteger)item
+- (void)selectedRow:(NSInteger)row
 {
-    PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:item inSection:0]];
-    cell.included = YES;
     self.tableView.userInteractionEnabled = NO;
-    NSNumber *itemToAdd = [NSNumber numberWithInteger:item];
     if (self.selectedPanoramas.count >= kMaximumSelections) {
-        [self removeItem:[[self.selectedPanoramas firstObject] integerValue] completion:^{
-            [self.selectedPanoramas addObject:itemToAdd];
-            [self animateSelection:cell];
+        [self removeRow:[[self.selectedPanoramas firstObject] integerValue] completion:^{
+            [self addRow:row];
         }];
     } else {
-        [self.selectedPanoramas addObject:itemToAdd];
-        [self animateSelection:cell];
+        [self addRow:row];
     }
 }
 
-- (void)removeItem:(NSInteger)item completion:(void(^)(void))completion
+- (void)addRow:(NSInteger)row
 {
-    NSNumber *itemRemoved = [NSNumber numberWithInteger:item];
+    PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+    cell.included = YES;
+    NSNumber *rowToAdd = [NSNumber numberWithInteger:row];
+    [self.selectedPanoramas addObject:rowToAdd];
+    [self animateSelection:cell];
+}
+
+- (void)removeRow:(NSInteger)row completion:(void(^)(void))completion
+{
+    NSNumber *rowRemoved = [NSNumber numberWithInteger:row];
     [self.selectedPanoramas removeObjectAtIndex:0];
-    if (![self.selectedPanoramas containsObject:itemRemoved]) {
-        PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:item inSection:0]];
+    if (![self.selectedPanoramas containsObject:rowRemoved]) {
+        PPPanoramaTableViewCell *cell = (PPPanoramaTableViewCell *)[self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
         cell.included = NO;
     }
     [self updatePreviewImageWithCompletion:^{
@@ -401,6 +364,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     }];
 }
 
+
 - (void)animateSelection:(PPPanoramaTableViewCell *)cell
 {
     [self animateSelectedCell:cell completion:^{
@@ -409,6 +373,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
             self.selectionView = nil;
             self.tableView.userInteractionEnabled = YES;
             self.printButton.enabled = YES;
+            self.magnifierImageView.hidden = NO;
         }];
     }];
 }
@@ -417,8 +382,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 {
     NSMutableArray *thumbnailImages = [NSMutableArray array];
     [self retrieveImages:thumbnailImages height:kPreviewSmallStripHeight completion:^{
-        UIImage *image = [self combinedImages:thumbnailImages resolution:kDPI showLines:YES];
-        self.previewImageView.image = image;
+        self.paperView.sourceImages = thumbnailImages;
         if (completion) {
             completion();
         }
@@ -434,10 +398,10 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     self.selectionView.image = cell.panoImageView.image;
     [self.view addSubview:self.selectionView];
     
-    CGRect destinationFrame = [self.previewImageView convertRect:self.previewImageView.bounds toView:self.view];
-    CGFloat offsetY = [self offset:self.selectedPanoramas.count];
-    destinationFrame.origin.y += destinationFrame.size.height * (offsetY / kPaperHeight);
-    destinationFrame.size.height *= kStripHeight / kPaperHeight;
+    CGRect destinationFrame = [self.paperView convertRect:self.paperView.bounds toView:self.view];
+    CGFloat offsetY = [self offsetInches:self.selectedPanoramas.count];
+    destinationFrame.origin.y += destinationFrame.size.height * (offsetY / kPPPaperHeight);
+    destinationFrame.size.height *= kPPStripHeight / kPPPaperHeight;
     
     [UIView animateWithDuration:kAnimationDuration animations:^{
         self.selectionView.frame = destinationFrame;
@@ -468,15 +432,39 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     tapRecognizer.cancelsTouchesInView = YES;
     tapRecognizer.numberOfTapsRequired = 1;
     tapRecognizer.numberOfTouchesRequired = 1;
-    [self.previewImageView addGestureRecognizer:tapRecognizer];
+    [self.paperView addGestureRecognizer:tapRecognizer];
 }
 
 - (void)handlePreviewTap:(UIGestureRecognizer *)gestureRecognizer
 {
     self.previewImages = [NSMutableArray array];
     [self retrieveImages:self.previewImages height:kPreviewLargeStripHeight completion:^{
-        [self performSegueWithIdentifier:@"Show Preview" sender:self];
+        if (self.previewImages.count > 0) {
+            [self performSegueWithIdentifier:@"Show Preview" sender:self];
+        } else {
+            [self showTip];
+        }
     }];
+}
+
+- (void)showTip
+{
+    self.tableView.userInteractionEnabled = NO;
+    CGFloat step = 0.1;
+    CGFloat duration = 0.2;
+    for (int idx = 0; idx < [self.tableView visibleCells].count ; idx++) {
+        PPPanoramaTableViewCell *cell = [self.tableView visibleCells][idx];
+        CGFloat start = idx * step;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(start * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            cell.included = YES;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                cell.included = NO;
+                if (idx == [self.tableView visibleCells].count - 1) {
+                    self.tableView.userInteractionEnabled = YES;
+                }
+            });
+        });
+    }
 }
 
 #pragma mark - PHPhotoLibraryChangeObserver

@@ -23,20 +23,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3S-In-XnF" userLabel="Container View">
                                 <rect key="frame" x="20" y="84" width="560" height="496"/>
                                 <subviews>
-                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View">
+                                    <view hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ftc-7o-cAX" userLabel="Paper View" customClass="PPPaperView">
                                         <rect key="frame" x="-150" y="-129" width="700" height="501"/>
                                         <subviews>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ii3-Pk-oqS" userLabel="Top Pano">
+                                            <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ii3-Pk-oqS" userLabel="Top Pano">
                                                 <rect key="frame" x="0.0" y="140" width="540" height="106"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </scrollView>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
+                                            <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KcF-wE-tc5" userLabel="Bottom Pano">
                                                 <rect key="frame" x="0.0" y="261" width="540" height="106"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             </scrollView>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
+                                            <scrollView hidden="YES" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ft8-8g-KHJ" userLabel="Middle Pano">
                                                 <rect key="frame" x="0.0" y="16" width="540" height="106"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -108,34 +108,33 @@
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vf2-8Z-TNd" userLabel="Preview View">
-                                <rect key="frame" x="0.0" y="64" width="600" height="140"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="150"/>
                                 <subviews>
-                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Maz-iC-EXc" userLabel="Preview Image View">
-                                        <rect key="frame" x="240" y="27" width="120" height="86"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dAc-gG-yab" userLabel="Paper View" customClass="PPPaperView">
+                                        <rect key="frame" x="209" y="10" width="182" height="130"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="120" id="4MW-VB-Ohe"/>
-                                            <constraint firstAttribute="width" secondItem="Maz-iC-EXc" secondAttribute="height" multiplier="7:5" id="AYd-2a-yKF"/>
+                                            <constraint firstAttribute="width" secondItem="dAc-gG-yab" secondAttribute="height" multiplier="7:5" id="UCe-ab-AOW"/>
                                         </constraints>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MPMagnify.png" translatesAutoresizingMaskIntoConstraints="NO" id="fNL-nh-JVg" userLabel="Maginifier Image View">
-                                        <rect key="frame" x="335" y="27" width="25" height="25"/>
+                                    </view>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MPMagnify.png" translatesAutoresizingMaskIntoConstraints="NO" id="fNL-nh-JVg" userLabel="Maginifier Image View">
+                                        <rect key="frame" x="366" y="10" width="25" height="25"/>
                                         <animations/>
                                     </imageView>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Maz-iC-EXc" firstAttribute="centerX" secondItem="Vf2-8Z-TNd" secondAttribute="centerX" id="0Oa-el-cYI"/>
-                                    <constraint firstItem="Maz-iC-EXc" firstAttribute="centerY" secondItem="Vf2-8Z-TNd" secondAttribute="centerY" id="4D0-qp-EQR"/>
-                                    <constraint firstItem="fNL-nh-JVg" firstAttribute="top" secondItem="Maz-iC-EXc" secondAttribute="top" id="5ib-8b-r8d"/>
-                                    <constraint firstAttribute="height" constant="140" id="Q6V-wp-em0"/>
-                                    <constraint firstItem="fNL-nh-JVg" firstAttribute="trailing" secondItem="Maz-iC-EXc" secondAttribute="trailing" id="rPF-du-Lo0"/>
+                                    <constraint firstItem="fNL-nh-JVg" firstAttribute="trailing" secondItem="dAc-gG-yab" secondAttribute="trailing" id="16F-4P-rSi"/>
+                                    <constraint firstItem="dAc-gG-yab" firstAttribute="centerY" secondItem="Vf2-8Z-TNd" secondAttribute="centerY" id="BZk-Fb-d2Q"/>
+                                    <constraint firstItem="fNL-nh-JVg" firstAttribute="top" secondItem="dAc-gG-yab" secondAttribute="top" id="EAj-ws-0YI"/>
+                                    <constraint firstItem="dAc-gG-yab" firstAttribute="height" secondItem="Vf2-8Z-TNd" secondAttribute="height" constant="-20" id="HIN-oD-e6t"/>
+                                    <constraint firstItem="dAc-gG-yab" firstAttribute="centerX" secondItem="Vf2-8Z-TNd" secondAttribute="centerX" id="auB-a1-oaT"/>
                                 </constraints>
                             </view>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
-                                <rect key="frame" x="20" y="204" width="560" height="396"/>
+                                <rect key="frame" x="20" y="214" width="560" height="386"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -151,7 +150,7 @@
                                                     <animations/>
                                                     <color key="backgroundColor" red="0.0" green="0.58823529409999997" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 </view>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.75" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
                                                     <rect key="frame" x="107" y="6" width="347" height="68"/>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -190,6 +189,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="tintColor" red="0.0" green="0.58823529411764708" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="Vf2-8Z-TNd" firstAttribute="height" secondItem="swk-i0-ru5" secondAttribute="height" multiplier="0.25" id="12I-kj-y6p"/>
                             <constraint firstItem="Vf2-8Z-TNd" firstAttribute="leading" secondItem="swk-i0-ru5" secondAttribute="leading" id="3Tx-rd-om5"/>
                             <constraint firstItem="Vaq-Wk-bjb" firstAttribute="top" secondItem="31t-uI-vRc" secondAttribute="bottom" id="66R-mD-aWq"/>
                             <constraint firstItem="4dO-yR-HoP" firstAttribute="top" secondItem="47A-lm-Cmz" secondAttribute="bottom" id="B4c-nO-fgu"/>
@@ -210,10 +210,9 @@
                     <navigationItem key="navigationItem" title="Panoramas" id="BtB-31-KHE"/>
                     <connections>
                         <outlet property="authorizeButton" destination="31t-uI-vRc" id="m46-fR-l6n"/>
+                        <outlet property="magnifierImageView" destination="fNL-nh-JVg" id="vIQ-RT-VcD"/>
                         <outlet property="noPanoLabel" destination="4dO-yR-HoP" id="SSK-Sh-oXq"/>
-                        <outlet property="previewHeightConstraint" destination="Q6V-wp-em0" id="eKp-Sw-SFp"/>
-                        <outlet property="previewImageView" destination="Maz-iC-EXc" id="Fux-N9-cWs"/>
-                        <outlet property="previewImageWidthConstraint" destination="4MW-VB-Ohe" id="OHC-QK-II1"/>
+                        <outlet property="paperView" destination="dAc-gG-yab" id="lym-Gf-BBx"/>
                         <outlet property="previewView" destination="Vf2-8Z-TNd" id="uQ9-Lt-b74"/>
                         <outlet property="tableView" destination="CnU-K1-tj6" id="wid-sb-vPr"/>
                         <segue destination="UXW-f8-qhT" kind="presentation" identifier="Show Preview" id="Ar8-Xr-isa"/>
