@@ -134,7 +134,7 @@
                                     <constraint firstItem="fNL-nh-JVg" firstAttribute="trailing" secondItem="Maz-iC-EXc" secondAttribute="trailing" id="rPF-du-Lo0"/>
                                 </constraints>
                             </view>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
                                 <rect key="frame" x="20" y="64" width="560" height="536"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -143,12 +143,18 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="aNK-14-VN1" id="1nV-Rk-qer">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="79.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
-                                                    <rect key="frame" x="97" y="4" width="367" height="72"/>
+                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fl8-wf-Flc" userLabel="Selected View">
+                                                    <rect key="frame" x="103" y="2" width="355" height="76"/>
                                                     <animations/>
+                                                    <color key="backgroundColor" red="0.0" green="0.58823529409999997" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Fmf-Cj-Wer" userLabel="Pano Image View">
+                                                    <rect key="frame" x="107" y="6" width="347" height="68"/>
+                                                    <animations/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="Fmf-Cj-Wer" secondAttribute="height" multiplier="7:1.375" id="kix-Zk-zEs"/>
                                                         <constraint firstAttribute="width" priority="500" constant="10000" id="zOY-gO-GRR"/>
@@ -159,13 +165,18 @@
                                             <constraints>
                                                 <constraint firstItem="Fmf-Cj-Wer" firstAttribute="centerY" secondItem="1nV-Rk-qer" secondAttribute="centerY" id="0zA-kH-v4b"/>
                                                 <constraint firstItem="Fmf-Cj-Wer" firstAttribute="centerX" secondItem="1nV-Rk-qer" secondAttribute="centerX" id="FK2-kR-i6P"/>
-                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="width" relation="lessThanOrEqual" secondItem="1nV-Rk-qer" secondAttribute="width" multiplier="0.9" id="lHA-Ag-n5t"/>
-                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="height" relation="lessThanOrEqual" secondItem="1nV-Rk-qer" secondAttribute="height" multiplier="0.9" id="yng-bk-BOP"/>
+                                                <constraint firstItem="fl8-wf-Flc" firstAttribute="top" secondItem="Fmf-Cj-Wer" secondAttribute="top" constant="-4" id="OYo-PG-iIy"/>
+                                                <constraint firstItem="fl8-wf-Flc" firstAttribute="height" secondItem="Fmf-Cj-Wer" secondAttribute="height" constant="8" id="PsL-YW-lsa"/>
+                                                <constraint firstItem="fl8-wf-Flc" firstAttribute="width" secondItem="Fmf-Cj-Wer" secondAttribute="width" constant="8" id="Zyl-cv-l3h"/>
+                                                <constraint firstItem="fl8-wf-Flc" firstAttribute="leading" secondItem="Fmf-Cj-Wer" secondAttribute="leading" constant="-4" id="daf-6K-x6u"/>
+                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="width" relation="lessThanOrEqual" secondItem="1nV-Rk-qer" secondAttribute="width" constant="-8" id="lHA-Ag-n5t"/>
+                                                <constraint firstItem="Fmf-Cj-Wer" firstAttribute="height" relation="lessThanOrEqual" secondItem="1nV-Rk-qer" secondAttribute="height" constant="-12" id="yng-bk-BOP"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <animations/>
                                         <connections>
                                             <outlet property="panoImageView" destination="Fmf-Cj-Wer" id="ebA-j3-Ahv"/>
+                                            <outlet property="selectedView" destination="fl8-wf-Flc" id="WiH-E6-ayk"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

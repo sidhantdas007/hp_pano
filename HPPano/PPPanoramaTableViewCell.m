@@ -8,9 +8,16 @@
 
 #import "PPPanoramaTableViewCell.h"
 
+@interface PPPanoramaTableViewCell()
+
+@property (weak, nonatomic) IBOutlet UIView *selectedView;
+
+@end
+
 @implementation PPPanoramaTableViewCell
 
-CGFloat kThumbnailHeight = 50.0;
+CGFloat const kPPThumbnailHeight = 50.0;
+CGFloat const kPPDeselectedAlpha = 0.5;
 
 - (void)awakeFromNib {
     // Initialization code
@@ -19,6 +26,8 @@ CGFloat kThumbnailHeight = 50.0;
 - (void)setIncluded:(BOOL)included
 {
     _included = included;
+    self.selectedView.hidden = !included;
+    self.panoImageView.alpha = included ? 1.0 : kPPDeselectedAlpha;
 }
 
 - (void)setAsset:(PHAsset *)asset
@@ -29,8 +38,8 @@ CGFloat kThumbnailHeight = 50.0;
         options.resizeMode = PHImageRequestOptionsResizeModeFast;
         options.synchronous = NO;
         
-        CGFloat scale = asset.pixelHeight / kThumbnailHeight;
-        CGSize size = CGSizeMake(asset.pixelWidth / scale, kThumbnailHeight);
+        CGFloat scale = asset.pixelHeight / kPPThumbnailHeight;
+        CGSize size = CGSizeMake(asset.pixelWidth / scale, kPPThumbnailHeight);
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [[PHImageManager defaultManager] requestImageForAsset:_asset targetSize:size contentMode:PHImageContentModeAspectFill options:options resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
