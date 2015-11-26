@@ -108,19 +108,19 @@
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vf2-8Z-TNd" userLabel="Preview View">
-                                <rect key="frame" x="0.0" y="64" width="600" height="0.0"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="140"/>
                                 <subviews>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Maz-iC-EXc" userLabel="Preview Image View">
-                                        <rect key="frame" x="300" y="0.0" width="0.0" height="0.0"/>
+                                        <rect key="frame" x="240" y="27" width="120" height="86"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" id="4MW-VB-Ohe"/>
-                                            <constraint firstAttribute="height" id="uU5-x7-9q9"/>
+                                            <constraint firstAttribute="width" constant="120" id="4MW-VB-Ohe"/>
+                                            <constraint firstAttribute="width" secondItem="Maz-iC-EXc" secondAttribute="height" multiplier="7:5" id="AYd-2a-yKF"/>
                                         </constraints>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MPMagnify.png" translatesAutoresizingMaskIntoConstraints="NO" id="fNL-nh-JVg" userLabel="Maginifier Image View">
-                                        <rect key="frame" x="275" y="0.0" width="25" height="25"/>
+                                        <rect key="frame" x="335" y="27" width="25" height="25"/>
                                         <animations/>
                                     </imageView>
                                 </subviews>
@@ -130,12 +130,12 @@
                                     <constraint firstItem="Maz-iC-EXc" firstAttribute="centerX" secondItem="Vf2-8Z-TNd" secondAttribute="centerX" id="0Oa-el-cYI"/>
                                     <constraint firstItem="Maz-iC-EXc" firstAttribute="centerY" secondItem="Vf2-8Z-TNd" secondAttribute="centerY" id="4D0-qp-EQR"/>
                                     <constraint firstItem="fNL-nh-JVg" firstAttribute="top" secondItem="Maz-iC-EXc" secondAttribute="top" id="5ib-8b-r8d"/>
-                                    <constraint firstAttribute="height" id="Q6V-wp-em0"/>
+                                    <constraint firstAttribute="height" constant="140" id="Q6V-wp-em0"/>
                                     <constraint firstItem="fNL-nh-JVg" firstAttribute="trailing" secondItem="Maz-iC-EXc" secondAttribute="trailing" id="rPF-du-Lo0"/>
                                 </constraints>
                             </view>
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="80" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CnU-K1-tj6">
-                                <rect key="frame" x="20" y="64" width="560" height="536"/>
+                                <rect key="frame" x="20" y="204" width="560" height="396"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -146,7 +146,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="560" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fl8-wf-Flc" userLabel="Selected View">
+                                                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fl8-wf-Flc" userLabel="Selected View">
                                                     <rect key="frame" x="103" y="2" width="355" height="76"/>
                                                     <animations/>
                                                     <color key="backgroundColor" red="0.0" green="0.58823529409999997" blue="0.83921568629999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -212,7 +212,6 @@
                         <outlet property="authorizeButton" destination="31t-uI-vRc" id="m46-fR-l6n"/>
                         <outlet property="noPanoLabel" destination="4dO-yR-HoP" id="SSK-Sh-oXq"/>
                         <outlet property="previewHeightConstraint" destination="Q6V-wp-em0" id="eKp-Sw-SFp"/>
-                        <outlet property="previewImageHeightConstraint" destination="uU5-x7-9q9" id="06h-qY-uNh"/>
                         <outlet property="previewImageView" destination="Maz-iC-EXc" id="Fux-N9-cWs"/>
                         <outlet property="previewImageWidthConstraint" destination="4MW-VB-Ohe" id="OHC-QK-II1"/>
                         <outlet property="previewView" destination="Vf2-8Z-TNd" id="uQ9-Lt-b74"/>

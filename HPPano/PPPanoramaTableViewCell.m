@@ -18,6 +18,7 @@
 
 CGFloat const kPPThumbnailHeight = 50.0;
 CGFloat const kPPDeselectedAlpha = 0.5;
+CGFloat const kPPFadeDuration = 0.2;
 
 - (void)awakeFromNib {
     // Initialization code
@@ -25,9 +26,15 @@ CGFloat const kPPDeselectedAlpha = 0.5;
 
 - (void)setIncluded:(BOOL)included
 {
-    _included = included;
-    self.selectedView.hidden = !included;
-    self.panoImageView.alpha = included ? 1.0 : kPPDeselectedAlpha;
+    if (_included != included) {
+        _included = included;
+        CGFloat selectedAlpha = included ? 1.0 : 0.0;
+        CGFloat imageAlpha = included ? 1.0 : kPPDeselectedAlpha;
+        [UIView animateWithDuration:kPPFadeDuration animations:^{
+            self.selectedView.alpha = selectedAlpha;
+            self.panoImageView.alpha = imageAlpha;
+        }];
+    }
 }
 
 - (void)setAsset:(PHAsset *)asset
