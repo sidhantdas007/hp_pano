@@ -451,7 +451,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 {
     self.tableView.userInteractionEnabled = NO;
     CGFloat step = 0.1;
-    CGFloat duration = 0.2;
+    CGFloat duration = 0.1;
     for (int idx = 0; idx < [self.tableView visibleCells].count ; idx++) {
         PPPanoramaTableViewCell *cell = [self.tableView visibleCells][idx];
         CGFloat start = idx * step;
