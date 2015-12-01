@@ -12,8 +12,6 @@
 		658AADF61BED13DC00893D3E /* PPPanoramaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658AADF51BED13DC00893D3E /* PPPanoramaViewController.m */; };
 		658CF7C71BEF0F7A0081B0F1 /* PPPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658CF7C61BEF0F7A0081B0F1 /* PPPreviewViewController.m */; };
 		658CF7CA1BEF10350081B0F1 /* PPScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 658CF7C91BEF10350081B0F1 /* PPScrollView.m */; };
-		658CF7CD1BEF14BB0081B0F1 /* PPLandscapeNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658CF7CC1BEF14BB0081B0F1 /* PPLandscapeNavigationController.m */; };
-		658CF7D01BEF15B50081B0F1 /* PPPortraitNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658CF7CF1BEF15B50081B0F1 /* PPPortraitNavigationController.m */; };
 		65C0F6261BEA7F5300E45CBB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F6251BEA7F5300E45CBB /* main.m */; };
 		65C0F6291BEA7F5300E45CBB /* PPAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F6281BEA7F5300E45CBB /* PPAppDelegate.m */; };
 		65C0F62F1BEA7F5300E45CBB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 65C0F62D1BEA7F5300E45CBB /* Main.storyboard */; };
@@ -55,10 +53,6 @@
 		658CF7C61BEF0F7A0081B0F1 /* PPPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPreviewViewController.m; sourceTree = "<group>"; };
 		658CF7C81BEF10350081B0F1 /* PPScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPScrollView.h; sourceTree = "<group>"; };
 		658CF7C91BEF10350081B0F1 /* PPScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPScrollView.m; sourceTree = "<group>"; };
-		658CF7CB1BEF14BB0081B0F1 /* PPLandscapeNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLandscapeNavigationController.h; sourceTree = "<group>"; };
-		658CF7CC1BEF14BB0081B0F1 /* PPLandscapeNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLandscapeNavigationController.m; sourceTree = "<group>"; };
-		658CF7CE1BEF15B50081B0F1 /* PPPortraitNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPortraitNavigationController.h; sourceTree = "<group>"; };
-		658CF7CF1BEF15B50081B0F1 /* PPPortraitNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPortraitNavigationController.m; sourceTree = "<group>"; };
 		65C0F6211BEA7F5300E45CBB /* HPPano.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HPPano.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		65C0F6251BEA7F5300E45CBB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		65C0F6271BEA7F5300E45CBB /* PPAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PPAppDelegate.h; sourceTree = "<group>"; };
@@ -144,10 +138,6 @@
 				658CF7C61BEF0F7A0081B0F1 /* PPPreviewViewController.m */,
 				658CF7C81BEF10350081B0F1 /* PPScrollView.h */,
 				658CF7C91BEF10350081B0F1 /* PPScrollView.m */,
-				658CF7CB1BEF14BB0081B0F1 /* PPLandscapeNavigationController.h */,
-				658CF7CC1BEF14BB0081B0F1 /* PPLandscapeNavigationController.m */,
-				658CF7CE1BEF15B50081B0F1 /* PPPortraitNavigationController.h */,
-				658CF7CF1BEF15B50081B0F1 /* PPPortraitNavigationController.m */,
 				650F940D1C067475002F7932 /* PPLaunchViewController.h */,
 				650F940E1C067475002F7932 /* PPLaunchViewController.m */,
 				6577A3591C07BC8C007F32D8 /* PPPaperView.h */,
@@ -381,8 +371,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				658CF7D01BEF15B50081B0F1 /* PPPortraitNavigationController.m in Sources */,
-				658CF7CD1BEF14BB0081B0F1 /* PPLandscapeNavigationController.m in Sources */,
 				650F940F1C067475002F7932 /* PPLaunchViewController.m in Sources */,
 				658AADF61BED13DC00893D3E /* PPPanoramaViewController.m in Sources */,
 				658CF7C71BEF0F7A0081B0F1 /* PPPreviewViewController.m in Sources */,

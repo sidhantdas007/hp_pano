@@ -222,10 +222,10 @@
             </objects>
             <point key="canvasLocation" x="1602" y="1265"/>
         </scene>
-        <!--Portrait Navigation Controller-->
+        <!--Panorama Navigation Controller-->
         <scene sceneID="pMH-h5-j4a">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0ix-7U-3Vr" customClass="PPPortraitNavigationController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0ix-7U-3Vr" userLabel="Panorama Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Nop-bF-G8k">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -290,10 +290,10 @@
             </objects>
             <point key="canvasLocation" x="723" y="-377"/>
         </scene>
-        <!--Landscape Navigation Controller-->
+        <!--Preview Navigation Controller-->
         <scene sceneID="fgF-ys-Sbe">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UXW-f8-qhT" customClass="PPLandscapeNavigationController" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="UXW-f8-qhT" userLabel="Preview Navigation Controller" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="pWt-Jp-GDA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

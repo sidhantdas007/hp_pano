@@ -75,10 +75,6 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     [MP sharedInstance].hidePaperTypeOption = YES;
 }
 
-- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
-    return UIInterfaceOrientationMaskPortrait;
-}
-
 #pragma mark - Navigation
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
