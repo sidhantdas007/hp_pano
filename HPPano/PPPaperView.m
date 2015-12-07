@@ -12,6 +12,7 @@
 
 @property (strong, nonatomic) CAShapeLayer *perforationsLayer;
 @property (strong, nonatomic) NSArray<UIImage *> *scaledImages;
+@property (assign, nonatomic) BOOL adjustLayout;
 
 @end
 
@@ -23,6 +24,41 @@ CGFloat const kPPPaperHeight = 5.0; // inches
 CGFloat const kPPStripWidth = 7.0; // inches
 CGFloat const kPPStripHeight = 1.375; // inches
 CGFloat const kPPDotsPerInch = 300.0;
+
+NSString * const kPPLayoutOffsetXKey = @"layout_offset_x";
+NSString * const kPPLayoutOffsetYKey = @"layout_offset_y";
+NSString * const kPPLayoutScaleFactor = @"layout_scale_factor";
+CGFloat const kPPDefaultLayoutOffsetX = 0.0;
+CGFloat const kPPDefaultLayoutOffsetY = 0.0;
+CGFloat const kPPDefaultLayoutScaleFactor = 1.0;
+
+- (id)initWithLayoutAdjustment:(BOOL)adjust
+{
+    self = [super init];
+    
+    if (self) {
+        self.adjustLayout = adjust;
+    }
+        
+    return self;
+}
+
+- (CGPoint)layoutOffset
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *offsetX = [defaults stringForKey:kPPLayoutOffsetXKey];
+    CGFloat x = offsetX ? [offsetX floatValue] : kPPDefaultLayoutOffsetX;
+    NSString *offsetY = [defaults stringForKey:kPPLayoutOffsetYKey];
+    CGFloat y = offsetY ? [offsetY floatValue] : kPPDefaultLayoutOffsetY;
+    return CGPointMake(x, y);
+}
+
+- (CGFloat)layoutScale
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *scale = [defaults stringForKey:kPPLayoutScaleFactor];
+    return scale ? [scale floatValue] : kPPDefaultLayoutScaleFactor;
+}
 
 - (void)drawRect:(CGRect)rect {
     [self.combinedImage drawInRect:rect];
@@ -81,9 +117,15 @@ CGFloat const kPPDotsPerInch = 300.0;
 
 - (void)combineImages
 {
+    CGPoint origin = CGPointZero;
+    if (self.adjustLayout) {
+        CGPoint adjust = [self layoutOffset];
+        origin = CGPointMake(adjust.x * kPPDotsPerInch, adjust.y * kPPDotsPerInch);
+    }
+    
     CGSize canvasSize = CGSizeMake(kPPPaperWidth * kPPDotsPerInch, kPPPaperHeight * kPPDotsPerInch);
     UIGraphicsBeginImageContext(canvasSize);
-    [self drawCombinedInRect:CGRectMake(0, 0, canvasSize.width, canvasSize.height)];
+    [self drawCombinedInRect:CGRectMake(origin.x, origin.y, canvasSize.width, canvasSize.height)];
     _combinedImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 }
@@ -106,12 +148,20 @@ CGFloat const kPPDotsPerInch = 300.0;
 
 - (void)drawCombinedInRect:(CGRect)rect
 {
+    CGFloat scale = 1.0;
+    if (self.adjustLayout) {
+        scale = [self layoutScale];
+    }
+    
     CGFloat rowPercent = kPPStripHeight / kPPPaperHeight;
     CGFloat gutterPercent = (1.0 - kPPNumberOfStrips * rowPercent) / (kPPNumberOfStrips + 1.0);
     for (int idx = 0; idx < self.scaledImages.count; idx++) {
         CGFloat yPercent = (idx + 1) * gutterPercent + (idx) * rowPercent;
         CGFloat yPosition = rect.size.height * yPercent;
-        CGRect rowRect = CGRectIntegral(CGRectMake(0, yPosition, rect.size.width, rect.size.height * rowPercent));
+        CGRect rowRect = CGRectIntegral(CGRectMake(rect.origin.x, rect.origin.y + yPosition, rect.size.width, rect.size.height * rowPercent));
+        CGFloat dx = (rowRect.size.width - (rowRect.size.width * scale)) / 2.0;
+        CGFloat dy = (rowRect.size.height - (rowRect.size.height * scale)) / 2.0;
+        rowRect = CGRectInset(rowRect, dx, dy);
         [self.scaledImages[idx] drawInRect:rowRect];
     }
 }

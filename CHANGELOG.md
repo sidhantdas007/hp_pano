@@ -1,3 +1,8 @@
+#### 0.1.6
+###### Monday, December 7, 2015
+
+- Add layout adjust settings
+
 #### 0.1.5
 ###### Tuesday, November 30, 2015
 

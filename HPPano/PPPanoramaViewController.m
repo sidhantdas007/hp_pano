@@ -183,8 +183,8 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
 }
 
 - (void)presentPrintController
-{
-    PPPaperView *printPaper = [[PPPaperView alloc] init];
+{    
+    PPPaperView *printPaper = [[PPPaperView alloc] initWithLayoutAdjustment:YES];
     printPaper.sourceImages = self.printableImages;
     MPPrintItem *printItem = [MPPrintItemFactory printItemWithAsset:printPaper.combinedImage];
     printItem.layout = [MPLayoutFactory layoutWithType:[MPLayoutFit layoutType] orientation:MPLayoutOrientationLandscape assetPosition:[MPLayout completeFillRectangle]];

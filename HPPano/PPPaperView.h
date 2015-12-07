@@ -13,6 +13,7 @@
 @property (strong, nonatomic) NSArray<UIImage *> *sourceImages;
 @property (strong, nonatomic, readonly) UIImage *combinedImage;
 
+- (id)initWithLayoutAdjustment:(BOOL)adjust;
 - (void)drawPerforations:(NSUInteger)count stripPercent:(CGFloat)stripPercent;
 
 extern NSUInteger const kPPNumberOfStrips;

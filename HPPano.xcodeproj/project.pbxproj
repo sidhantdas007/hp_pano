@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		650F940F1C067475002F7932 /* PPLaunchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 650F940E1C067475002F7932 /* PPLaunchViewController.m */; };
 		6577A35B1C07BC8C007F32D8 /* PPPaperView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6577A35A1C07BC8C007F32D8 /* PPPaperView.m */; };
+		657EE7EC1C15695500054916 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 657EE7EB1C15695500054916 /* Settings.bundle */; };
 		658AADF61BED13DC00893D3E /* PPPanoramaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658AADF51BED13DC00893D3E /* PPPanoramaViewController.m */; };
 		658CF7C71BEF0F7A0081B0F1 /* PPPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 658CF7C61BEF0F7A0081B0F1 /* PPPreviewViewController.m */; };
 		658CF7CA1BEF10350081B0F1 /* PPScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 658CF7C91BEF10350081B0F1 /* PPScrollView.m */; };
@@ -47,6 +48,7 @@
 		650F940E1C067475002F7932 /* PPLaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLaunchViewController.m; sourceTree = "<group>"; };
 		6577A3591C07BC8C007F32D8 /* PPPaperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPaperView.h; sourceTree = "<group>"; };
 		6577A35A1C07BC8C007F32D8 /* PPPaperView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPaperView.m; sourceTree = "<group>"; };
+		657EE7EB1C15695500054916 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		658AADF41BED13DC00893D3E /* PPPanoramaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPanoramaViewController.h; sourceTree = "<group>"; };
 		658AADF51BED13DC00893D3E /* PPPanoramaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPanoramaViewController.m; sourceTree = "<group>"; };
 		658CF7C51BEF0F7A0081B0F1 /* PPPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPreviewViewController.h; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 		65C0F64B1BEA7F5300E45CBB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		65C3283D1BEC07F90071E752 /* PPPanoramaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPanoramaTableViewCell.h; sourceTree = "<group>"; };
 		65C3283E1BEC07F90071E752 /* PPPanoramaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPanoramaTableViewCell.m; sourceTree = "<group>"; };
+		65ED28F41C16A33300A81F7F /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
 		D81B966252321C8EDF1F02AF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -101,6 +104,7 @@
 		65C0F6181BEA7F5300E45CBB = {
 			isa = PBXGroup;
 			children = (
+				65ED28F41C16A33300A81F7F /* CHANGELOG.md */,
 				65C0F6231BEA7F5300E45CBB /* HPPano */,
 				65C0F63D1BEA7F5300E45CBB /* HPPanoTests */,
 				65C0F6481BEA7F5300E45CBB /* HPPanoUITests */,
@@ -142,6 +146,7 @@
 				650F940E1C067475002F7932 /* PPLaunchViewController.m */,
 				6577A3591C07BC8C007F32D8 /* PPPaperView.h */,
 				6577A35A1C07BC8C007F32D8 /* PPPaperView.m */,
+				657EE7EB1C15695500054916 /* Settings.bundle */,
 			);
 			path = HPPano;
 			sourceTree = "<group>";
@@ -296,6 +301,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				657EE7EC1C15695500054916 /* Settings.bundle in Resources */,
 				65C0F6341BEA7F5300E45CBB /* LaunchScreen.storyboard in Resources */,
 				65C0F6311BEA7F5300E45CBB /* Assets.xcassets in Resources */,
 				65C0F62F1BEA7F5300E45CBB /* Main.storyboard in Resources */,
