@@ -1,3 +1,8 @@
+#### 0.1.8
+###### Wednesday, December 9, 2015
+
+- TestFlight debug
+
 #### 0.1.7
 ###### Wednesday, December 9, 2015
 
