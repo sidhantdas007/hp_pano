@@ -7,6 +7,8 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>FooterText</key>
+			<string>These values adjust the layout of the print on the paper. The X/Y offset values shift the entire printed image on the paper. Values are in inches and positive numbers move the image down and to the right. The scale value increases or decreases the size of each panorama within its row. The center point of each panorama is anchored to the center of its perforated row and the image is increased (scale &gt; 1.0) or decreased (scale &lt; 1.0) from its normal size.</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
@@ -16,7 +18,7 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Offset X</string>
+			<string>Offset X (inches)</string>
 			<key>Key</key>
 			<string>layout_offset_x</string>
 			<key>DefaultValue</key>
@@ -34,7 +36,7 @@
 			<key>Type</key>
 			<string>PSTextFieldSpecifier</string>
 			<key>Title</key>
-			<string>Offset Y</string>
+			<string>Offset Y (inches)</string>
 			<key>Key</key>
 			<string>layout_offset_y</string>
 			<key>DefaultValue</key>

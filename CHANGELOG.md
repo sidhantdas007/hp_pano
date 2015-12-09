@@ -1,3 +1,8 @@
+#### 0.1.7
+###### Wednesday, December 9, 2015
+
+- Add descriptions to layout adjustment settings
+
 #### 0.1.6
 ###### Monday, December 7, 2015
 
