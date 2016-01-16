@@ -1,3 +1,8 @@
+#### 0.1.10
+###### Friday, January 15, 2016
+
+- Add test metrics URL to security settings
+
 #### 0.1.9
 ###### Friday, January 15, 2016
 
