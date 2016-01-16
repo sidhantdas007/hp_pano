@@ -140,7 +140,6 @@
     return circleRenderer;
 }
 
-
 #pragma mark - CLLocationManagerDelegate
 
 - (void)locationManager:(CLLocationManager *)manager

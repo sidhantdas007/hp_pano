@@ -1,3 +1,9 @@
+#### 0.1.9
+###### Friday, January 15, 2016
+
+- Update to print library 3.0.1
+- Allow network download of iCloud photos
+
 #### 0.1.8
 ###### Wednesday, December 9, 2015
 

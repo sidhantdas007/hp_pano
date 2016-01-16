@@ -44,6 +44,7 @@ CGFloat const kPPFadeDuration = 0.2;
         options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
         options.resizeMode = PHImageRequestOptionsResizeModeExact;
         options.synchronous = NO;
+        options.networkAccessAllowed = YES;
         
         CGFloat scale = asset.pixelHeight / kPPThumbnailHeight;
         CGSize size = CGSizeMake(asset.pixelWidth / scale, kPPThumbnailHeight);

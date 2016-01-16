@@ -148,6 +148,8 @@ NSString * const kPageSettingsScreenName = @"Print Preview Screen";
 NSString * const kPrintFromQueueScreenName = @"Add Job Screen";
 NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
 
+CGFloat const kMPPreviewHeightRatio = 0.61803399; // golden ratio
+
 #pragma mark - UIView
 
 - (void)viewDidLoad
@@ -160,7 +162,7 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
     
     self.mp = [MP sharedInstance];
     
-    self.cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonTapped:)];
+    self.cancelBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:MPLocalizedString(@"Cancel", @"button bar cancel button") style:UIBarButtonItemStylePlain target:self action:@selector(cancelButtonTapped:)];
 
     if( self.mp.pageSettingsCancelButtonLeft ) {
         self.navigationItem.leftBarButtonItem = self.cancelBarButtonItem;
@@ -257,6 +259,7 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
     self.jobNameCell.backgroundColor = [self.mp.appearance.settings objectForKey:kMPSelectionOptionsBackgroundColor];
     self.jobNameLabel.font = [self.mp.appearance.settings objectForKey:kMPSelectionOptionsSecondaryFont];
     self.jobNameLabel.textColor = [self.mp.appearance.settings objectForKey:kMPSelectionOptionsPrimaryFontColor];
+    self.jobNameLabel.text = MPLocalizedString(@"Name", @"job name label");
     self.jobNameTextField.font = [self.mp.appearance.settings objectForKey:kMPSelectionOptionsSecondaryFont];
     self.jobNameTextField.textColor = [self.mp.appearance.settings objectForKey:kMPSelectionOptionsSecondaryFontColor];
     self.jobNameTextField.returnKeyType = UIReturnKeyDone;
@@ -308,8 +311,10 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
     
     self.footerHeadingLabel.font = [self.mp.appearance.settings objectForKey:kMPGeneralBackgroundPrimaryFont];
     self.footerHeadingLabel.textColor = [self.mp.appearance.settings objectForKey:kMPGeneralBackgroundPrimaryFontColor];
+    self.footerHeadingLabel.text = MPLocalizedString(@"What is Print Queue?", @"footer heading describing print queue");
     self.footerTextLabel.font = [self.mp.appearance.settings objectForKey:kMPGeneralBackgroundSecondaryFont];
     self.footerTextLabel.textColor = [self.mp.appearance.settings objectForKey:kMPGeneralBackgroundSecondaryFontColor];
+    self.footerTextLabel.text = MPLocalizedString(@"Add a print to the Print Queue and receive a notification when you are near your printer.  Tap your notification or simply come back to this app to print your projects.", @"fotter text describing print queue");
     
     [self updatePrintSettingsUI];
     [[MPPrinter sharedInstance] checkLastPrinterUsedAvailability];
@@ -403,6 +408,12 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
                                                object:nil];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:kMPTrackableScreenNotification object:nil userInfo:[NSDictionary dictionaryWithObject:screenName forKey:kMPTrackableScreenNameKey]];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self  selector:@selector(orientationChanged:)  name:UIDeviceOrientationDidChangeNotification  object:nil];
+
+    [self setPreviewPaneFrame];
+
+    [self.multiPageView refreshLayout];
 }
 
 -  (void)viewWillDisappear:(BOOL)animated
@@ -417,37 +428,57 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
     self.printManager.delegate = nil;
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-        
-    [self.multiPageView refreshLayout];
-}
-
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+    [self.multiPageView cancelZoom];
+
+    self.multiPageView.rotationInProgress = YES;
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self refreshPreviewLayout];
+    } completion:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+        [self refreshPreviewLayout];
+        [self.tableView reloadData];
+        self.multiPageView.rotationInProgress = NO;
+    }];
+}
+
+- (void)orientationChanged:(NSNotification *)notification{
+    [self.multiPageView cancelZoom];
+    [self refreshPreviewLayout];
+}
+
+- (void)refreshPreviewLayout
+{
+    [self setPreviewPaneFrame];
+    [self setPageRangeKeyboardView];
+    [self.multiPageView refreshLayout];
+}
+
+- (void)setPreviewPaneFrame
+{
+    CGSize size = self.tableView.bounds.size;
+    CGRect frame = self.tableView.tableHeaderView.frame;
     
-    if( MPPageSettingsDisplayTypePreviewPane == self.displayType ) {
-        CGRect frame = self.tableView.tableHeaderView.frame;
-        frame.size.height = size.height - self.jobSummaryCell.frame.size.height - 1;
-        self.tableView.tableHeaderView.frame = frame;
-        
-        [self.multiPageView refreshLayout];
-        
-        // without this seemingly useless line, the header view is not displayed in the appropriate frame
-        self.tableView.tableHeaderView = self.tableView.tableHeaderView;
+    CGFloat height = 0.0;
+    if (MPPageSettingsDisplayTypePreviewPane == self.displayType) {
+        height = size.height - self.jobSummaryCell.frame.size.height - 1;
+    } else if (MPPageSettingsDisplayTypeSingleView == self.displayType) {
+        CGFloat printHeight = 2 * (self.tableView.rowHeight + SEPARATOR_SECTION_FOOTER_HEIGHT);
+        height = fminf(size.height - printHeight, size.height * kMPPreviewHeightRatio);
     }
     
-    [self setPageRangeKeyboardView];
+    frame.size.height = height;
+    self.tableView.tableHeaderView.frame = frame;
     
-    [self.tableView reloadData];
+    // without this seemingly useless line, the header view is not displayed in the appropriate frame
+    self.tableView.tableHeaderView = self.tableView.tableHeaderView;
 }
 
 - (void)viewDidLayoutSubviews
 {
     [self.view layoutIfNeeded];
-    
     [self.tableView bringSubviewToFront:self.pageSelectionMark];
 }
 
@@ -663,8 +694,8 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
     if (self.delegateManager.printSettings.paper) {
         self.multiPageView.blackAndWhite = self.delegateManager.blackAndWhite;
         [self.multiPageView setInterfaceOptions:[MP sharedInstance].interfaceOptions];
-        NSArray *images = [printItem previewImagesForPaper:self.delegateManager.printSettings.paper];
-        [self.multiPageView setPages:images paper:self.delegateManager.printSettings.paper layout:printItem.layout];
+
+        [self.multiPageView configurePages:printItem.numberOfPages paper:self.delegateManager.printSettings.paper layout:printItem.layout];
     }
 }
 
@@ -1419,7 +1450,7 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
         MPLogWarn(@"%lu MPPrintItems and %lu MPPageRanges.  Using default values for all MPPageRanges.", (unsigned long)self.itemsToPrint.count, (unsigned long)self.pageRanges.count);
         self.pageRanges = [[NSMutableArray alloc] initWithCapacity:self.itemsToPrint.count];
         for (int i=0; i<self.itemsToPrint.count; i++) {
-            [self.pageRanges insertObject:[[MPPageRange alloc] initWithString:@"All" allPagesIndicator:@"All" maxPageNum:firstItem.numberOfPages sortAscending:TRUE] atIndex:i];
+            [self.pageRanges insertObject:[[MPPageRange alloc] initWithString:MPLocalizedString(@"All", nil) allPagesIndicator:MPLocalizedString(@"All", nil) maxPageNum:firstItem.numberOfPages sortAscending:TRUE] atIndex:i];
         }
     }
     
@@ -1598,24 +1629,20 @@ NSString * const kSettingsOnlyScreenName = @"Print Settings Screen";
     }
     self.printManager.delegate = self;
 
-    MPPrintManagerOptions options = MPPrintManagerOriginCustom;
-    if ([self.printDelegate class] == [MPPrintActivity class]) {
-        options = MPPrintManagerOriginShare;
-    } else if ([self.printDelegate class] == [MPPrintJobsViewController class]) {
-        options = MPPrintManagerOriginQueue;
-    }
-
-    if ([self.dataSource respondsToSelector:@selector(numberOfPrintingItems)]) {
-        if ([self.dataSource numberOfPrintingItems] > 1) {
-            options += MPPrintManagerMultiJob;
-        }
-    }
-    
-    self.printManager.options = options;
-    
+    [self.printManager setOptionsForPrintDelegate:self.printDelegate dataSource:self.dataSource];
 }
 
 #pragma mark - MPMultipageViewDelegate
+
+- (UIImage *)multiPageView:(MPMultiPageView *)multiPageView getImageForPage:(NSUInteger)pageNumber
+{
+    UIImage *image = nil;
+    
+    if( pageNumber <= self.printItem.numberOfPages ) {
+        image = [self.printItem previewImageForPage:pageNumber paper:self.delegateManager.printSettings.paper];
+    }
+    return image;
+}
 
 - (void)multiPageView:(MPMultiPageView *)multiPageView didChangeFromPage:(NSUInteger)oldPageNumber ToPage:(NSUInteger)newPageNumber
 {

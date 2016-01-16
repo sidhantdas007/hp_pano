@@ -153,6 +153,7 @@ CGFloat kAnimationDuration = 0.61803399; //seconds
     options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
     options.resizeMode = PHImageRequestOptionsResizeModeExact;
     options.synchronous = NO;
+    options.networkAccessAllowed = YES;
     
     dispatch_async(dispatch_get_main_queue(), ^{
         NSInteger item = [self.selectedPanoramas[images.count] integerValue];
