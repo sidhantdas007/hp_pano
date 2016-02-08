@@ -66,6 +66,16 @@ platform :ios do
     # http://hpgo.co/X8hZhE
   end
 
+  desc "Build an ipa file for HP Inc."
+  lane :hp do
+    gym(
+      configuration:'HP Inc.',
+      output_name:'HPPano.HPInc.ipa',
+      codesigning_identity:'iPhone Distribution: Hewlett Packard',
+      provisioning_profile_path:"#{ENV['HOME']}/Library/MobileDevice/Provisioning Profiles/cfb07778-7374-4518-ab60-2c76fb95a238.mobileprovision"
+    )
+  end
+
   after_all do |lane|
     # This block is called, only if the executed lane was successful
 

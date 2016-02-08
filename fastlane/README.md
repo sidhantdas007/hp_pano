@@ -28,6 +28,11 @@ Deploy a new version to the App Store
 fastlane ios adhoc
 ```
 Publish a build to S3
+### ios hp
+```
+fastlane ios hp
+```
+Build an ipa file for HP Inc.
 
 ----
 
