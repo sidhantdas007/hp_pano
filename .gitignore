@@ -48,5 +48,5 @@ fastlane/screenshots
 # scan temporary files
 fastlane/test_output
 
-# gym results
+# gym temporary files
 fastlane/build_output
