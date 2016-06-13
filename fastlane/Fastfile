@@ -51,8 +51,8 @@ platform :ios do
     gym(
       configuration:'HP Inc.',
       output_name:'HPPano.HPInc.ipa',
-      codesigning_identity:'iPhone Distribution: Hewlett Packard',
-      provisioning_profile_path:"#{ENV['HOME']}/Library/MobileDevice/Provisioning Profiles/cfb07778-7374-4518-ab60-2c76fb95a238.mobileprovision"
+      codesigning_identity:'iPhone Distribution: HP Inc.',
+      provisioning_profile_path:"#{ENV['HOME']}/Library/MobileDevice/Provisioning Profiles/1a0943ba-4246-437c-a435-2b179bdbef91.mobileprovision"
     )
   end
 
