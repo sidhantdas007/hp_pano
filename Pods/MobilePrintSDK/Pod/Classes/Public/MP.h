@@ -39,7 +39,9 @@
 #define IS_IPHONE_6 ([[UIScreen mainScreen] bounds].size.height == 667.0f)
 #define IS_IPHONE_6_PLUS ([[UIScreen mainScreen] bounds].size.height == 736.0f)
 
-#define IS_SPLIT_VIEW_CONTROLLER_IMPLEMENTATION (IS_OS_8_OR_LATER && IS_IPAD)
+#define IS_USING_FULL_SCREEN CGRectEqualToRect([UIApplication sharedApplication].delegate.window.frame, [UIApplication sharedApplication].delegate.window.screen.bounds)
+
+#define IS_SPLIT_VIEW_CONTROLLER_IMPLEMENTATION (IS_OS_8_OR_LATER && IS_IPAD && IS_USING_FULL_SCREEN)
 
 #define IS_PORTRAIT UIDeviceOrientationIsPortrait((UIDeviceOrientation)[UIApplication sharedApplication].statusBarOrientation)
 #define IS_LANDSCAPE UIDeviceOrientationIsLandscape((UIDeviceOrientation)[UIApplication sharedApplication].statusBarOrientation)
@@ -412,6 +414,18 @@ extern NSString * const kMPPrinterPaperAreaYPoints;
  * @return The view controller that the client should present
  */
 - (UIViewController *)printViewControllerWithDelegate:(id<MPPrintDelegate>)delegate dataSource:(id<MPPrintDataSource>)dataSource printItem:(MPPrintItem *)printItem fromQueue:(BOOL)fromQueue settingsOnly:(BOOL)settingsOnly;
+
+/*!
+ * @abstract Prepares a view controller suitable for the device and OS
+ * @description This method prepares a view controller for displaying the print flow. It takes into consideration the device type and OS and prepares either a split view controller (iPad with iOS 8 or above) or a standard view controller. Both types are wrapped in a navigation controller. The controller returned is suitable for using with the UIActivity method 'activityViewController'.
+ * @param delegate An optional delegate object that implements the MPPrintDelegate protocol
+ * @param dataSource An optional data source object that implements the MPPrintDataSource protocol
+ * @param printLaterJobs The MPPrintLaterJobs to print
+ * @param fromQueue Indicates if controller being requested from the print queue
+ * @param settingsOnly Indicates that the controller will be used for settings only and not for printing
+ * @return The view controller that the client should present
+ */
+- (UIViewController *)printViewControllerWithDelegate:(id<MPPrintDelegate>)delegate dataSource:(id<MPPrintDataSource>)dataSource printLaterJobs:(NSArray *)printLaterJobs fromQueue:(BOOL)fromQueue settingsOnly:(BOOL)settingsOnly;
 
 /*!
  * @abstract Prepares a view controller suitable for the device and OS

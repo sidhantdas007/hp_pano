@@ -52,10 +52,10 @@
 
 #import <CoreFoundation/CoreFoundation.h>
 
-#import "MPReachability.h"
+#import "MPMobilePrintSDKReachability.h"
 
 
-NSString *kMPReachabilityChangedNotification = @"kMPNetworkReachabilityChangedNotification";
+NSString *kMPMobilePrintSDKReachabilityChangedNotification = @"kMPMobilePrintSDKReachabilityChangedNotification";
 
 
 #pragma mark - Supporting functions
@@ -87,17 +87,17 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 {
 #pragma unused (target, flags)
 	NSCAssert(info != NULL, @"info was NULL in ReachabilityCallback");
-	NSCAssert([(__bridge NSObject*) info isKindOfClass: [MPReachability class]], @"info was wrong class in ReachabilityCallback");
+	NSCAssert([(__bridge NSObject*) info isKindOfClass: [MPMobilePrintSDKReachability class]], @"info was wrong class in ReachabilityCallback");
 
-    MPReachability* noteObject = (__bridge MPReachability *)info;
+    MPMobilePrintSDKReachability* noteObject = (__bridge MPMobilePrintSDKReachability *)info;
     // Post a notification to notify the client that the network reachability changed.
-    [[NSNotificationCenter defaultCenter] postNotificationName: kMPReachabilityChangedNotification object: noteObject];
+    [[NSNotificationCenter defaultCenter] postNotificationName: kMPMobilePrintSDKReachabilityChangedNotification object: noteObject];
 }
 
 
 #pragma mark - Reachability implementation
 
-@implementation MPReachability
+@implementation MPMobilePrintSDKReachability
 {
 	BOOL _alwaysReturnLocalWiFiStatus; //default is NO
 	SCNetworkReachabilityRef _reachabilityRef;
@@ -105,7 +105,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 
 + (instancetype)reachabilityWithHostName:(NSString *)hostName
 {
-	MPReachability* returnValue = NULL;
+	MPMobilePrintSDKReachability* returnValue = NULL;
 	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithName(NULL, [hostName UTF8String]);
 	if (reachability != NULL)
 	{
@@ -124,7 +124,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 {
 	SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr *)hostAddress);
 
-	MPReachability* returnValue = NULL;
+	MPMobilePrintSDKReachability* returnValue = NULL;
 
 	if (reachability != NULL)
 	{
@@ -161,7 +161,7 @@ static void ReachabilityCallback(SCNetworkReachabilityRef target, SCNetworkReach
 	// IN_LINKLOCALNETNUM is defined in <netinet/in.h> as 169.254.0.0.
 	localWifiAddress.sin_addr.s_addr = htonl(IN_LINKLOCALNETNUM);
 
-	MPReachability* returnValue = [self reachabilityWithAddress: &localWifiAddress];
+	MPMobilePrintSDKReachability* returnValue = [self reachabilityWithAddress: &localWifiAddress];
 	if (returnValue != NULL)
 	{
 		returnValue->_alwaysReturnLocalWiFiStatus = YES;

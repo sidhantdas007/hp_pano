@@ -81,6 +81,10 @@ NSString * const kMPOfframpDirect = @"PrintWithNoUI";
     numCopies:(NSInteger)numCopies
         error:(NSError **)errorPtr
 {
+    if (MPPrintManagerOriginDirect & self.options) {
+        [[MPAnalyticsManager sharedManager] trackUserFlowEventWithId:kMPMetricsEventTypePrintInitiated];
+    }
+    
     MPPrintManagerError error = MPPrintManagerErrorNone;
     
     printItem.layout.paper = self.currentPrintSettings.paper;
@@ -136,6 +140,9 @@ NSString * const kMPOfframpDirect = @"PrintWithNoUI";
             if (completed && !error) {
                 [self saveLastOptionsForPrinter:controller.printInfo.printerID];
                 [self processMetricsForPrintItem:printItem andPageRange:pageRange];
+                if (MPPrintManagerOriginDirect & self.options) {
+                    [[MPAnalyticsManager sharedManager] trackUserFlowEventWithId:kMPMetricsEventTypePrintCompleted];
+                }
             }
             
             if( self.delegate && [self.delegate respondsToSelector:@selector(didFinishPrintJob:completed:error:)] ) {
@@ -187,7 +194,7 @@ NSString * const kMPOfframpDirect = @"PrintWithNoUI";
         if (![printItem.printAsset isKindOfClass:[UIImage class]]) {
             MPLogWarn(@"Using custom print renderer with non-image class:  %@", printItem.printAsset);
         }
-        MPPrintPageRenderer *renderer = [[MPPrintPageRenderer alloc] initWithImages:@[[printItem printAssetForPageRange:pageRange]] layout:printItem.layout paper:self.currentPrintSettings.paper copies:self.numberOfCopies];
+        MPPrintPageRenderer *renderer = [[MPPrintPageRenderer alloc] initWithImages:[printItem printAssetForPageRange:pageRange] layout:printItem.layout paper:self.currentPrintSettings.paper copies:self.numberOfCopies];
         controller.printPageRenderer = renderer;
     } else {
         if (1 == self.numberOfCopies) {
@@ -270,11 +277,16 @@ NSString * const kMPOfframpDirect = @"PrintWithNoUI";
 {
     NSInteger printPageCount = pageRange ? [pageRange getPages].count : printItem.numberOfPages;
     NSMutableDictionary *metrics = [NSMutableDictionary dictionaryWithDictionary:printItem.extra];
+    if (nil == [MPAnalyticsManager sharedManager].printSessionId) {
+        [[MPAnalyticsManager sharedManager] trackUserFlowEventWithId:kMPMetricsEventTypePrintInitiated];
+    }
     [metrics addEntriesFromDictionary:@{
                                         kMPOfframpKey:[self offramp],
-                                        kMPNumberPagesPrint:[NSNumber numberWithInteger:printPageCount]
+                                        kMPNumberPagesPrint:[NSNumber numberWithInteger:printPageCount],
+                                        kMPMetricsPrintSessionID:[MPAnalyticsManager sharedManager].printSessionId
                                         }];
     printItem.extra = metrics;
+    
     if ([MP sharedInstance].handlePrintMetricsAutomatically) {
         [[MPAnalyticsManager sharedManager] trackShareEventWithPrintItem:printItem andOptions:metrics];
     }

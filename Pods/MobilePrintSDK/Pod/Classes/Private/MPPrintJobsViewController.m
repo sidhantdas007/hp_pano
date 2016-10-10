@@ -141,13 +141,18 @@ NSString * const kJobListScreenName = @"Job List Screen";
 
 + (void)presentAnimated:(BOOL)animated usingController:(UIViewController *)hostController andCompletion:(void(^)(void))completion
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MP" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MP" bundle:[NSBundle bundleForClass:[MP class]]];
     UINavigationController *navigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"MPPrintJobsNavigationController"];
     [hostController presentViewController:navigationController animated:animated completion:^{
         if (completion) {
             completion();
         }
     }];
+}
+
+- (void)traitCollectionDidChange:(UITraitCollection *)previousTraitCollection
+{
+    [self.tableView reloadData];
 }
 
 #pragma mark - Button actions
@@ -221,24 +226,14 @@ NSString * const kJobListScreenName = @"Job List Screen";
         navController = ((UISplitViewController *)vc).viewControllers[0];
         vc = (MPPageSettingsTableViewController *)navController.topViewController;
     }
-    
-    if( [vc isKindOfClass:[MPPageSettingsTableViewController class]] ) {
-        MPPageSettingsTableViewController *pageSettingsController = (MPPageSettingsTableViewController *)vc;
-        pageSettingsController.printLaterJob = self.selectedPrintJob;
-    }
-    
-    if( nil != previewController  &&  [previewController isKindOfClass:[MPPageSettingsTableViewController class]] ) {
-        previewController.printLaterJob = self.selectedPrintJob;
-    }
 }
 
 - (void)printJobs:(NSArray *)printJobs
 {
     self.selectedPrintJob = printJobs[0];
     self.selectedPrintJobs = printJobs;
-    MPPrintItem *printItem = [self.selectedPrintJob.printItems objectForKey:[MPPaper titleFromSize:[MP sharedInstance].defaultPaper.paperSize]];
-    printItem.extra = self.selectedPrintJob.extra;
-    UIViewController *vc = [[MP sharedInstance] printViewControllerWithDelegate:self dataSource:self printItem:printItem fromQueue:YES settingsOnly:NO];
+
+    UIViewController *vc = [[MP sharedInstance] printViewControllerWithDelegate:self dataSource:self printLaterJobs:printJobs fromQueue:YES settingsOnly:NO];
     if( [vc class] == [UINavigationController class] ) {
         [self setViewControllerPageRange:[(UINavigationController *)vc topViewController]];
         [self.navigationController pushViewController:[(UINavigationController *)vc topViewController] animated:YES];
@@ -251,6 +246,32 @@ NSString * const kJobListScreenName = @"Job List Screen";
 - (void)didDismissPreview
 {
     self.navigationItem.rightBarButtonItem = self.savedBarButton;
+}
+
+- (void)setJobStatusImageView:(BOOL)isActive jobCell:(UITableViewCell *)jobCell
+{
+    UIImageView *imageView = nil;
+    UIImage *checkMarkImage = nil;
+    NSString *accessibiltyIdentifier = nil;
+    if(isActive) {
+        checkMarkImage = [[MP sharedInstance].appearance.settings objectForKey:kMPJobSettingsSelectedJobIcon];
+        imageView = [[UIImageView alloc] initWithImage:checkMarkImage];
+        accessibiltyIdentifier = @"MPActiveCircle";
+    } else {
+        checkMarkImage = [[MP sharedInstance].appearance.settings objectForKey:kMPJobSettingsUnselectedJobIcon];
+        imageView = [[UIImageView alloc] initWithImage:checkMarkImage];
+        accessibiltyIdentifier = @"MPInactiveCircle";
+    }
+
+    jobCell.accessoryView = imageView;
+    jobCell.selected = isActive;
+
+    jobCell.accessibilityIdentifier = accessibiltyIdentifier;
+    jobCell.accessoryView.accessibilityIdentifier = accessibiltyIdentifier;
+    jobCell.textLabel.accessibilityIdentifier = accessibiltyIdentifier;
+    jobCell.detailTextLabel.accessibilityIdentifier = accessibiltyIdentifier;
+    jobCell.accessibilityIdentifier = accessibiltyIdentifier;
+    jobCell.imageView.accessibilityIdentifier = accessibiltyIdentifier;
 }
 
 #pragma mark - Table view data source
@@ -278,16 +299,11 @@ NSString * const kJobListScreenName = @"Job List Screen";
     
     jobCell.printLaterJob = job;
     
-    UIImage *checkMarkImage = nil;
-    
     if ([self.mutableCheckMarkedPrintJobs containsObject:[NSNumber numberWithInteger:indexPath.row]]) {
-        checkMarkImage = [[MP sharedInstance].appearance.settings objectForKey:kMPJobSettingsSelectedJobIcon];
+        [self setJobStatusImageView:YES jobCell:jobCell];
     } else {
-        checkMarkImage = [[MP sharedInstance].appearance.settings objectForKey:kMPJobSettingsUnselectedJobIcon];
+        [self setJobStatusImageView:NO jobCell:jobCell];
     }
-    
-    UIImageView *checkMarkImageView = [[UIImageView alloc] initWithImage:checkMarkImage];
-    jobCell.accessoryView = checkMarkImageView;
     
     return cell;
 }
@@ -297,24 +313,17 @@ NSString * const kJobListScreenName = @"Job List Screen";
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSNumber *rowIndex = [NSNumber numberWithInteger:indexPath.row];
+    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
     
-    UIImage *checkMarkImage = nil;
     if (![self.mutableCheckMarkedPrintJobs containsObject:rowIndex]) {
         [self.mutableCheckMarkedPrintJobs addObject:rowIndex];
-        checkMarkImage = [[MP sharedInstance].appearance.settings objectForKey:kMPJobSettingsSelectedJobIcon];
-        
-        [self setJobsCounterLabel];
+        [self setJobStatusImageView:YES jobCell:cell];
     } else {
         [self.mutableCheckMarkedPrintJobs removeObject:rowIndex];
-        checkMarkImage = [[MP sharedInstance].appearance.settings objectForKey:kMPJobSettingsUnselectedJobIcon];
-        
-        [self setJobsCounterLabel];
+        [self setJobStatusImageView:NO jobCell:cell];
     }
     
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:indexPath];
-    UIImageView *check = [[UIImageView alloc] initWithImage:checkMarkImage];
-    cell.accessoryView = check;
-    
+    [self setJobsCounterLabel];
     [self setDeleteButtonStatus];
     [self setNextButtonStatus];
     [self setSelectAllButtonStatus];
@@ -372,7 +381,8 @@ NSString * const kJobListScreenName = @"Job List Screen";
             MPLogError(@"Unable to obtain offramp for print later job");
         }
         
-        [job prepareMetricswithOfframp:offramp];
+        [job prepareMetricsForOfframp:offramp];
+        [job setPrintSessionForPrintItem:printItem];
         
         NSDictionary *values = @{
                                  kMPPrintQueueActionKey:offramp,
@@ -458,7 +468,9 @@ NSString * const kJobListScreenName = @"Job List Screen";
 
 - (void)printJobsActionViewDidTapDeleteButton:(MPPrintJobsActionView *)printJobsActionView
 {
-    NSArray *checkMarkedPrintJobs = self.mutableCheckMarkedPrintJobs.copy;
+    NSSortDescriptor *highestToLowest = [NSSortDescriptor sortDescriptorWithKey:@"self" ascending:NO];
+    NSMutableArray *checkMarkedPrintJobs = self.mutableCheckMarkedPrintJobs.mutableCopy;
+    [checkMarkedPrintJobs sortUsingDescriptors:@[highestToLowest]];
     
     NSString *message = (checkMarkedPrintJobs.count > 1) ? [NSString stringWithFormat:MPLocalizedString(@"Are you sure you want to delete %d Prints?", nil), checkMarkedPrintJobs.count] : MPLocalizedString(@"Are you sure you want to delete 1 Print?", nil);
     
@@ -511,7 +523,7 @@ NSString * const kJobListScreenName = @"Job List Screen";
 
 - (void)printJobsTableViewCellDidTapImage:(MPPrintJobsTableViewCell *)printJobsTableViewCell
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MP" bundle:nil];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MP" bundle:[NSBundle bundleForClass:[MP class]]];
     MPPrintJobsPreviewViewController *vc = (MPPrintJobsPreviewViewController *)[storyboard instantiateViewControllerWithIdentifier:@"MPPrintJobsPreviewViewController"];
     vc.modalPresentationStyle = UIModalPresentationOverCurrentContext;
     vc.printLaterJob = printJobsTableViewCell.printLaterJob;

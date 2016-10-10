@@ -54,7 +54,19 @@
     CGSize contentPaperSize = CGSizeMake(self.paper.width * kMPPointsPerInch, self.paper.height * kMPPointsPerInch);
     CGSize printerPaperSize = [self.paper printerPaperSize];
     CGSize renderContentSize = CGSizeMake(contentRect.size.width * contentPaperSize.width / printerPaperSize.width, contentRect.size.height * contentPaperSize.height / printerPaperSize.height);
-    CGRect insetContentRect = CGRectInset(CGRectMake(0, 0, renderContentSize.width, renderContentSize.height), self.layout.borderInches * kMPPointsPerInch, self.layout.borderInches * kMPPointsPerInch);
+    CGRect insetContentRect = CGRectInset(CGRectMake(contentRect.origin.x, contentRect.origin.y, renderContentSize.width, renderContentSize.height), self.layout.borderInches * kMPPointsPerInch, self.layout.borderInches * kMPPointsPerInch);
+    
+    MPLogDebug(@"~~~~~~~~~~~~~~~~~~~~~");
+    MPLogDebug(@"PRINT PAGE RENDERER");
+    MPLogDebug(@"~~~~~~~~~~~~~~~~~~~~~");
+    [[MPLogger sharedInstance] logSize:image.size withName:@"IMAGE"];
+    [[MPLogger sharedInstance] logRect:contentRect withName:@"CONTENT"];
+    [[MPLogger sharedInstance] logSize:CGSizeMake(self.paper.width, self.paper.height) withName:@"PAPER (inches)"];
+    [[MPLogger sharedInstance] logSize:contentPaperSize withName:@"PAPER (points)"];
+    [[MPLogger sharedInstance] logSize:printerPaperSize withName:@"PRINTER PAPER"];
+    [[MPLogger sharedInstance] logSize:renderContentSize withName:@"RENDER SIZE"];
+    [[MPLogger sharedInstance] logRect:insetContentRect withName:@"INSET"];
+    MPLogDebug(@"~~~~~~~~~~~~~~~~~~~~~");
     
     [self.layout drawContentImage:image inRect:insetContentRect];
 }

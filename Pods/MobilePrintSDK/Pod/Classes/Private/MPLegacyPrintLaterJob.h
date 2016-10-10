@@ -10,20 +10,8 @@
 // the license agreement.
 //
 
-#import "UIView+MPBackground.h"
+#import "MPPrintLaterJob.h"
 
-@implementation UIView (MPBackground)
-
-- (UIImage *)MPScreenshotImage
-{
-    UIGraphicsBeginImageContextWithOptions(self.bounds.size, self.opaque, 0);
-    [self.layer renderInContext:UIGraphicsGetCurrentContext()];
-    
-    UIImage * img = UIGraphicsGetImageFromCurrentImageContext();
-    
-    UIGraphicsEndImageContext();
-    
-    return img;
-}
+@interface MPLegacyPrintLaterJob : MPPrintLaterJob
 
 @end

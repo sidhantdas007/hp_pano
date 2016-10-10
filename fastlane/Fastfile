@@ -23,8 +23,6 @@ default_platform :ios
 platform :ios do
   before_all do
     ensure_git_status_clean
-    ensure_git_branch(branch:'fastlane')
-    cocoapods
   end
 
   desc "Runs all the tests"
@@ -32,14 +30,22 @@ platform :ios do
     scan
   end
 
+  desc "Submit a new Beta Build to Apple TestFlight"
+  desc "This will also make sure the profile is up to date"
+  lane :apple do
+    match(type:'appstore')
+    gym
+    pilot(skip_submission: true)
+  end
+
   desc "Publish a build to S3"
-  lane :adhoc do
-    match(type:'adhoc')
+  lane :aws do
     gym
     s3(
       region:'us-west-2',
       bucket:'pi-ios-apps',
       html_file_name:'pano.html',
+      html_template_path:'fastlane/s3.html.erb',
       version_file_name:'pano.json',
       path:'fastlane/HPPano/v{CFBundleShortVersionString}_b{CFBundleVersion}/'
     )
@@ -49,10 +55,9 @@ platform :ios do
   desc "Build an ipa file for HP Inc."
   lane :hp do
     gym(
+      export_method: 'app-store',
       configuration:'HP Inc.',
       output_name:'HPPano.HPInc.ipa',
-      codesigning_identity:'iPhone Distribution: HP Inc.',
-      provisioning_profile_path:"#{ENV['HOME']}/Library/MobileDevice/Provisioning Profiles/1a0943ba-4246-437c-a435-2b179bdbef91.mobileprovision"
     )
   end
 

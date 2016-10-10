@@ -13,6 +13,7 @@
 #import "MP.h"
 #import "MPPageRangeKeyboardView.h"
 #import "UIColor+MPStyle.h"
+#import "NSBundle+MPLocalizable.h"
 
 @interface MPPageRangeKeyboardView ()
 
@@ -29,14 +30,16 @@
 
 @implementation MPPageRangeKeyboardView
 
-NSString * const kPageRangeAllPages = @"All";
-NSString * const kPageRangeNoPages = @"No pages selected";
+#define MP_PAGE_RANGE_ALL_PAGES @"All"
+#define MP_PAGE_RANGE_NO_PAGES @"No pages selected"
+NSString *kPageRangeAllPages= MP_PAGE_RANGE_ALL_PAGES;
+NSString *kPageRangeNoPages = MP_PAGE_RANGE_NO_PAGES;
 
-static NSString *kBackButtonText = @"⌫";
-static NSString *kCheckButtonText = @"Done";
-static NSString *kAllButtonText = @"ALL";
-static NSString *kAllPagesIndicator = @"";
-static NSString *kPlaceholderText = @"e.g. 1,3-5";
+static NSString *kBackButtonText;
+static NSString *kCheckButtonText;
+static NSString *kAllButtonText;
+static NSString *kAllPagesIndicator;
+static NSString *kPlaceholderText;
 
 - (id)initWithFrame:(CGRect)frame textField:(UITextField *)textField maxPageNum:(NSInteger)maxPageNum
 {
@@ -45,6 +48,15 @@ static NSString *kPlaceholderText = @"e.g. 1,3-5";
 
 - (id) loadView:(UITextField *)textField maxPageNum:(NSInteger)maxPageNum
 {
+    kPageRangeAllPages = MPLocalizedString(MP_PAGE_RANGE_ALL_PAGES, @"Specifies that all pages will be selected");
+    kPageRangeNoPages = MPLocalizedString(MP_PAGE_RANGE_NO_PAGES, @"Specifies that no pages are selected for printing");
+
+    kBackButtonText = @"⌫";
+    kCheckButtonText = MPLocalizedString(@"Done", @"Used on a button for closing the dialog");
+    kAllButtonText = MPLocalizedString(@"ALL", @"Text used on a button that selects all pages for printing");
+    kAllPagesIndicator = @"";
+    kPlaceholderText = MPLocalizedString(@"e.g. 1,3-5", @"Text used to give an example of how to enter a page range");
+
     self.textField = textField;
     self.textField.placeholder = kPlaceholderText;
     self.buttons = [[NSMutableArray alloc] init];
@@ -87,7 +99,6 @@ static NSString *kPlaceholderText = @"e.g. 1,3-5";
 
 - (void)addButtonsLandscape
 {
-    NSLog(@"Adding landscape buttons: %@", self);
     NSArray *buttonTitles = @[@"1", @"2", @"3", @"4", @"5", @"6", @",", kBackButtonText, @"7", @"8", @"9", @"0",kAllButtonText, @"-", kCheckButtonText];
     
     [self layoutButtons:buttonTitles buttonsPerRow:8 wideAllButton:TRUE];
@@ -95,7 +106,6 @@ static NSString *kPlaceholderText = @"e.g. 1,3-5";
 
 - (void)addButtonsPortrait
 {
-    NSLog(@"Adding portrait buttons: %@", self);
     NSArray *buttonTitles = @[@"1", @"2", @"3", kBackButtonText, @"4", @"5", @"6", @",", @"7", @"8", @"9", @"-", @"0", kAllButtonText, kCheckButtonText];
 
     [self layoutButtons:buttonTitles buttonsPerRow:4 wideAllButton:TRUE];
@@ -104,7 +114,7 @@ static NSString *kPlaceholderText = @"e.g. 1,3-5";
 - (void)layoutButtons:(NSArray *)buttonTitles buttonsPerRow:(NSInteger)buttonsPerRow wideAllButton:(BOOL)doubleWideAllButton
 {
     // The keyboard will take the width of the entire screen, not just our frame
-    CGRect screenFrame = [[UIScreen mainScreen] bounds];
+    CGRect screenFrame = [self screenFrame];
                     
     UIFont *baseFont = [self.mp.appearance.settings objectForKey:kMPSelectionOptionsPrimaryFont];
     
@@ -287,6 +297,21 @@ static NSString *kPlaceholderText = @"e.g. 1,3-5";
         UITextPosition *newPosition = [self.textField positionFromPosition:selectedTextRange.start offset:string.length];
         self.textField.selectedTextRange = [self.textField textRangeFromPosition:newPosition toPosition:newPosition];
     }
+}
+
+#pragma mark - Utils
+- (CGRect)screenFrame
+{
+    CGRect screenFrame = [UIScreen mainScreen].bounds;
+    
+    // iOS8 and later adjust the mainScreen bounds based on orientation
+    //  In order to support iOS 7, we add this special case
+    if (!IS_OS_8_OR_LATER  &&  IS_LANDSCAPE) {
+        CGSize screenSize = [UIScreen mainScreen].bounds.size;
+        screenFrame.size = CGSizeMake(screenSize.height, screenSize.width);
+    }
+    
+    return screenFrame;
 }
 
 @end

@@ -14,6 +14,7 @@
 #import <UIKit/UIKit.h>
 #import <CoreLocation/CoreLocation.h>
 #import "MP.h"
+#import "MPPageSettingsSplitViewController.h"
 
 /*!
  * @abstract All of the different possible configurations for the MPPageSettingsTableViewController screen
@@ -41,7 +42,7 @@ typedef enum {
  * @abstract The view controller class for displaying the print preview
  * @discussion This class implements the view controller used for displaying the print preview screen and associated page settings used for printing.
  */
-@interface MPPageSettingsTableViewController : UITableViewController
+@interface MPPageSettingsTableViewController : UITableViewController <MPPageSettingsSplitViewControllerProtocol>
 
 /*!
  * @abstract Notification sent when a default printer is added
@@ -81,9 +82,9 @@ extern NSString * const kMPDefaultPrinterRemovedNotification;
 @property (nonatomic, weak) id<MPPrintDataSource> dataSource;
 
 /*!
- * @abstract The printLaterJob, if any, associated with the page settings
+ * @abstract The printLaterJobs, if any, associated with the page settings
  */
-@property (assign, nonatomic) MPPrintLaterJob *printLaterJob;
+@property (strong, nonatomic) NSArray *printLaterJobs;
 
 /*!
  * @abstract The type of page settings screen to display
@@ -98,8 +99,10 @@ extern NSString * const kMPDefaultPrinterRemovedNotification;
 /*!
  * @abstract If this instance of MPPageSettingsTableViewController has a preview view controller for displaying the multiPageView and jobSummaryCell,
  *  this is the preview view controller.
+ *  This must be strong, not weak, in order to maintain state through compact-regular size changes.  It is set to nil in dealloc to prevent a 
+ *  memory leak.
  */
-@property (weak, nonatomic) MPPageSettingsTableViewController *previewViewController;
+@property (strong, nonatomic) MPPageSettingsTableViewController *previewViewController;
 
 /*!
  * @abstract Causes a refresh of the data displayed by the view controller

@@ -27,6 +27,8 @@ NSString * const kMPPrintLaterJobExtra = @"kMPPrintLaterJobExtra";
 
 @implementation MPPrintLaterJob
 
+@synthesize customAnalytics = _customAnalytics;
+
 - (id) init
 {
     self = [super init];
@@ -101,13 +103,41 @@ NSString * const kMPPrintLaterJobExtra = @"kMPPrintLaterJobExtra";
     return [self printItemForPaperSize:[MP sharedInstance].defaultPaper.sizeTitle];
 }
 
-- (void)prepareMetricswithOfframp:(NSString *)offramp
+- (void)setPrintSessionForPrintItem:(MPPrintItem *)printItem
+{
+    NSMutableDictionary *jopOptions = [NSMutableDictionary dictionaryWithDictionary:self.extra];
+    [jopOptions addEntriesFromDictionary:@{ kMPMetricsPrintSessionID:[printItem.extra objectForKey:kMPMetricsPrintSessionID] }];
+    self.extra = jopOptions;
+}
+
+- (void)prepareMetricsForOfframp:(NSString *)offramp
 {
     NSInteger printPageCount = self.pageRange ? [self.pageRange getPages].count : self.defaultPrintItem.numberOfPages;
     NSMutableDictionary *jopOptions = [NSMutableDictionary dictionaryWithDictionary:self.extra];
-    [jopOptions addEntriesFromDictionary:@{ kMPOfframpKey:offramp }];
-    [jopOptions setObject:[NSNumber numberWithInteger:printPageCount] forKey:kMPNumberPagesPrint];
+    [jopOptions addEntriesFromDictionary:@{
+                                           kMPOfframpKey:offramp,
+                                           kMPNumberPagesPrint:[NSNumber numberWithInteger:printPageCount]}];
+
     self.extra = jopOptions;
+}
+
+- (NSDictionary *)customAnalytics
+{
+    _customAnalytics = [self.extra objectForKey:kMPCustomAnalyticsKey];
+    
+    if (nil == _customAnalytics) {
+        [self setCustomAnalytics:[[NSMutableDictionary alloc] init]];
+        _customAnalytics = [self.extra objectForKey:kMPCustomAnalyticsKey];
+    }
+    
+    return _customAnalytics;
+}
+
+- (void)setCustomAnalytics:(NSDictionary *)customAnalytics
+{
+    NSMutableDictionary *extras = [self.extra mutableCopy];
+    [extras setObject:customAnalytics forKey:kMPCustomAnalyticsKey];
+    self.extra = extras;
 }
 
 - (NSString *)description

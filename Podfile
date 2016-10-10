@@ -1,5 +1,6 @@
 platform :ios, '8.4'
 
-pod 'MobilePrintSDK'
+target 'HPPano'
 
-xcodeproj 'HPPano'
+pod 'MobilePrintSDK', git: 'git@github.com:IPGPTP/ios-print-sdk.git', branch: 'master'
+

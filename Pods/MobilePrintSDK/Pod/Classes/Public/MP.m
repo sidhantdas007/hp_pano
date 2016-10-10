@@ -21,7 +21,7 @@
 #import <CoreFoundation/CoreFoundation.h>
 #import "MPLayoutFactory.h"
 
-NSString * const kMPLibraryVersion = @"3.0.1";
+NSString * const kMPLibraryVersion = @"3.0.9";
 
 NSString * const kLaterActionIdentifier = @"LATER_ACTION_IDENTIFIER";
 NSString * const kPrintActionIdentifier = @"PRINT_ACTION_IDENTIFIER";
@@ -138,95 +138,104 @@ BOOL const kMPDefaultUniqueDeviceIdPerApp = YES;
 - (void)handleShareCompletedNotification:(NSNotification *)notification
 {
     NSString *offramp = [notification.userInfo objectForKey:kMPOfframpKey];
-    if ([MPPrintManager printingOfframp:offramp]  && self.handlePrintMetricsAutomatically) {
+    
+    if ([MPPrintManager printingOfframp:offramp] && self.handlePrintMetricsAutomatically) {
         // The client app must disable automatic print metric handling in order to post print metrics via the notification system
         MPLogError(@"Cannot post extended metrics notification while automatic metric handling is active");
         return;
     }
-    [[MPAnalyticsManager sharedManager] trackShareEventWithPrintItem:notification.object andOptions:notification.userInfo];
+    
+    if ([[notification.object class] isSubclassOfClass:[MPPrintItem class]]) {
+        [[MPAnalyticsManager sharedManager] trackShareEventWithPrintItem:notification.object andOptions:notification.userInfo];
+    } else {
+        [[MPAnalyticsManager sharedManager] trackShareEventWithPrintLaterJob:notification.object andOptions:notification.userInfo];
+    }
 }
 
 #pragma mark - Getter methods
 
-- (UIViewController *)printViewControllerWithDelegate:(id<MPPrintDelegate>)delegate dataSource:(id<MPPrintDataSource>)dataSource printItem:(MPPrintItem *)printItem fromQueue:(BOOL)fromQueue settingsOnly:(BOOL)settingsOnly;
+- (UIViewController *)printViewControllerWithDelegate:(id<MPPrintDelegate>)delegate
+                                           dataSource:(id<MPPrintDataSource>)dataSource
+                                       printLaterJobs: (NSArray *)printLaterJobs
+                                            fromQueue:(BOOL)fromQueue
+                                         settingsOnly:(BOOL)settingsOnly
 {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MP" bundle:[NSBundle mainBundle]];
+    MPPrintLaterJob *firstJob = printLaterJobs[0];
     
-    if (IS_SPLIT_VIEW_CONTROLLER_IMPLEMENTATION) {
-        UISplitViewController *pageSettingsSplitViewController = (UISplitViewController *)[storyboard instantiateViewControllerWithIdentifier:@"MPPageSettingsSplitViewController"];
-        
-        if( 1 == pageSettingsSplitViewController.viewControllers.count ) {
-            MPLogError(@"Only one navController created for the pageSettingsSplitViewController... correcting");
-            UINavigationController *activeNavigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"MPActiveNavigationController"];
-            UINavigationController *detailsNavigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"MPPreviewNavigationController"];
-            NSMutableArray *viewControllers = [[NSMutableArray alloc] initWithObjects:activeNavigationController, detailsNavigationController, nil];
-            pageSettingsSplitViewController.viewControllers = viewControllers;
+    MPPrintItem *printItem = [firstJob.printItems objectForKey:self.defaultPaper.sizeTitle];
+    printItem.extra = firstJob.extra;
+    
+    UIViewController *vc = [self printViewControllerWithDelegate:delegate dataSource:dataSource printItem:printItem fromQueue:fromQueue settingsOnly:settingsOnly];
+    
+    if ([vc isKindOfClass:[UINavigationController class]]) {
+        ((MPPageSettingsTableViewController *)((UINavigationController *)vc).viewControllers[0]).printLaterJobs = printLaterJobs;
+    } else if ([vc isKindOfClass:[UISplitViewController class]]){
+        for (UINavigationController *navController in ((UISplitViewController *)vc).viewControllers) {
+            MPPageSettingsTableViewController *pageSettings = navController.viewControllers[0];
+            pageSettings.printLaterJobs = printLaterJobs;
         }
-        
-        UINavigationController *detailsNavigationController = pageSettingsSplitViewController.viewControllers[1];
-        if( nil == (MPPageSettingsTableViewController *)detailsNavigationController.topViewController ) {
-            MPLogError(@"Preview pane view controller failed to be created... correcting");
-            MPPageSettingsTableViewController *previewPane = [storyboard instantiateViewControllerWithIdentifier:@"MPPageSettingsTableViewController"];
-            [detailsNavigationController pushViewController:previewPane animated:NO];
-        }
-        detailsNavigationController.navigationBar.translucent = NO;
-        MPPageSettingsTableViewController *previewPane = (MPPageSettingsTableViewController *)detailsNavigationController.topViewController;
-        previewPane.dataSource = dataSource;
-        previewPane.printItem = printItem;
-        previewPane.displayType = MPPageSettingsDisplayTypePreviewPane;
-        
-        UINavigationController *masterNavigationController = pageSettingsSplitViewController.viewControllers[0];
-        if( nil == (MPPageSettingsTableViewController *)masterNavigationController.topViewController ) {
-            MPLogError(@"Page Settings view controller failed to be created... correcting");
-            MPPageSettingsTableViewController *pageSettingsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"MPPageSettingsTableViewController"];
-            [masterNavigationController pushViewController:pageSettingsTableViewController animated:NO];
-        }
-        masterNavigationController.navigationBar.translucent = NO;
-        MPPageSettingsTableViewController *pageSettingsTableViewController = (MPPageSettingsTableViewController *)masterNavigationController.topViewController;
-        pageSettingsTableViewController.displayType = MPPageSettingsDisplayTypePageSettingsPane;
-        pageSettingsTableViewController.printDelegate = delegate;
-        pageSettingsTableViewController.dataSource = dataSource;
-        pageSettingsTableViewController.printItem = printItem;
-        pageSettingsSplitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
-        pageSettingsTableViewController.previewViewController = previewPane;
-       
-        if( fromQueue ) {
-            pageSettingsTableViewController.mode = MPPageSettingsModePrintFromQueue;
-            previewPane.mode = MPPageSettingsModePrintFromQueue;
-        } else if( settingsOnly ) {
-            pageSettingsTableViewController.mode = MPPageSettingsModeSettingsOnly;
-            previewPane.mode = MPPageSettingsModeSettingsOnly;
-        } else {
-            pageSettingsTableViewController.mode = MPPageSettingsModePrint;
-            previewPane.mode = MPPageSettingsModePrint;
-        }
-
-        return pageSettingsSplitViewController;
-    } else {
-        // Is not possible to use UISplitViewController in iOS 7 without been the first view controller of the app. You can however do tricky workarounds like embbeding the Split View Controller in a Container View Controller, but that can end up in difficult bugs to find.
-        // From Apple Documentation (iOS 7):
-        // "you must always install the view from a UISplitViewController object as the root view of your application’s window. [...] Split view controllers cannot be presented modally."
-        MPPageSettingsTableViewController *pageSettingsTableViewController = (MPPageSettingsTableViewController *)[storyboard instantiateViewControllerWithIdentifier:@"MPPageSettingsTableViewController"];
-        
-        pageSettingsTableViewController.displayType = MPPageSettingsDisplayTypeSingleView;
-        pageSettingsTableViewController.printItem = printItem;
-        pageSettingsTableViewController.printDelegate = delegate;
-        pageSettingsTableViewController.dataSource = dataSource;
-        
-        if( fromQueue ) {
-            pageSettingsTableViewController.mode = MPPageSettingsModePrintFromQueue;
-        } else if( settingsOnly ) {
-            pageSettingsTableViewController.mode = MPPageSettingsModeSettingsOnly;
-        } else {
-            pageSettingsTableViewController.mode = MPPageSettingsModePrint;
-        }
-
-        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:pageSettingsTableViewController];
-        navigationController.navigationBar.translucent = NO;
-        navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-        
-        return navigationController;
     }
+    
+    return vc;
+}
+
+- (UIViewController *)printViewControllerWithDelegate:(id<MPPrintDelegate>)delegate
+                                           dataSource:(id<MPPrintDataSource>)dataSource
+                                            printItem:(MPPrintItem *)printItem
+                                            fromQueue:(BOOL)fromQueue
+                                         settingsOnly:(BOOL)settingsOnly;
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MP" bundle:[NSBundle bundleForClass:[MP class]]];
+    
+    UISplitViewController *pageSettingsSplitViewController = (UISplitViewController *)[storyboard instantiateViewControllerWithIdentifier:@"MPPageSettingsSplitViewController"];
+    
+    if( 1 == pageSettingsSplitViewController.viewControllers.count ) {
+        MPLogError(@"Only one navController created for the pageSettingsSplitViewController... correcting");
+        UINavigationController *activeNavigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"MPActiveNavigationController"];
+        UINavigationController *detailsNavigationController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"MPPreviewNavigationController"];
+        NSMutableArray *viewControllers = [[NSMutableArray alloc] initWithObjects:activeNavigationController, detailsNavigationController, nil];
+        pageSettingsSplitViewController.viewControllers = viewControllers;
+    }
+    
+    UINavigationController *detailsNavigationController = pageSettingsSplitViewController.viewControllers[1];
+    if( nil == (MPPageSettingsTableViewController *)detailsNavigationController.topViewController ) {
+        MPLogError(@"Preview pane view controller failed to be created... correcting");
+        MPPageSettingsTableViewController *previewPane = [storyboard instantiateViewControllerWithIdentifier:@"MPPageSettingsTableViewController"];
+        [detailsNavigationController pushViewController:previewPane animated:NO];
+    }
+    detailsNavigationController.navigationBar.translucent = NO;
+    MPPageSettingsTableViewController *previewPane = (MPPageSettingsTableViewController *)detailsNavigationController.topViewController;
+    previewPane.dataSource = dataSource;
+    previewPane.printItem = printItem;
+    previewPane.displayType = MPPageSettingsDisplayTypePreviewPane;
+    
+    UINavigationController *masterNavigationController = pageSettingsSplitViewController.viewControllers[0];
+    if( nil == (MPPageSettingsTableViewController *)masterNavigationController.topViewController ) {
+        MPLogError(@"Page Settings view controller failed to be created... correcting");
+        MPPageSettingsTableViewController *pageSettingsTableViewController = [storyboard instantiateViewControllerWithIdentifier:@"MPPageSettingsTableViewController"];
+        [masterNavigationController pushViewController:pageSettingsTableViewController animated:NO];
+    }
+    masterNavigationController.navigationBar.translucent = NO;
+    MPPageSettingsTableViewController *pageSettingsTableViewController = (MPPageSettingsTableViewController *)masterNavigationController.topViewController;
+    pageSettingsTableViewController.displayType = MPPageSettingsDisplayTypePageSettingsPane;
+    pageSettingsTableViewController.printDelegate = delegate;
+    pageSettingsTableViewController.dataSource = dataSource;
+    pageSettingsTableViewController.printItem = printItem;
+    pageSettingsSplitViewController.preferredDisplayMode = UISplitViewControllerDisplayModeAllVisible;
+    pageSettingsTableViewController.previewViewController = previewPane;
+    
+    if( fromQueue ) {
+        pageSettingsTableViewController.mode = MPPageSettingsModePrintFromQueue;
+        previewPane.mode = MPPageSettingsModePrintFromQueue;
+    } else if( settingsOnly ) {
+        pageSettingsTableViewController.mode = MPPageSettingsModeSettingsOnly;
+        previewPane.mode = MPPageSettingsModeSettingsOnly;
+    } else {
+        pageSettingsTableViewController.mode = MPPageSettingsModePrint;
+        previewPane.mode = MPPageSettingsModePrint;
+    }
+    
+    return pageSettingsSplitViewController;
 }
 
 - (UIViewController *)printLaterViewControllerWithDelegate:(id<MPAddPrintLaterDelegate>)delegate printLaterJob:(MPPrintLaterJob *)printLaterJob
@@ -238,23 +247,20 @@ BOOL const kMPDefaultUniqueDeviceIdPerApp = YES;
     
     UIViewController *vc = [self printViewControllerWithDelegate:nil dataSource:nil printItem:printItem fromQueue:NO settingsOnly:NO];
     
-    if( [vc isKindOfClass:[UINavigationController class]] ) {
-        pageSettingsTableViewController = (MPPageSettingsTableViewController *)((UINavigationController *)vc).topViewController;
-    } else if( [vc isKindOfClass:[UISplitViewController class]] ) {
+    if( [vc isKindOfClass:[UISplitViewController class]] ) {
         UINavigationController *masterNavigationController = (UINavigationController *)((UISplitViewController *)vc).viewControllers[0];
         pageSettingsTableViewController = (MPPageSettingsTableViewController *)masterNavigationController.topViewController;
+        pageSettingsTableViewController.printLaterJobs =  [[NSArray alloc] initWithObjects:printLaterJob, nil];
+        pageSettingsTableViewController.printLaterDelegate = delegate;
+        pageSettingsTableViewController.mode = MPPageSettingsModeAddToQueue;
+        pageSettingsTableViewController.printItem = printItem;
 
         UINavigationController *previewNavigationController = (UINavigationController *)((UISplitViewController *)vc).viewControllers[1];
         previewViewController = (MPPageSettingsTableViewController *)previewNavigationController.topViewController;
         previewViewController.mode = MPPageSettingsModeAddToQueue;
-        previewViewController.printLaterJob = printLaterJob;
-    } else {
-        pageSettingsTableViewController = (MPPageSettingsTableViewController *)vc;
+        previewViewController.printLaterJobs =  [[NSArray alloc] initWithObjects:printLaterJob, nil];
+        previewViewController.printItem = printItem;
     }
-    
-    pageSettingsTableViewController.printLaterJob = printLaterJob;
-    pageSettingsTableViewController.printLaterDelegate = delegate;
-    pageSettingsTableViewController.mode = MPPageSettingsModeAddToQueue;
     
     return vc;
 }
@@ -304,6 +310,14 @@ BOOL const kMPDefaultUniqueDeviceIdPerApp = YES;
 - (BOOL)isWifiConnected
 {
     return [[MPWiFiReachability sharedInstance] isWifiConnected];
+}
+
+#pragma mark - Print library version 
+
+// This private method exists so it can be swizzled for testing. See MP+PrintLibraryVersion.h/m
+- (NSString *)printLibraryVersion
+{
+    return kMPLibraryVersion;
 }
 
 @end

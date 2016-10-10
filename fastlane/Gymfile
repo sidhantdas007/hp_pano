@@ -1,3 +1,4 @@
 scheme "HPPano"
 configuration "Release"
 output_directory "./fastlane/build_output"
+export_method "development"

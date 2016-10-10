@@ -85,6 +85,16 @@
 @property (strong, nonatomic) NSString *printLaterLabelText;
 
 /*!
+ * @abstract The text to be used on a "Print all jobs" button when printing from the print queue
+ */
+@property (strong, nonatomic, readonly) NSString *printMultipleJobsFromQueueLabelText;
+
+/*!
+ * @abstract The text to be used on a print button when printing one item from the print queue
+ */
+@property (strong, nonatomic, readonly) NSString *printSingleJobFromQueueLabelText;
+
+/*!
  * @abstract The text to be used to convey the number of copies to produced by the print job
  */
 @property (strong, nonatomic) NSString *numCopiesLabelText;
@@ -107,7 +117,7 @@
 /*!
  * @abstract The text used to display the printer's name to a user
  */
-@property (strong, nonatomic) NSString *selectedPrinterText;
+@property (strong, nonatomic, readonly) NSString *selectedPrinterText;
 
 /*!
  * @abstract The text summarizing the printer name, paper size, and paper type

@@ -27,7 +27,6 @@ NSString * const kMPLastPrinterLocationSetting = @"kMPLastPrinterLocationSetting
 NSString * const kMPLastPaperSizeSetting = @"kMPLastPaperSizeSetting";
 NSString * const kMPLastPaperTypeSetting = @"kMPLastPaperTypeSetting";
 NSString * const kMPLastBlackAndWhiteFilterSetting = @"kMPLastBlackAndWhiteFilterSetting";
-NSString * const kMPBlackAndWhiteIndicatorText = @"B&W";
 NSString * const kMPPrintSummarySeparatorText = @" / ";
 
 #pragma mark - MPPageRangeViewDelegate
@@ -93,6 +92,17 @@ NSString * const kMPPrintSummarySeparatorText = @" / ";
     }
     
     [self.pageSettingsViewController refreshData];
+}
+
+- (UIViewController *)printerPickerControllerParentViewController:(UIPrinterPickerController *)printerPickerController
+{
+    UIViewController *retVal = nil;
+    
+    if( self.pageSettingsViewController.splitViewController.isCollapsed ) {
+        retVal = self.pageSettingsViewController;
+    }
+    
+    return retVal;
 }
 
 #pragma mark - Number of Copies
@@ -167,7 +177,7 @@ NSString * const kMPPrintSummarySeparatorText = @" / ";
         if( summaryText.length > 0 ) {
             summaryText = [summaryText stringByAppendingString:kMPPrintSummarySeparatorText];
         }
-        summaryText = [summaryText stringByAppendingString:kMPBlackAndWhiteIndicatorText];
+        summaryText = [summaryText stringByAppendingString:MPLocalizedString(@"B&W", @"Let's the user know their job will be printed in black-and-white")];
     }
     
     if( summaryText.length > 0 ) {
@@ -193,7 +203,7 @@ NSString * const kMPPrintSummarySeparatorText = @" / ";
     
     BOOL printingOneCopyOfAllPages = (1 == self.numCopies && [self allPagesSelected]);
     if( [self noPagesSelected]  ||  printingOneCopyOfAllPages ) {
-        _printLabelText = MPLocalizedString(@"Print", @"Print button label image");
+        _printLabelText = MPLocalizedString(@"Print", @"Print button label");
     } else if( 1 == numPagesToBePrinted ) {
         _printLabelText = MPLocalizedString(@"Print 1 Page", @"Print button label single page");
     } else {
@@ -201,6 +211,16 @@ NSString * const kMPPrintSummarySeparatorText = @" / ";
     }
     
     return _printLabelText;
+}
+
+- (NSString *)printMultipleJobsFromQueueLabelText
+{
+    return MPLocalizedString(@"Print All", @"Print button label for printing multiple jobs");
+}
+
+- (NSString *)printSingleJobFromQueueLabelText
+{
+    return MPLocalizedString(@"Print", @"Print button label");
 }
 
 - (NSString *)printLaterLabelText
@@ -319,6 +339,8 @@ NSString * const kMPPrintSummarySeparatorText = @" / ";
         NSNumber *lastBlackAndWhiteUsed = [[NSUserDefaults standardUserDefaults] objectForKey:kMPLastBlackAndWhiteFilterSetting];
         if (lastBlackAndWhiteUsed != nil) {
             self.blackAndWhite = lastBlackAndWhiteUsed.boolValue;
+        } else {
+            self.blackAndWhite = NO;
         }
     }
 }

@@ -1,10 +1,22 @@
 PODS:
-  - MobilePrintSDK (3.0.1)
+  - MobilePrintSDK (3.0.9)
 
 DEPENDENCIES:
-  - MobilePrintSDK
+  - MobilePrintSDK (from `git@github.com:IPGPTP/ios-print-sdk.git`, branch `master`)
+
+EXTERNAL SOURCES:
+  MobilePrintSDK:
+    :branch: master
+    :git: git@github.com:IPGPTP/ios-print-sdk.git
+
+CHECKOUT OPTIONS:
+  MobilePrintSDK:
+    :commit: ce55372466632ae5dd57c968718a24c1ec59b204
+    :git: git@github.com:IPGPTP/ios-print-sdk.git
 
 SPEC CHECKSUMS:
-  MobilePrintSDK: 1c366172660e817a72c38bc0f7e8bbd91f184385
+  MobilePrintSDK: dc228ff7c4adb9ed8fed8b9a6d016356a23d4fe1
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 180e559aac28235c610c6af5111071cf362fa694
+
+COCOAPODS: 1.0.1

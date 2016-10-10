@@ -63,6 +63,12 @@
 @property (strong, nonatomic) NSDictionary *extra;
 
 /*!
+ * @abstract A dictionary of custom analytics information to store with the print job
+ * @discussion The objects in this dictionary must be encodable with the NSCoding protocol
+ */
+@property (strong, nonatomic) NSDictionary *customAnalytics;
+
+/*!
  * @abstract The default preview image
  * @discussion This image is created to suit the MP default paper size
  */
@@ -82,6 +88,12 @@
  * @abstract Populates job with metrics info
  * @param offramp The metrics offramp to use
  */
-- (void)prepareMetricswithOfframp:(NSString *)offramp;
+- (void)prepareMetricsForOfframp:(NSString *)offramp;
+
+/*!
+ * @abstract Populates job with print session info
+ * @param printItem The print item to use to get the print session
+ */
+- (void)setPrintSessionForPrintItem:(MPPrintItem *)printItem;
 
 @end

@@ -11,9 +11,16 @@ sudo gem install fastlane
 fastlane ios test
 ```
 Runs all the tests
-### ios adhoc
+### ios apple
 ```
-fastlane ios adhoc
+fastlane ios apple
+```
+Submit a new Beta Build to Apple TestFlight
+
+This will also make sure the profile is up to date
+### ios aws
+```
+fastlane ios aws
 ```
 Publish a build to S3
 ### ios hp
@@ -24,6 +31,6 @@ Build an ipa file for HP Inc.
 
 ----
 
-This README.md is auto-generated and will be re-generated every time to run [fastlane](https://fastlane.tools).
+This README.md is auto-generated and will be re-generated every time [fastlane](https://fastlane.tools) is run.
 More information about fastlane can be found on [https://fastlane.tools](https://fastlane.tools).
 The documentation of fastlane can be found on [GitHub](https://github.com/fastlane/fastlane/tree/master/fastlane).

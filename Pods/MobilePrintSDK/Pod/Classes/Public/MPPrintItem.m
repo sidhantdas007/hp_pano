@@ -18,6 +18,9 @@
 
 CGFloat const kMPPointsPerInch = 72.0f;
 NSString * const kMPPrintAssetKey = @"kMPPrintAssetKey";
+NSString * const kMPCustomAnalyticsKey = @"custom_data";
+
+@synthesize customAnalytics = _customAnalytics;
 
 #pragma mark - Abstract methods
 
@@ -63,6 +66,11 @@ NSString * const kMPPrintAssetKey = @"kMPPrintAssetKey";
     return nil;
 }
 
+- (NSArray *)activityItems
+{
+    return @[ self, self.printAsset ];
+}
+
 #pragma mark - NSCoding
 
 - (void)encodeWithCoder:(NSCoder *)encoder
@@ -73,7 +81,7 @@ NSString * const kMPPrintAssetKey = @"kMPPrintAssetKey";
 
 - (id)initWithCoder:(NSCoder *)decoder
 {
-    id printAsset = [self initAssetWithCoder:decoder];
+    id printAsset = [self decodeAssetWithCoder:decoder];
     MPPrintItem *printItem = [MPPrintItemFactory printItemWithAsset:printAsset];
     if (printItem) {
         printItem.layout = [MPLayoutFactory initLayoutWithCoder:decoder];
@@ -87,7 +95,7 @@ NSString * const kMPPrintAssetKey = @"kMPPrintAssetKey";
     [encoder encodeObject:self.printAsset forKey:kMPPrintAssetKey];
 }
 
-- (id)initAssetWithCoder:(NSCoder *)decoder
+- (id)decodeAssetWithCoder:(NSCoder *)decoder
 {
     return [decoder decodeObjectForKey:kMPPrintAssetKey];
 }
@@ -111,6 +119,27 @@ NSString * const kMPPrintAssetKey = @"kMPPrintAssetKey";
         _extra = [NSDictionary dictionary];
     }
     return _extra;
+}
+
+- (NSDictionary *)customAnalytics
+{
+    _customAnalytics = [self.extra objectForKey:kMPCustomAnalyticsKey];
+    
+    if (nil == _customAnalytics) {
+        [self setCustomAnalytics:[[NSMutableDictionary alloc] init]];
+        _customAnalytics = [self.extra objectForKey:kMPCustomAnalyticsKey];
+    }
+    
+    return _customAnalytics;
+}
+
+- (void)setCustomAnalytics:(NSDictionary *)customAnalytics
+{
+    _customAnalytics = customAnalytics;
+
+    NSMutableDictionary *extras = [self.extra mutableCopy];
+    [extras setObject:customAnalytics forKey:kMPCustomAnalyticsKey];
+    self.extra = extras;
 }
 
 @end

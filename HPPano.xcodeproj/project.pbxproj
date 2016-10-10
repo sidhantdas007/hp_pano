@@ -21,7 +21,7 @@
 		65C0F63F1BEA7F5300E45CBB /* HPPanoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F63E1BEA7F5300E45CBB /* HPPanoTests.m */; };
 		65C0F64A1BEA7F5300E45CBB /* HPPanoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C0F6491BEA7F5300E45CBB /* HPPanoUITests.m */; };
 		65C3283F1BEC07F90071E752 /* PPPanoramaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 65C3283E1BEC07F90071E752 /* PPPanoramaTableViewCell.m */; };
-		EEC31F0F676D9DAACE99F9E3 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32AA3D1FDE691CED0B848D9B /* libPods.a */; };
+		F2B5FA85592C16BAB5E7A8A1 /* libPods-HPPano.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C27BDFD5461048B9A2B05CE3 /* libPods-HPPano.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		32AA3D1FDE691CED0B848D9B /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		3644E75EE9B1D3DF99D3FD1B /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		2286E41BA36C67436CB12393 /* Pods-HPPano.hp inc..xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HPPano.hp inc..xcconfig"; path = "Pods/Target Support Files/Pods-HPPano/Pods-HPPano.hp inc..xcconfig"; sourceTree = "<group>"; };
 		650F940D1C067475002F7932 /* PPLaunchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPLaunchViewController.h; sourceTree = "<group>"; };
 		650F940E1C067475002F7932 /* PPLaunchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPLaunchViewController.m; sourceTree = "<group>"; };
 		6577A3591C07BC8C007F32D8 /* PPPaperView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPaperView.h; sourceTree = "<group>"; };
@@ -72,7 +71,9 @@
 		65C3283D1BEC07F90071E752 /* PPPanoramaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PPPanoramaTableViewCell.h; sourceTree = "<group>"; };
 		65C3283E1BEC07F90071E752 /* PPPanoramaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PPPanoramaTableViewCell.m; sourceTree = "<group>"; };
 		65ED28F41C16A33300A81F7F /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = "<group>"; };
-		D81B966252321C8EDF1F02AF /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		94DCC6228DB45784CC010690 /* Pods-HPPano.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HPPano.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HPPano/Pods-HPPano.debug.xcconfig"; sourceTree = "<group>"; };
+		C27BDFD5461048B9A2B05CE3 /* libPods-HPPano.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HPPano.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D03D0511D3E3319758FA6D8C /* Pods-HPPano.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HPPano.release.xcconfig"; path = "Pods/Target Support Files/Pods-HPPano/Pods-HPPano.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,7 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEC31F0F676D9DAACE99F9E3 /* libPods.a in Frameworks */,
+				F2B5FA85592C16BAB5E7A8A1 /* libPods-HPPano.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -101,6 +102,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E009925D56011B9A7BB3E6D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				94DCC6228DB45784CC010690 /* Pods-HPPano.debug.xcconfig */,
+				D03D0511D3E3319758FA6D8C /* Pods-HPPano.release.xcconfig */,
+				2286E41BA36C67436CB12393 /* Pods-HPPano.hp inc..xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		65C0F6181BEA7F5300E45CBB = {
 			isa = PBXGroup;
 			children = (
@@ -109,8 +120,8 @@
 				65C0F63D1BEA7F5300E45CBB /* HPPanoTests */,
 				65C0F6481BEA7F5300E45CBB /* HPPanoUITests */,
 				65C0F6221BEA7F5300E45CBB /* Products */,
-				75CE50D0BA2C49B44BF94236 /* Pods */,
-				8300B3DC852633C0F0A61E07 /* Frameworks */,
+				3E009925D56011B9A7BB3E6D /* Pods */,
+				710DC95840CCEFE0BEA49333 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -177,19 +188,10 @@
 			path = HPPanoUITests;
 			sourceTree = "<group>";
 		};
-		75CE50D0BA2C49B44BF94236 /* Pods */ = {
+		710DC95840CCEFE0BEA49333 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D81B966252321C8EDF1F02AF /* Pods.debug.xcconfig */,
-				3644E75EE9B1D3DF99D3FD1B /* Pods.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
-		8300B3DC852633C0F0A61E07 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				32AA3D1FDE691CED0B848D9B /* libPods.a */,
+				C27BDFD5461048B9A2B05CE3 /* libPods-HPPano.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -201,12 +203,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 65C0F64E1BEA7F5300E45CBB /* Build configuration list for PBXNativeTarget "HPPano" */;
 			buildPhases = (
-				AFF0B1525C8AA86E016F5D0D /* Check Pods Manifest.lock */,
+				BEAFC19ECA051255B8FFC6F6 /* [CP] Check Pods Manifest.lock */,
 				65C0F61D1BEA7F5300E45CBB /* Sources */,
 				65C0F61E1BEA7F5300E45CBB /* Frameworks */,
 				65C0F61F1BEA7F5300E45CBB /* Resources */,
-				E97F803903B45C67E91ECF7C /* Embed Pods Frameworks */,
-				1AD51F0420C7571969C02304 /* Copy Pods Resources */,
+				721DD2B93999CFBCE61C9820 /* [CP] Embed Pods Frameworks */,
+				65038143FF2A5A0664CC9CCC /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -259,7 +261,7 @@
 		65C0F6191BEA7F5300E45CBB /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = HP;
 				TargetAttributes = {
 					65C0F6201BEA7F5300E45CBB = {
@@ -325,49 +327,49 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1AD51F0420C7571969C02304 /* Copy Pods Resources */ = {
+		65038143FF2A5A0664CC9CCC /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HPPano/Pods-HPPano-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		AFF0B1525C8AA86E016F5D0D /* Check Pods Manifest.lock */ = {
+		721DD2B93999CFBCE61C9820 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-HPPano/Pods-HPPano-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BEAFC19ECA051255B8FFC6F6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		E97F803903B45C67E91ECF7C /* Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -452,8 +454,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -479,17 +483,19 @@
 		};
 		65BE31CC1C69317900CBBCC6 /* HP Inc. */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3644E75EE9B1D3DF99D3FD1B /* Pods.release.xcconfig */;
+			baseConfigurationReference = 2286E41BA36C67436CB12393 /* Pods-HPPano.hp inc..xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: HP Inc. (6HB5Y2QTA3)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: HP Inc. (6HB5Y2QTA3)";
+				DEVELOPMENT_TEAM = 6HB5Y2QTA3;
 				INFOPLIST_FILE = HPPano/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hp.panorama;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "1a0943ba-4246-437c-a435-2b179bdbef91";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "HP Panorama IOS Distribution Provision";
 			};
 			name = "HP Inc.";
 		};
@@ -530,8 +536,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -574,8 +582,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -601,33 +611,37 @@
 		};
 		65C0F64F1BEA7F5300E45CBB /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D81B966252321C8EDF1F02AF /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 94DCC6228DB45784CC010690 /* Pods-HPPano.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Talle (X55T2978K2)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Talle (X55T2978K2)";
+				DEVELOPMENT_TEAM = UJ5KAZ5V7V;
 				INFOPLIST_FILE = HPPano/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hp.dev.panorama;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "$(sigh_com.hp.dev.panorama_development)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "HP Wildcard Development Provision";
 			};
 			name = Debug;
 		};
 		65C0F6501BEA7F5300E45CBB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3644E75EE9B1D3DF99D3FD1B /* Pods.release.xcconfig */;
+			baseConfigurationReference = D03D0511D3E3319758FA6D8C /* Pods-HPPano.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Eric Talle (UJ5KAZ5V7V)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Eric Talle (UJ5KAZ5V7V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Eric Talle (X55T2978K2)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Eric Talle (X55T2978K2)";
+				DEVELOPMENT_TEAM = UJ5KAZ5V7V;
 				INFOPLIST_FILE = HPPano/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.hp.dev.panorama;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "$(sigh_com.hp.dev.panorama_adhoc)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "HP Wildcard Development Provision";
 			};
 			name = Release;
 		};

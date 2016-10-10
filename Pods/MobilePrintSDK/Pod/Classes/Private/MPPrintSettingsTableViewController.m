@@ -19,6 +19,7 @@
 #import "MPWiFiReachability.h"
 #import "UITableView+MPHeader.h"
 #import "NSBundle+MPLocalizable.h"
+#import "UIImage+MPBundle.h"
 
 #define PRINTER_SELECTION_SECTION 0
 #define PAPER_SELECTION_SECTION 1
@@ -52,7 +53,7 @@ NSString * const kPrintSettingsScreenName = @"Print Settings Screen";
 {
     [super viewDidLoad];
     
-    self.title = MPLocalizedString(@"Print Settings", @"Title of the Print Settings screen");
+    self.title = MPLocalizedString(@"Print Settings", @"Title of the print settings screen");
     
     self.mp = [MP sharedInstance];
     
@@ -121,7 +122,7 @@ NSString * const kPrintSettingsScreenName = @"Print Settings Screen";
     if (self.printSettings.printerIsAvailable){
         [self.printerSelectCell.imageView setImage:nil];
     } else {
-        UIImage *warningSign = [UIImage imageNamed:@"MPDoNoEnter"];
+        UIImage *warningSign = [UIImage imageResource:@"MPDoNoEnter" ofType:@"png"];
         [self.printerSelectCell.imageView setImage:warningSign];
     }
     [self.tableView endUpdates];
@@ -168,7 +169,7 @@ NSString * const kPrintSettingsScreenName = @"Print Settings Screen";
             UIPrinterPickerController* printerPicker = [UIPrinterPickerController printerPickerControllerWithInitiallySelectedPrinter:nil];
             printerPicker.delegate = self;
             
-            if( IS_IPAD ) {
+            if( !self.splitViewController.isCollapsed ) {
                 [printerPicker presentFromRect:self.printerSelectCell.frame
                                         inView:tableView
                                       animated:YES
@@ -261,6 +262,17 @@ NSString * const kPrintSettingsScreenName = @"Print Settings Screen";
 
 #pragma mark - UIPrinterPickerControllerDelegate
 
+- (UIViewController *)printerPickerControllerParentViewController:(UIPrinterPickerController *)printerPickerController
+{
+    UIViewController *retVal = nil;
+    
+    if( self.splitViewController.isCollapsed ) {
+        retVal = self;
+    }
+    
+    return retVal;
+}
+
 - (void)printerPickerControllerDidDismiss:(UIPrinterPickerController *)printerPickerController
 {
     UIPrinter *selectedPrinter = printerPickerController.selectedPrinter;
@@ -345,6 +357,8 @@ NSString * const kPrintSettingsScreenName = @"Print Settings Screen";
 
 - (void)handleDidCheckPrinterAvailability:(NSNotification *)notification
 {
+    MPLogInfo(@"handleDidCheckPrinterAvailability: %@", notification);
+
     BOOL available = [[notification.userInfo objectForKey:kMPPrinterAvailableKey] boolValue];
     
     self.printSettings.printerIsAvailable = available;

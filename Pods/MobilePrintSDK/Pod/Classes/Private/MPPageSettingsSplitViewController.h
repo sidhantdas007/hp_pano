@@ -12,8 +12,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface UIView (MPBackground)
+@interface MPPageSettingsSplitViewController : UISplitViewController
 
-- (UIImage *)MPScreenshotImage;
+@end
+
+@protocol MPPageSettingsSplitViewControllerProtocol
+
+- (void)respondToSplitControllerTraitChange:(UITraitCollection *)newTraits;
 
 @end
