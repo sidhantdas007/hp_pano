@@ -20,10 +20,6 @@ CGFloat const kPPThumbnailHeight = 200.0;
 CGFloat const kPPDeselectedAlpha = 0.75;
 CGFloat const kPPFadeDuration = 0.2;
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
 - (void)setIncluded:(BOOL)included
 {
     if (_included != included) {
